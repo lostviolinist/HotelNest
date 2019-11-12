@@ -24,6 +24,17 @@ body {
     box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
 }
 
+.homemain {
+
+    background-color: #FFFFFF;
+    width: 400px;
+    height: 550px;
+    margin: 5em auto;
+    margin-left: 5em;
+    border-radius: none;
+    box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
 
 .sign {
     padding-top: 40px;
@@ -152,6 +163,115 @@ font-family: 'Ubuntu', sans-serif;
     color: #111111;
     padding-top: 15px;
 }
+
+.city {
+
+    width: 76%;
+    color: rgb(38, 50, 56);
+    font-weight: lighter;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: #FFFFFF;
+    padding: 10px 20px;
+    border: #707070;
+    /* border-radius: 20px; */
+    outline: none;
+    box-sizing: border-box;
+    border: 1px solid #707070;
+    margin-bottom: 50px;
+    margin-left: 46px;
+    text-align: left;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.start-date {
+
+    width: 30%;
+    color: rgb(38, 50, 56);
+    font-weight: lighter;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: #FFFFFF;
+    padding: 10px 20px;
+    border: #707070;
+    /* border-radius: 20px; */
+    outline: none;
+    box-sizing: border-box;
+    border: 1px solid #707070;
+    margin-bottom: 50px;
+    margin-left: 46px;
+    text-align: left;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.end-date {
+
+    width: 30%;
+    color: rgb(38, 50, 56);
+    font-weight: lighter;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: #FFFFFF;
+    padding: 10px 20px;
+    border: #707070;
+    /* border-radius: 20px; */
+    outline: none;
+    box-sizing: border-box;
+    border: 1px solid #707070;
+    margin-bottom: 50px;
+    margin-left: 46px;
+    text-align: left;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.pax {
+
+    width: 15%;
+    color: rgb(38, 50, 56);
+    font-weight: lighter;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: #FFFFFF;
+    padding: 10px 20px;
+    border: #707070;
+    /* border-radius: 20px; */
+    outline: none;
+    box-sizing: border-box;
+    border: 1px solid #707070;
+    margin-bottom: 50px;
+    margin-left: 46px;
+    text-align: left;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.flex-container {
+    display:flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+    
+    
+
+}
+.flex-container > *:not(:last-child){
+    margin-right:10px;
+}
+
+
+.flex {
+    border: none;
+}
+
+.recommended {
+    margin-left: 8em;
+    
+}
+
+
 
 
 a {
