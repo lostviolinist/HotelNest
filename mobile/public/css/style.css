@@ -65,7 +65,7 @@ font-family: 'Ubuntu', sans-serif;
 }
 
 form.form1 {
-    padding-top: 24px;
+    padding-top: 40px;
 }
 
 .pass {
@@ -352,6 +352,33 @@ font-family: 'Ubuntu', sans-serif;
   border: 1px solid black;
   padding: 0px;
   margin: 0px;
+}
+
+.confirm-booking {
+
+    background-color: white;
+  width: 300px;
+  border: 0px;
+  padding: 20px;
+  margin: 0px;
+  box-shadow: #000000;
+  height: 350px;
+  margin-top: 200px;
+  margin-left: 600px;
+}
+
+.confirm-booking h3 {
+    text-align: center;
+}
+
+.confirm-booking h4 {
+    color:#596FA0;
+    font-style: normal;
+}
+
+.confirm-booking h5 {
+    color: #596FA0;
+    font-weight: lighter;
 }
 
 a {
