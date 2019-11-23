@@ -1,5 +1,8 @@
 <?php
 
+use App\User;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +15,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('mainhome');
 });
 
 Route::resource('user','UserController');
@@ -30,3 +33,13 @@ Route::resource('hotel', 'HotelController');
 Route::post('hotel/update', 'HotelController@update')->name('hotel.update');
 
 Route::get('hotel/destroy/{id}', 'Hotelcontroller@destroy');
+
+
+Route::get('/hello',function(){
+    return 'hello world';
+});
+
+Route::get('/userTest/{id}',function($id){
+    $data = User::findOrFail($id);
+    return $data['firstName'];
+});
