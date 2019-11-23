@@ -18,28 +18,32 @@ Route::get('/', function () {
     return view('mainhome');
 });
 
-Route::resource('user','UserController');
-
-Route::get('/form',function(){
-	return view('user.create');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
 
+
+
+// -----------------------------------------For Testing------------------------------------------------------
+// -----------------------------------------For Testing------------------------------------------------------
+// -----------------------------------------For Testing------------------------------------------------------
 Route::resource('hotel', 'HotelController');
 
 Route::post('hotel/update', 'HotelController@update')->name('hotel.update');
 
 Route::get('hotel/destroy/{id}', 'Hotelcontroller@destroy');
 
+// -----------------------------------------For mobile------------------------------------------------------
+// -----------------------------------------For mobile------------------------------------------------------
+// -----------------------------------------For mobile------------------------------------------------------
 
-Route::get('/hello',function(){
-    return 'hello world';
-});
+Route::post('loginUser',function(Request $request){
+    $credentials = $request->only('email', 'password');
 
-Route::get('/userTest/{id}',function($id){
-    $data = User::findOrFail($id);
-    return $data['firstName'];
+    if (Auth::attempt($credentials)) {
+        // Authentication passed...
+        return $credentials['password'];
+    }else{
+        return "false";
+    }
 });
