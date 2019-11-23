@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HotelNest</string>
+    <string name="hotelnest">HotelNest</string>
+    <string name="welcome_to">Welcome to</string>
+
+    <string name="material_calendar_monday">Mon</string>
+    <string name="material_calendar_tuesday">Tue</string>
+    <string name="material_calendar_wednesday">Wed</string>
+    <string name="material_calendar_thursday">Thu</string>
+    <string name="material_calendar_friday">Fri</string>
+    <string name="material_calendar_saturday">Sat</string>
+    <string name="material_calendar_sunday">Sun</string>
+</resources>

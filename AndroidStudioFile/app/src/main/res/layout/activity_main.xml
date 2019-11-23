@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="254dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="26dp"
+        android:fontFamily="@font/airbnb_cereal_bold"
+        android:text="@string/hotelnest"
+        android:textColor="#3C3838"
+        android:textColorLink="#3C3838"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.394"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.004" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="310dp"
+        android:fontFamily="@font/airbnb_cereal_book"
+        android:text="@string/welcome_to"
+        android:textColor="#3C3838"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/loginEmail"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:background="@layout/rounded_border_edittext"
+        android:ems="10"
+        android:fontFamily="@font/airbnb_cereal_light"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
+        android:letterSpacing=".15"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/loginPassword"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:background="@layout/rounded_border_edittext"
+        android:ems="10"
+        android:fontFamily="@font/airbnb_cereal_light"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:letterSpacing=".15"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginEmail" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="310dp"
+        android:layout_height="310dp"
+        android:layout_marginEnd="24dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/welcome_background" />
+
+    <Button
+        android:id="@+id/signInButton"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="28dp"
+        android:background="@layout/rounded_border_button"
+        android:fontFamily="@font/airbnb_cereal_medium"
+        android:letterSpacing=".20"
+        android:text="Sign In"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="22dp"
+            android:fontFamily="@font/airbnb_cereal_medium"
+            android:letterSpacing=".15"
+            android:text="Don't have an account yet?  "
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="71dp"
+            android:layout_height="18dp"
+            android:layout_marginBottom="22dp"
+            android:background="@android:color/transparent"
+            android:cursorVisible="false"
+            android:fontFamily="@font/airbnb_cereal_bold"
+            android:letterSpacing=".15"
+            android:padding="0dp"
+            android:shadowColor="#0000"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:text="Register"
+            android:textAllCaps="false"
+            android:textColor="#586BA4"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="285dp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
