@@ -381,6 +381,39 @@ font-family: 'Ubuntu', sans-serif;
     font-weight: lighter;
 }
 
+.hotel-name h2{
+    color:#707070;
+    font-weight: lighter;
+    margin-left: 15px;
+}
+
+.hotel-description td {
+    padding-left: 40px;
+}
+
+.details{
+    margin-top: 20px;
+}
+
+.details td {
+    padding-left: 40px;
+    
+}
+
+.title {
+    color:#586BA4;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.register-button {
+    background-color: #586BA4;
+}
+
+.signin-button {
+    border-color: #586BA4;
+}
+
 a {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
     color: #586BA4;
