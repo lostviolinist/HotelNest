@@ -22,7 +22,29 @@ Auth::routes();
 
 Route::get('home', 'HomeController@index')->name('home');
 
+// ------------------------------------- MANAGEMENT ----------------------------------- //
 
+Route::get('management/sign-in', function() {
+    return view('management/sign-in');
+});
+
+Route::get('management/change-password', function() {
+    return view('management/change-password');
+});
+
+Route::get('management/bookings', function() {
+    return view('management/bookings');
+});
+
+Route::get('management/profile', function() {
+    return view('management/profile');
+});
+
+Route::get('management/book', function() {
+    return view('management/book');
+});
+
+// ------------------------------------- MANAGEMENT END ----------------------------------- //
 
 // -----------------------------------------For Testing------------------------------------------------------
 // -----------------------------------------For Testing------------------------------------------------------

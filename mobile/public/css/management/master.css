@@ -1,0 +1,155 @@
+/* Index
+1) Default
+2) Header
+3) Other */
+
+/* --------------- Default ----------- */
+:root {
+  --default-color: #586ba4;
+  --default-color-light: #586bff;
+}
+
+.bg-default {
+  background-color: var(--default-color);
+}
+
+.text-default {
+  color: var(--default-color);
+}
+
+.text-default-light {
+  color: var(--default-color-light);
+}
+
+.btn-default {
+  color: white;
+  background-color: var(--default-color);
+  border-color: var(--default-color);
+}
+
+.btn-default:hover {
+  color: white;
+  background-color: var(--default-color-light);
+  border-color: var(--default-color-light);
+}
+/* -------------------- Default END -------- */
+
+/* ------------------- Header--------------- */
+.header {
+  background-color: white;
+  border-bottom: 2px solid #dddddd;
+  margin-bottom: 32px;
+  /* position: sticky;
+  top: 0;
+  z-index: 10; */
+}
+
+.nav-item-header:first-child {
+  border-left: 1px solid var(--default-color);
+}
+.nav-item-header + .nav-item-header {
+  border-left: 1px solid var(--default-color);
+}
+.nav-item-header:last-child {
+  border-right: 1px solid var(--default-color);
+}
+
+.nav-link-header {
+  width: 96px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.nav-link-header:hover {
+  color: white !important;
+  background-color: var(--default-color);
+}
+
+/* ---------------------- Header END -------------- */
+
+/* ---------------------- Bookings ----------------- */
+/* .query-container { */
+  /* max-width: 240px; */
+/* } */
+
+.search-container {
+  margin-bottom: 32px;
+}
+
+.filter-container {
+  border: 2px solid #dddddd;
+  padding: 4px 8px;
+}
+
+.filter-container .form-check {
+  margin: 8px 0;
+}
+
+/* .booking-table { */
+  /* max-height: calc(100vh - 94px - 48px);
+  overflow-y: scroll;
+  display: block; */
+/* } */
+
+.booking-table td {
+  vertical-align: middle;
+}
+
+/* .booking-table th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+} */
+
+.expanded-row:hover {
+  color: inherit !important;
+  background-color: inherit !important;
+}
+
+/* Override collapse animation */
+.expanded-row.collapsing {
+  transition: none;
+}
+
+/* -------------------- Bookings END -------------- */
+
+/* --------------------- Sign In ------------------- */
+.sign-in-container {
+  max-width: 480px;
+  border: 2px solid var(--default-color);
+  padding: 32px;
+}
+/* --------------------- Sign In END ---------------- */
+
+/* --------------------- Change Password -------------- */
+.change-password-container {
+  max-width: 480px;
+  border: 2px solid var(--default-color);
+  padding: 32px;
+}
+/* ----------------- Change Password END ----------------- */
+
+/* ----------------------- Hotel Profile -------------- */
+.picture-big {
+  height: 360px;
+  /* width: 40vw; */
+  object-fit: cover;
+}
+.picture-small {
+  height: 180px;
+  /* width: 20vw; */
+  object-fit: cover;
+}
+
+.profile-container {
+  margin-top: 32px;
+  /* max-width: 640px; */
+  /* border: 2px solid var(--default-color); */
+  /* padding: 32px; */
+  margin-bottom: 32px;
+}
+
+/* .test {
+  border: 1px solid var(--default-color);
+} */
+/* -------------------- Hotel Profile END-------------- */
