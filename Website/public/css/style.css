@@ -406,13 +406,10 @@ font-family: 'Ubuntu', sans-serif;
     margin-left: 10px;
 }
 
-.register-button {
-    background-color: #586BA4;
+.hotel-menu {
+    border: #586BA4;
 }
 
-.signin-button {
-    border-color: #586BA4;
-}
 
 a {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
