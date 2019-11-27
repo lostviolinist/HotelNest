@@ -1,194 +1,253 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type = "text/css" href="style.css">
-        <title>
-            HotelNest
-        </title>
-    </head>
-    <body>
-       <div class="search">
-           <form>
+<html lang="en">
 
-                <table>
-                        <tr>
-                            <td>
-                                <input class="city" type="text" align="center" placeholder="City"> 
-                            </td>
-                            <td>
-                                <input class="start-date" type="date" align="center" placeholder="start">   to   <input class="end-date" type="date" align="center" placeholder="end">
-                            </td>
-                            <td>
-                                <input class="pax" type="number" align="center" placeholder="">   Adults <input class="pax" type="number" align="center" placeholder="">   Child
-                            </td>
-                            <td>
-                                <a class="search-button" align="center">Search</a>
-                            </td>
-                        </tr>
-                    </table>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+  <title>Choose a Hotel</title>
+</head>
 
-           </form>
-            
-       </div> 
+<body>
+  <div class="container-fluid mt-3">
+    <section class="row">
+      <div class="col-md-8">
+        <h1 class="title">HotelNest</h1>
+      </div>
+      <div class="col-md-4">
+        <div class=" float-right" role="group">
+          <a class="btn btn-secondary btn-md  mr-3" style="background-color: #586BA4;" href="#"> Register </a>
+          <a class="btn btn-md btn-outline-secondary" tyle="border-color: #586BA4;" href="#"> Sign In </a>
+        </div>
+      </div>
+    </section>
+  </div>
 
-       <div class="bottom">
-           <table>
-               <tr>
-                   <td>
-                       <div class="filter">
-                            <h3> filter </h3>
-                            <div class="choice">
+  <div class="container mt-5">
+    <form class="form-inline">
+      <label class="sr-only" for="inlineFormInputName2">Name</label>
+      <input type="text" class="form-control mb-2 mr-5" id="inlineFormInputName2" placeholder="Where">
 
-                                    <form>
-                                        <input type="checkbox" name="smoke"> Non-smoking<br><br>
-                                        <input type="checkbox" name="bath"> Bath Tub<br><br>
-                                        <input type="checkbox" name="wifi"> Free Wifi<br><br>
-                                        <input type="checkbox" name="parking"> Free Parking<br><br>
-                                        <input type="checkbox" name="checkout"> Late Checkout<br><br>
-                                        <input type="checkbox" name="bed"> Large Bed<br><br>
-                                        <input type="checkbox" name="star1"> 1 Star<br><br>
-                                        <input type="checkbox" name="star2"> 2 Star<br><br>
-                                        <input type="checkbox" name="star3"> 3 Star<br><br>
-                                        <input type="checkbox" name="star4"> 4 Star<br><br>
-                                        <input type="checkbox" name="star5"> 5 Star<br><br>
-                                        <input type="checkbox" name="reception"> 24hr Reception<br><br>
-                                        <input type="checkbox" name="fitness"> Fitness Centre<br><br>
-                                        <input type="checkbox" name="coffee"> Coffee Maker<br>
-                                        
-                                      </form>
+      <label class="sr-only" for="inlineFormInputGroupUsername2">Check in</label>
+      <div class="input-group mb-2 mr-sm-2">
 
-                            </div>
-                       </div>
-                   </td>
-                   <td>
-                        <div class="display">
+        <input type="date" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Check in">
+      </div>
 
-                                <table>
-                                    <tr>
-                                        <td>
-                                        <div class="sort">
-                                            <h3>Sort</h3>
-            
-                                            <div class="sort-menu">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                                <div class="sort-box">
-                                                                        Our top picks
-                                                                    </div>
-                                                        </td>
-                                                        <td>
-                                                                <div class="sort-box">
-                                                                        Cheapest
-                                                                    </div>  
-                                                        </td>
-                                                        <td>
-                                                                <div class="sort-box">
-                                                                        Lowest Star(s)
-                                                                    </div>  
-                                                        </td>
-                                                        <td>
-                                                                <div class="sort-box">
-                                                                        Star and Price
-                                                                    </div> 
-                                                        </td>
-                                                        <td>
-                                                                <div class="sort-box">
-                                                                        Top Reviewed
-                                                                    </div>
-                                                        </td>
-                                                       
-                                                    </tr>
-                                                </table>
-            
-                                                
-            
-                                            </div>
-            
-                                        </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="hotel">
-                                                <div class="flex-container-vertical">
+      <label class="sr-only" for="inlineFormInputGroupUsername2">to</label>
+      <div class="input-group mb-2 mr-sm-2">
 
-                                                    <div>
-                                                        <table>
-                                                            <td>
-                                                                <img src="112963088.png" alt="hotel picture" height="255px" width="255px">
-                                                            </td>
-                                                            <td>
-                                                                <h4>The St. Regis</h4>
-                                                                Description description description description description
-                                                                description description description description description.
-                                                            </td>
-                                                        </table>
-                                                    </div>
-                                                    <div>
-                                                            <table>
-                                                                <td>
-                                                                    <img src="112963088.png" alt="hotel picture" height="255px" width="255px">
-                                                                </td>
-                                                                <td>
-                                                                    <h4>The St. Regis</h4>
-                                                                    Description description description description description
-                                                                    description description description description description.
-                                                                </td>
-                                                            </table>
-                                                        </div>
-                                                        <div>
-                                                                <table>
-                                                                    <td>
-                                                                        <img src="112963088.png" alt="hotel picture" height="255px" width="255px">
-                                                                    </td>
-                                                                    <td>
-                                                                        <h4>The St. Regis</h4>
-                                                                        Description description description description description
-                                                                        description description description description description.
-                                                                    </td>
-                                                                </table>
-                                                            </div>
-                                                            <div>
-                                                                    <table>
-                                                                        <td>
-                                                                            <img src="112963088.png" alt="hotel picture" height="255px" width="255px">
-                                                                        </td>
-                                                                        <td>
-                                                                            <h4>The St. Regis</h4>
-                                                                            Description description description description description
-                                                                            description description description description description.
-                                                                        </td>
-                                                                    </table>
-                                                                </div>
-                                                                <div>
-                                                                        <table>
-                                                                            <td>
-                                                                                <img src="112963088.png" alt="hotel picture" height="255px" width="255px">
-                                                                            </td>
-                                                                            <td>
-                                                                                <h4>The St. Regis</h4>
-                                                                                Description description description description description
-                                                                                description description description description description.
-                                                                            </td>
-                                                                        </table>
-                                                                    </div>
+        to
+      </div>
+      <label class="sr-only" for="inlineFormInputGroupUsername2">Check Out</label>
+      <div class="input-group mb-2 mr-5">
 
-                                                </div>
+        <input type="date" class="form-control" id="inlineFormInputGroupUsername3" placeholder="Check Out">
+      </div>
+      <label class="sr-only" for="inlineFormInputGroupUsername2">Pax</label>
+      <div class="input-group mb-2 mr-sm-2">
 
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-            
-                               </div>
+        <input type="number" class="form-control" style="width: 50px;" id="inlineFormInputGroupUsername4"
+          placeholder="1">
+      </div>
+      <label class="sr-only" for="inlineFormInputGroupUsername2">Pax</label>
+      <label class="sr-only" for="inlineFormInputGroupUsername2">to</label>
+      <div class="input-group mb-2 mr-5">
 
-                        
-                   </td>
-                   
-               </tr>
-           </table>
+        Adults
+      </div>
+      <div class="input-group mb-2 mr-sm-2">
 
-       </div>
-    </body>
+        <input type="number" class="form-control" style="width: 50px;" id="inlineFormInputGroupUsername5"
+          placeholder="1">
+      </div>
+      <label class="sr-only" for="inlineFormInputGroupUsername2">to</label>
+      <div class="input-group mb-2 mr-5">
+
+        Children
+      </div>
+
+
+      <button type="submit" class="btn btn-primary mb-2" style="background-color: #586BA4;">Search</button>
+    </form>
+  </div>
+
+  <div class="ml-5 mt-5">
+    <div class="row">
+      <div class="col-sm">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Non-smoking
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Bath Tub
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Free Wifi
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Breakfast
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Free Parking
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Late CheckOut
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">1 Star
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">2 Stars
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">3 Stars
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">4 Stars
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">5 Stars
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">24hr Reception
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Fitness Centre
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Coffee Maker
+              </label>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col"> <button class="btn btn-success"> Our Top Pick </button> </div>
+          <div class="col"> <button class="btn btn-outline-info">Cheapest</button></div>
+          <div class="col"><button class="btn btn-outline-info">Lowest Stars</button></div>
+          <div class="col"><button class="btn btn-outline-info">Star and Price</button></div>
+          <div class="col"><button class="btn btn-outline-info">Top Reviewed</button></div>
+
+        </div>
+        <div style="height: 300px overflow: scroll;">
+          <div class="card mb-3 mt-5" style="max-width: 1000px;">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="112963088.png" class="card-img" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">The St. Regis</h5>
+                  <p class="card-text">Description description description description description Description
+                    description description description description</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3 mt-5" style="max-width: 1000px;">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="112963088.png" class="card-img" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">The St. Regis</h5>
+                  <p class="card-text">Description description description description description Description
+                    description description description description</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3 mt-5" style="max-width: 1000px;">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="112963088.png" class="card-img" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">The St. Regis</h5>
+                  <p class="card-text">Description description description description description Description
+                    description description description description</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3 mt-5" style="max-width: 1000px;">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="112963088.png" class="card-img" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">The St. Regis</h5>
+                  <p class="card-text">Description description description description description Description
+                    description description description description</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3 mt-5" style="max-width: 1000px;">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="112963088.png" class="card-img" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">The St. Regis</h5>
+                  <p class="card-text">Description description description description description Description
+                    description description description description</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+</body>
+
 </html>
