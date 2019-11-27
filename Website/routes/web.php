@@ -2,6 +2,7 @@
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,3 +91,14 @@ Route::post('loginUser',function(Request $request){
         return "false";
     }
 });
+
+Route::post('registerUser',function(Request $request){
+    $data = $request->only('firstName','lastName','email','password','phone');
+    try{
+        RegisterController::create($data);
+    }catch(Exception $e){
+        echo $e;
+        return "false";
+    }
+    return "true";
+})->name('registerUser');
