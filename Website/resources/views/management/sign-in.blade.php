@@ -34,13 +34,25 @@ Sign In
   $('#sign-in-form').on('submit', function (e) {
     e.preventDefault();
     $('#sign-in-btn').prop('disabled', true);
-    $.ajax({
+    var error = '';
+    if ( !$('#sign-in-password').val() ) {
+      error = 'Password cannot be empty';
+    }
+    if ( !$('#sign-in-email').val() ) {
+      error = 'Email cannot be empty';
+    }
+    if (error !== '') {
+      $('#sign-in-validator').css('color', 'red');;
+      $('#sign-in-validator').html(error);
+      $('#sign-in-btn').prop('disabled', false);
+    } else {
+      $.ajax({
         url: "{{ route('management/sign-in') }}",
         method: "POST",
         data: $('#sign-in-form').serialize(),
         success:function(data) {
           if (data['status'] === true) {
-            console.log('Success');
+            console.log('Signed in successfully.');
             $(location).attr('href', data['redirect']);
           } else {
             console.log('Failed: ' + data['error']);
@@ -53,7 +65,8 @@ Sign In
           console.log('Error: ' + error);
           $('#sign-in-btn').prop('disabled', false);
         }
-    });
+      });
+    }
   });
 </script>
 @endsection

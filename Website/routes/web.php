@@ -34,8 +34,21 @@ Route::get('management/bookings', function() {
 });
 
 Route::get('management/profile', function() {
-    return view('management/profile');
+    try {
+        $results = DB::select('SELECT * FROM hotels WHERE name=?;', 
+            [session('management_hotel_name')]);
+        if (count($results) > 0) {
+            return view('management/profile', ['hotel' => $results[0]]);
+        }
+    } catch (Exception $e) {
+        return 'Invalid hotel.';
+    }
+    return 'Invalid hotel.';
 });
+
+Route::post('management/update-profile', 
+    'Management\HotelController@updateProfile')
+    ->name('management/update-profile');
 
 Route::get('management/change-password', function() {
     return view('management/change-password');
@@ -45,62 +58,17 @@ Route::get('management/sign-in', function() {
     return view('management/sign-in');
 });
 
-Route::post('management/sign-in', function(Request $request) {
+Route::post('management/sign-in', 
+    'Management\AdminController@signIn')
+    ->name('management/sign-in');
 
-    $status = false;
-    $redirect = null;
-    $error = null;
-    $results = DB::select ('SELECT * FROM admins WHERE email=:email AND password=:password;', 
-        ['email' => $request['email'], 'password' => $request['password']]);
+Route::get('management/sign-out', 
+    'Management\AdminController@signOut')
+    ->name('management/sign-out');
 
-    if (count($results) > 0) {
-        $request->session()->flush();
-        session(['management_admin_id' => $results[0]->id]);
-        session(['management_hotel_name' => $results[0]->hotelName]);
-        $status = true;
-        $redirect = url('management/book');
-    } else {
-        $error = "Email and password combination are not valid.";
-    }
-    return response()->json([
-        'status' => $status,
-        'redirect' => $redirect,
-        'error' => $error
-    ]);
-})->name('management/sign-in');
-
-Route::get('management/sign-out', function() {
-    session()->flush();
-    return redirect('management/sign-in');
-})->name('management/sign-out');
-
-Route::post('management/change-password', function(Request $request) {
-
-    $status = false;
-    $error = null;
-    if ($request['new-password'] == $request['confirm-password']) {
-        $adminId = session('management_admin_id');
-        $results = DB::select ('SELECT * FROM admins WHERE id=:id AND password=:password;', 
-            ['id' => $adminId, 'password' => $request['current-password']]);
-        if (count($results) > 0) {
-            $results = DB::update('UPDATE admins SET password=:password WHERE id=:id', 
-                ['password' => $request['new-password'], 'id' => $adminId]);
-            if ($results == 0)
-                $error = 'Failed to change password.';
-            else
-                $status = true;
-        } else {
-            $error = 'Please enter the correct current password.';
-        }  
-    } else {
-        $error = 'The new password and password confirmed does not match.';
-    }
-    
-    return response()->json([
-        'status' => $status,
-        'error' => $error,
-    ]);
-})->name('management/change-password');
+Route::post('management/change-password', 
+    'Management\AdminController@changePassword')
+    ->name('management/change-password');
 
 // ------------------------------------- MANAGEMENT END ----------------------------------- //
 

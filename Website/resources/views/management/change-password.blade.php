@@ -36,16 +36,34 @@ Change Password
   $('#change-password-form').on('submit', function (e) {
     e.preventDefault();
     $('#change-password-btn').prop('disabled', true);
-    $.ajax({
+    var error = '';
+    if ( $('#new-password').val() !== $('#confirm-password').val() ) {
+      error = 'New password and confirm password must be the same';
+    }
+    if ( !$('#confirm-password').val() ) {
+      error = 'Confirm password cannot be empty';
+    }
+    if ( !$('#new-password').val() ) {
+      error = 'New password cannot be empty';
+    }
+    if ( !$('#current-password').val() ) {
+      error = 'Current password cannot be empty';
+    }
+    if (error !== '') {
+      $('#change-password-validator').css('color', 'red');;
+      $('#change-password-validator').html(error);
+      $('#change-password-btn').prop('disabled', false);
+    } else {
+      $.ajax({
         url: "{{ route('management/change-password') }}",
         method: "POST",
         data: $('#change-password-form').serialize(),
         success:function(data) {
           var html = '';
           if (data['status'] === true) {
-            console.log('Success');
+            console.log('Password changed successfully');
             $('#change-password-validator').css('color', 'green');
-            html = 'Password change successfully';
+            html = 'Password changed successfully';
             $('#change-password-form').trigger('reset');
           } else {
             console.log('Failed: ' + data['error']);
@@ -59,7 +77,8 @@ Change Password
           console.log('Error: ' + error);
           $('#change-password-btn').prop('disabled', false);
         }
-    });
+      });
+    }
   });
 </script>
 @endsection
