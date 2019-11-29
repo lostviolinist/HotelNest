@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
-
+                                message.setText("Server Error.");
                         }
                     }) {
                         @Override
