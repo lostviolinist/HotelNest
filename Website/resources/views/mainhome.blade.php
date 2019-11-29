@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\DB;
                             <div class="flex-container">
                                 <div class="flex"></div>
                                 <?php 
-                                    $arr = json_decode(ImageController::getHotelImage(2)); 
+                                    $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur")); 
                                     for($i = 0 ;$i < count($arr); $i++){ ?>
                                         <div>
                                             <img src="<?php print_r($arr[$i]) ?>" alt="st.regis" >
