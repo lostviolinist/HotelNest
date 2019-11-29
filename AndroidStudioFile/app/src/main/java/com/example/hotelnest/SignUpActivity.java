@@ -64,6 +64,10 @@ public class SignUpActivity extends AppCompatActivity {
                     message.setText("Passwords not the same!");
                     message.setTextColor(Color.parseColor("#EE1111"));
                 }
+                else if(password.getText().toString().length()<8){
+                    message.setText("At least 8 characters for password!");
+                    message.setTextColor(Color.parseColor("#EE1111"));
+                }
                 else{
                     RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                     String url = "http://10.0.2.2:8000/registerUser";
@@ -74,11 +78,11 @@ public class SignUpActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     // Display the first 500 characters of the response string.
-                                    if(response.equals("false")){
-                                        message.setText("Register not successful!");
+                                    if(response.equals("true")){
+                                        message.setText("Register successful!");
                                         message.setTextColor(Color.parseColor("#EE1111"));
                                     }else{
-                                        message.setText("Register Successful!");
+                                        message.setText("Register not successful!");
                                         message.setTextColor(Color.parseColor("#EE1111"));
                                     }
                                 }

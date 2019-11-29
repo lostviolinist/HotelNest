@@ -80,24 +80,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
             <EditText
-                android:id="@+id/signUpPhone"
-                android:layout_width="260dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="5dp"
-                android:background="@layout/rounded_border_edittext"
-                android:ems="10"
-                android:fontFamily="@font/airbnb_cereal_light"
-                android:hint="Phone "
-                android:inputType="textPassword"
-                android:letterSpacing=".15"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.511"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-            <EditText
                 android:id="@+id/signUpEmailAddress"
                 android:layout_width="260dp"
                 android:layout_height="35dp"
@@ -243,6 +225,24 @@
                 android:textColor="#1C1C1C"
                 app:layout_constraintStart_toStartOf="@+id/signUpConfirmPassword"
                 app:layout_constraintTop_toBottomOf="@+id/signUpConfirmPassword" />
+
+            <EditText
+                android:id="@+id/signUpPhone"
+                android:layout_width="260dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="number"
+                android:background="@layout/rounded_border_edittext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:textAlignment="center"
+                android:fontFamily="@font/airbnb_cereal_light"
+                android:letterSpacing=".15"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
