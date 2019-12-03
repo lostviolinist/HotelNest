@@ -86,6 +86,12 @@ Route::post('hotel/update', 'HotelController@update')->name('hotel.update');
 
 Route::get('hotel/destroy/{id}', 'Hotelcontroller@destroy');
 
+Route::resource('testbooking', 'BookingController');
+
+Route::post('testbooking/update', 'BookingController@update')->name('testbooking.update');
+
+Route::get('testbooking/destroy/{id}', 'BookingController@destroy');
+
 // -----------------------------------------For mobile------------------------------------------------------
 // -----------------------------------------For mobile------------------------------------------------------
 // -----------------------------------------For mobile------------------------------------------------------
