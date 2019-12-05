@@ -111,6 +111,10 @@
   transition: none;
 }
 
+.dataTables_filter input { 
+  width: 250px !important;
+}
+
 /* -------------------- Bookings END -------------- */
 
 /* --------------------- Sign In ------------------- */

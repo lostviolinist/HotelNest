@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') - {{ config('app.name', 'Laravel') }} Management</title>
 
     <!-- Bootstrap 4.3.1 -->
     <link rel="stylesheet" href="{{ asset('bootstrap-4.3.1/css/bootstrap.min.css') }}">
@@ -20,21 +20,17 @@
     
     <!-- master.css -->
     <link rel="stylesheet" href="{{ asset('css/management/master.css') }}">
-    
-    <!-- Moment (For datetimepicker)-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" charset="utf-8"></script>
-    
-    <!-- Datetimepicker -->
-    <link rel="stylesheet" href="{{ asset('css/management/bootstrap-datetimepicker.min.css') }}">
-    <script src="{{ asset('js/management/bootstrap-datetimepicker.min.js') }}" charset="utf-8"></script>
+
+    @yield('head-extra')
 </head>
 <body>
     <header class="header">
       <nav class="navbar navbar-expand-md navbar-light container">
         @if (session('management_admin_id') != null)
             <!-- Brand -->
-            <a class="" href="{{ url('management/book') }}">
-                <img src="{{ asset('images/management/logo.png') }}" alt="logo" style="width: 64px;" />
+            <a class="title text-default h1 text-decoration-none" href="{{ url('management/book') }}">
+                HotelNest
+                <!-- <img src="{{ asset('images/management/logo.png') }}" alt="logo" style="width: 64px;" /> -->
             </a>
 
             <!-- Toggler/collapsibe Button -->
@@ -43,7 +39,7 @@
             </button>
 
             <!-- Navbar links -->
-            <div class="collapse navbar-collapse ml-5" id="collapsibleNavbar">
+            <div class="collapse navbar-collapse mx-3" id="collapsibleNavbar">
                 <ul class="navbar-nav">
                     <li class="nav-item nav-item-header">
                     <a class="nav-link text-default nav-link-header" href="{{ url('management/book') }}">Book</a>

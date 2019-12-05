@@ -4,6 +4,15 @@
 Profile
 @endsection
 
+@section('head-extra')
+<!-- Moment (For datetimepicker)-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" charset="utf-8"></script>
+
+<!-- Datetimepicker -->
+<link rel="stylesheet" href="{{ asset('css/management/bootstrap-datetimepicker.min.css') }}">
+<script src="{{ asset('js/management/bootstrap-datetimepicker.min.js') }}" charset="utf-8"></script>
+@endsection
+
 @section('content')
 <div class="">
   <div class="container px-0">

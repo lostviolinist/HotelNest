@@ -13,15 +13,15 @@ Change Password
     <form id="change-password-form">
       @csrf
       <div class="form-group">
-        <label for="current-password">Current Password</label>
+        <label for="current-password" class="font-weight-bold">Current Password</label>
         <input type="password" class="form-control" name="current-password" value="" placeholder="Current password" id="current-password">
       </div>
       <div class="form-group">
-        <label for="new-password">New Password</label>
+        <label for="new-password" class="font-weight-bold">New Password</label>
         <input type="password" class="form-control" name="new-password" value="" placeholder="New password" id="new-password">
       </div>
       <div class="form-group">
-        <label for="confirm-password">Confirm Password</label>
+        <label for="confirm-password" class="font-weight-bold">Confirm Password</label>
         <input type="password" class="form-control" name="confirm-password" value="" placeholder="Confirm password" id="confirm-password">
       </div>
       <!-- <input type="submit" class="btn btn-default btn-block font-weight-bold" value="Change Password" /> -->
