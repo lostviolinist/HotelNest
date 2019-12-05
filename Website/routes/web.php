@@ -3,6 +3,7 @@
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('home', 'HomeController@index')->name('home');
+
+Route::get('/choose',function(){
+    return view('choose');
+});
 
 // ------------------------------------- MANAGEMENT ----------------------------------- //
 
@@ -81,6 +86,12 @@ Route::post('hotel/update', 'HotelController@update')->name('hotel.update');
 
 Route::get('hotel/destroy/{id}', 'Hotelcontroller@destroy');
 
+Route::resource('testbooking', 'BookingController');
+
+Route::post('testbooking/update', 'BookingController@update')->name('testbooking.update');
+
+Route::get('testbooking/destroy/{id}', 'BookingController@destroy');
+
 // -----------------------------------------For mobile------------------------------------------------------
 // -----------------------------------------For mobile------------------------------------------------------
 // -----------------------------------------For mobile------------------------------------------------------
@@ -106,3 +117,14 @@ Route::post('registerUser',function(Request $request){
     }
     return "true";
 })->name('registerUser');
+
+Route::post('search',function(Request $request){
+    $data = $request->only('city','checkInDate','checkOutDate','adult','child','room');
+    try{
+        $hotels = SearchController::searchHotelList($data);
+    }catch(Exception $e){
+        echo $e;
+        return "false";
+    }
+    return $hotels;
+})->name('search');

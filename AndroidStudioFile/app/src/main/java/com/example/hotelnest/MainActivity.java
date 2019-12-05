@@ -63,17 +63,17 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     // Display the first 500 characters of the response string.
-                                        if(response.equals("false")){
-                                            message.setText("The email or password is wrong!");
-                                        }else{
+                                        if(response.equals(password_string)){
                                             message.setText("Login Successful!");
+                                        }else{
+                                            message.setText("The email or password is wrong!");
                                         }
                                 }
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
-
+                                message.setText("Server Error.");
                         }
                     }) {
                         @Override

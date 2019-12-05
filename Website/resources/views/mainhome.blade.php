@@ -1,3 +1,8 @@
+<?php
+use App\Http\Controllers\ImageController;
+use Illuminate\Support\Facades\DB;
+
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,21 +30,15 @@
                         <p>Kuala Lumpur</p>
                             <div class="flex-container">
                                 <div class="flex"></div>
-                                <div>
-                                    <img src="57776335.png" alt="st.regis" >
-                                    <p>The St.Regis</p>
-                                    <p>RM719/night</p>
-                                </div>
-                                <div>
-                                    <img src="112963088.png" alt="st.regis" >
-                                    <p>Shangri-La</p>
-                                    <p>RM719/night</p>
-                                </div>
-                                <div>
-                                    <img src="205914774.png" alt="st.regis">
-                                    <p>Four Season Hotel</p>
-                                    <p>RM719/night</p>
-                                </div> 
+                                <?php 
+                                    $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur")); 
+                                    for($i = 0 ;$i < count($arr); $i++){ ?>
+                                        <div>
+                                            <img src="<?php print_r($arr[$i]) ?>" alt="st.regis" >
+                                            <p>The St.Regis</p>
+                                            <p>RM719/night</p>
+                                        </div>
+                                    <?php } ?>
                             </div>
                         </div>
                     </div>

@@ -10,13 +10,14 @@
     <TextView
         android:id="@+id/textView4"
         android:layout_width="249dp"
-        android:layout_height="73dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="@font/airbnb_cereal_bold"
         android:text="@string/hotelnest"
+        android:textAlignment="center"
         android:textColor="#3C3838"
         android:textColorLink="#3C3838"
-        android:textSize="50sp"
+        android:textSize="45sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +26,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="307dp"
-        android:layout_height="480dp"
+        android:layout_width="301dp"
+        android:layout_height="516dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -135,7 +136,7 @@
                 android:id="@+id/signUpButton"
                 android:layout_width="200dp"
                 android:layout_height="35dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:background="@layout/rounded_border_button"
                 android:fontFamily="@font/airbnb_cereal_medium"
                 android:letterSpacing=".20"
@@ -143,16 +144,16 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signUpConfirmPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/signUpPhone" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/airbnb_cereal_bold"
                 android:letterSpacing="0.2"
                 android:text="FIRST NAME"
@@ -165,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:fontFamily="@font/airbnb_cereal_bold"
                 android:letterSpacing="0.2"
                 android:text="LAST NAME"
@@ -178,7 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:fontFamily="@font/airbnb_cereal_bold"
                 android:letterSpacing="0.2"
                 android:text="EMAIL"
@@ -191,7 +192,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:fontFamily="@font/airbnb_cereal_bold"
                 android:letterSpacing="0.2"
                 android:text="PASSWORD"
@@ -204,13 +205,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:fontFamily="@font/airbnb_cereal_bold"
                 android:letterSpacing="0.2"
                 android:text="CONFIRM PASSWORD"
                 android:textColor="#1C1C1C"
                 app:layout_constraintStart_toStartOf="@+id/signUpConfirmPassword"
                 app:layout_constraintTop_toBottomOf="@+id/signUpPassword" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/airbnb_cereal_bold"
+                android:letterSpacing="0.2"
+                android:text="PHONE "
+                android:textColor="#1C1C1C"
+                app:layout_constraintStart_toStartOf="@+id/signUpConfirmPassword"
+                app:layout_constraintTop_toBottomOf="@+id/signUpConfirmPassword" />
+
+            <EditText
+                android:id="@+id/signUpPhone"
+                android:layout_width="260dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="number"
+                android:background="@layout/rounded_border_edittext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:textAlignment="center"
+                android:fontFamily="@font/airbnb_cereal_light"
+                android:letterSpacing=".15"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -226,7 +258,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="22dp"

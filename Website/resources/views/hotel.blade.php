@@ -1,3 +1,15 @@
+<?php
+use App\Http\Controllers\ImageController;
+
+?>
+
+<?php
+
+$arr = ImageController::getHotelImage(2);
+
+print_r($arr);
+?>
+
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,6 +50,8 @@
 <br />
 <br />
 </div>
+
+
 </body>
 </html>
 
