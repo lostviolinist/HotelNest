@@ -24,18 +24,27 @@ use App\Http\Controllers\SearchController;
 
 // print_r($home);
 
-// $hotels = SearchController::searchHotelList();
-
-// print_r($hotels);
-
-$hotels = SearchController::getHotelDetails(1);
-
-print_r($hotels);
+// $hotelss = SearchController::searchHotelList(" "," "," ", 3, 3 , 2);
+// $list = json_decode($hotelss);
 
 
-$rooms = SearchController::getRoomDetails(1);
+// for($i=0; $i < count($list); $i++){
+//     $id = $list[$i] -> hotelId;
+//     
+// }
 
-print_r($rooms);
+$hotels = SearchController::getHotelDetails( );    
+    print_r($hotels);
+
+
+
+// $rooms = SearchController::getRoomDetails(1);
+
+// print_r($rooms);
+
+// $arr = SearchController::calculate(9,5);
+
+// print_r($arr);
 
 ?>
 
