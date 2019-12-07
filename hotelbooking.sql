@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2019 at 07:22 AM
+-- Generation Time: Dec 07, 2019 at 04:41 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -69,12 +69,43 @@ CREATE TABLE `bookings` (
   `remark` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `adult` int(11) NOT NULL,
   `child` int(11) NOT NULL,
+  `roomNo` int(10) NOT NULL,
   `totalPrice` double NOT NULL,
-  `roomId` int(11) NOT NULL,
   `hotelId` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`bookingNum`, `fullName`, `email`, `phone`, `icNum`, `checkInDate`, `checkOutDate`, `remark`, `adult`, `child`, `roomNo`, `totalPrice`, `hotelId`, `created_at`, `updated_at`) VALUES
+(1, 'Heng Jun Xi', 'a@a.com', '012', '12', '2019-12-06', '2019-12-08', 's', 2, 3, 3, 123, 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booking_room`
+--
+
+CREATE TABLE `booking_room` (
+  `no` bigint(20) NOT NULL,
+  `bookingNum` bigint(20) NOT NULL,
+  `hotelId` bigint(20) NOT NULL,
+  `roomId` bigint(20) NOT NULL,
+  `addBed` tinyint(1) NOT NULL,
+  `roomNum` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `booking_room`
+--
+
+INSERT INTO `booking_room` (`no`, `bookingNum`, `hotelId`, `roomId`, `addBed`, `roomNum`) VALUES
+(1, 1, 1, 1, 0, 'A101'),
+(2, 1, 1, 1, 0, 'A102'),
+(3, 1, 1, 3, 0, 'B103');
 
 -- --------------------------------------------------------
 
@@ -711,6 +742,12 @@ ALTER TABLE `bookings`
   ADD PRIMARY KEY (`bookingNum`);
 
 --
+-- Indexes for table `booking_room`
+--
+ALTER TABLE `booking_room`
+  ADD PRIMARY KEY (`no`,`bookingNum`,`hotelId`,`roomId`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -792,7 +829,13 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `bookingNum` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `bookingNum` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `booking_room`
+--
+ALTER TABLE `booking_room`
+  MODIFY `no` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -804,7 +847,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `hotels`
 --
 ALTER TABLE `hotels`
-  MODIFY `hotelId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `hotelId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `migrations`
