@@ -26,5 +26,6 @@ class VerifyCsrfToken extends Middleware
         'http://*.*.*.*:8000/roomAvailable',
         'http://*.*.*.*:8000/hotelInfo',
         'http://*.*.*.*:8000/createBooking',
+        'http://*.*.*.*:8000/confirmBookingDetail',
     ];
 }

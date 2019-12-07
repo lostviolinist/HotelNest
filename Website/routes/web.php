@@ -171,3 +171,16 @@ Route::post('createBooking',function(Request $request){
     }
     return "true";
 })->name('createBooking');
+
+Route::post('confirmBookingDetails',function(Request $request){
+    $data = $request->only('bookingNum');
+
+    try{
+        $details = InsertBookingController::getBookingDetail($data);
+    }catch(Exception $e){
+        echo $e;
+        return "false";
+    }
+    return $details;
+
+})->name('confirmBookingDetail');

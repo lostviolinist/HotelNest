@@ -38,4 +38,24 @@ class InsertBookingController extends Controller
         return "successful!!!";
     }
 
+    public static function getBookingDetail($bookingNum)
+    {
+        
+        $info = DB::select('select * from bookings where bookingNum = ?',[$bookingNum]);
+
+        $roomInfo = DB::select('select booking_room.roomId, type, COUNT(*) as number from booking_room INNER JOIN room_infos
+        Where (booking_room.hotelId = room_infos.hotelId)
+        AND (booking_room.roomId = room_infos.roomId)
+        AND bookingNum = ? GROUP BY booking_room.roomId, type;',[$bookingNum]);
+
+        array_push($info, $roomInfo);
+
+        $array = json_decode(json_encode($info), True);
+
+        return json_encode($array);
+        // print_r("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
+        // print_r($array[0]["bookingNum"]);
+
+    }
+
 }
