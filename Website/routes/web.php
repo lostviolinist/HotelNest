@@ -4,6 +4,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SelectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -132,3 +133,25 @@ Route::post('search',function(Request $request){
     }
     return $hotels;
 })->name('search');
+
+Route::post('hotelInfo',function(Request $request){
+    $data = $request->only('hotelId');
+    try{
+        $hotelInfo = SelectController::getHotelInfo($data);
+    }catch(Exception $e){
+        echo $e;
+        return "false";
+    }
+    return $hotelInfo;
+})->name('hotelInfo');
+
+Route::post('roomAvailable',function(Request $request){
+    $data = $request->only('hotelId','checkInDate','checkOutDate');
+    try{
+        $roomInfo = SelectController::getRoomInfo($data);
+    }catch(Exception $e){
+        echo $e;
+        return "false";
+    }
+    return $roomInfo;
+})->name('roomAvailable');

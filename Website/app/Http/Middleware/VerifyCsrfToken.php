@@ -23,5 +23,7 @@ class VerifyCsrfToken extends Middleware
         'http://*.*.*.*:8000/loginUser',
         'http://*.*.*.*:8000/registerUser',
         'http://*.*.*.*:8000/search',
+        'http://*.*.*.*:8000/roomAvailable',
+        'http://*.*.*.*:8000/hotelInfo',
     ];
 }
