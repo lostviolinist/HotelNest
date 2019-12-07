@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2019 at 04:41 AM
+-- Generation Time: Dec 07, 2019 at 08:13 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `emial` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `hotelName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `emial`, `password`, `hotelName`, `created_at`, `updated_at`) VALUES
+INSERT INTO `admins` (`id`, `email`, `password`, `hotelName`, `created_at`, `updated_at`) VALUES
 (1, 'SWE1704010@xmu.edu.my', 'swe1704010', 'XMUM hotel', NULL, NULL),
 (2, 'SWE1704023@xmu.edu.my', 'swe1704023', 'Smart Boutique Hotel', NULL, NULL),
 (3, 'SWE1704587@xmu.edu.my', 'swe1704587', 'Sahabat Guesthouse', NULL, NULL),
@@ -81,7 +81,9 @@ CREATE TABLE `bookings` (
 --
 
 INSERT INTO `bookings` (`bookingNum`, `fullName`, `email`, `phone`, `icNum`, `checkInDate`, `checkOutDate`, `remark`, `adult`, `child`, `roomNo`, `totalPrice`, `hotelId`, `created_at`, `updated_at`) VALUES
-(1, 'Heng Jun Xi', 'a@a.com', '012', '12', '2019-12-06', '2019-12-08', 's', 2, 3, 3, 123, 1, NULL, NULL);
+(1, 'Heng Jun Xi', 'a@a.com', '012', '12', '2019-12-06', '2019-12-08', 's', 2, 3, 3, 123, 1, NULL, NULL),
+(2, 'Loh Shu Yi', 'loh@loh.com', '0124893823', '980330085972', '2019-12-08', '2019-12-11', 'Please prepare welcome drink.', 2, 2, 2, 123.5, 2, '2019-12-06 02:00:00', NULL),
+(3, 'Joyce', 'joy@joy.com', '016', '981018111112', '2019-12-07', '2019-12-10', ' ', 4, 3, 3, 320, 3, '2019-12-07 10:12:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -105,7 +107,12 @@ CREATE TABLE `booking_room` (
 INSERT INTO `booking_room` (`no`, `bookingNum`, `hotelId`, `roomId`, `addBed`, `roomNum`) VALUES
 (1, 1, 1, 1, 0, 'A101'),
 (2, 1, 1, 1, 0, 'A102'),
-(3, 1, 1, 3, 0, 'B103');
+(3, 1, 1, 3, 0, 'B103'),
+(4, 2, 2, 2, 0, '1-07'),
+(5, 2, 2, 2, 0, '1-08'),
+(6, 3, 3, 2, 0, 'pending'),
+(7, 3, 3, 2, 0, 'pending'),
+(8, 3, 3, 3, 0, 'pending');
 
 -- --------------------------------------------------------
 
@@ -733,7 +740,7 @@ CREATE TABLE `user_pictures` (
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `admins_emial_unique` (`emial`);
+  ADD UNIQUE KEY `admins_emial_unique` (`email`);
 
 --
 -- Indexes for table `bookings`
@@ -829,13 +836,13 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `bookingNum` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `bookingNum` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `booking_room`
 --
 ALTER TABLE `booking_room`
-  MODIFY `no` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `no` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
