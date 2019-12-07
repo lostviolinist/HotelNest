@@ -1,7 +1,8 @@
 <?php
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\SearchController;
-
+use App\Http\Controllers\FilterController;
+use App\Http\Controllers\SelectController;
 ?>
 
 <?php
@@ -33,10 +34,14 @@ use App\Http\Controllers\SearchController;
 //     
 // }
 
-$hotels = SearchController::getHotelDetails( );    
-    print_r($hotels);
+// $hotels = SearchController::getHotelDetails( );    
+//     print_r($hotels);
 
+// $filter = FilterController::getFilterItem();
+// print_r(json_decode($filter));
 
+$info = Selectcontroller::getHotelInfo(2);
+print_r($info);
 
 // $rooms = SearchController::getRoomDetails(1);
 
