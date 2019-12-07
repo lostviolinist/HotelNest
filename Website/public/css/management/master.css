@@ -32,6 +32,15 @@
   background-color: var(--default-color-light);
   border-color: var(--default-color-light);
 }
+
+[data-toggle="collapse"] .fa:before {   
+  content: "\f139";
+}
+
+[data-toggle="collapse"].collapsed .fa:before {
+  content: "\f13a";
+}
+
 /* -------------------- Default END -------- */
 
 /* ------------------- Header--------------- */
@@ -111,7 +120,7 @@
   transition: none;
 }
 
-.dataTables_filter input { 
+#bookings-table_filter.dataTables_filter input { 
   width: 250px !important;
 }
 

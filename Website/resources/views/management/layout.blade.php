@@ -48,7 +48,7 @@
                     <a class="nav-link text-default nav-link-header" href="{{ url('management/bookings') }}">Bookings</a>
                     </li>
                     <li class="nav-item nav-item-header">
-                    <a class="nav-link text-default nav-link-header" href="#">Rooms</a>
+                    <a class="nav-link text-default nav-link-header" href="{{ url('management/rooms') }}">Rooms</a>
                     </li>
                 </ul>
             </div>

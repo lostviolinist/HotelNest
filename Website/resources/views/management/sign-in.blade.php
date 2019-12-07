@@ -21,12 +21,14 @@ Sign In
         <input type="password" class="form-control" name="password" value="" placeholder="Password" id="sign-in-password">
       </div>
       <div class="form-group">
-        <a href="#">Forgot password?</a>
-      </div>
-      <div class="form-group">
         <span id='sign-in-validator'></span>
       </div>
-      <button id="sign-in-btn" class="btn btn-default btn-block font-weight-bold">Sign In</button>
+      <div class="form-group">
+        <button id="sign-in-btn" class="btn btn-default btn-block font-weight-bold">Sign In</button>
+      </div>
+      <div class="text-center">
+        <a href="#">Forgot password?</a>
+      </div>
     </form>
   </div>
 </div>

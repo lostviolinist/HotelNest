@@ -38,6 +38,10 @@ Route::get('management/bookings', function() {
     return view('management/bookings');
 });
 
+Route::get('management/rooms', function() {
+    return view('management/rooms');
+});
+
 Route::get('management/profile', function() {
     try {
         $results = DB::select('SELECT * FROM hotels WHERE name=?;', 
