@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SelectController;
+use App\Http\Controllers\InsertBookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -155,3 +156,18 @@ Route::post('roomAvailable',function(Request $request){
     }
     return $roomInfo;
 })->name('roomAvailable');
+
+Route::post('createBooking',function(Request $request){
+    $data = $request->only('fullName', 'email', 'phone', 'icNum', 'checkInDate', 'checkOutDate', 
+    'remark', 'adult', 'child', 'roomNum', 'totalPrice', 'hotelId', 'roomId');
+    
+    // roomId must be an array....
+    
+    try{
+        InsertBookingController::newBooking($data);
+    }catch(Exception $e){
+        echo $e;
+        return "false";
+    }
+    return "true";
+})->name('createBooking');
