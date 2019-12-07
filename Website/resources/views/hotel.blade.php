@@ -1,13 +1,51 @@
 <?php
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\SearchController;
 
 ?>
 
 <?php
 
-$arr = ImageController::getHotelImage(2);
+// $arr = ImageController::getHotelImage(2);
 
-print_r($arr);
+// print_r($arr);
+
+// $room = ImageController::getRoomImage(2,2);
+
+// print_r($room);
+// echo "-----------------------------------------------------------------------\n";
+// $all = ImageController::getImage(1);
+
+// print_r($all);
+
+// echo "------------ HOME -----------------------------------------------------------\n";
+
+// $home = ImageController::getHomeImage("Sepang");
+
+// print_r($home);
+
+// $hotelss = SearchController::searchHotelList(" "," "," ", 3, 3 , 2);
+// $list = json_decode($hotelss);
+
+
+// for($i=0; $i < count($list); $i++){
+//     $id = $list[$i] -> hotelId;
+//     
+// }
+
+$hotels = SearchController::getHotelDetails( );    
+    print_r($hotels);
+
+
+
+// $rooms = SearchController::getRoomDetails(1);
+
+// print_r($rooms);
+
+// $arr = SearchController::calculate(9,5);
+
+// print_r($arr);
+
 ?>
 
 <html>
@@ -51,6 +89,17 @@ print_r($arr);
 <br />
 </div>
 
+<form method="POST" action="{{ route('search') }}" class="form1">
+<input id="firstName" type="text" class="firstname" name="city" align="center" placeholder="First Name" value="{{ old('firstName') }}" required autocomplete="firstName" autofocus>
+<input id="lastName" type="date" class="lastname" align="center" placeholder="Last Name" name="checkInDate" value="{{ old('lastName') }}" required autocomplete="lastName" autofocus>
+<input id="email" type="date"  name="checkOutDate" class="un " align="center" placeholder="Fill in your email" value="{{ old('email') }}" required autocomplete="email">
+<input id="password" type="text"  name="adult" class="pass" align="center" placeholder="Choose a strong password" required autocomplete="new-password">     
+<input id="password-confirm" type="text" name="child" class="pass" align="center" placeholder="Confirm your password" required autocomplete="new-password">
+<input id="phone" type="text" name="room" class="lastname" align="center" placeholder="Phone number" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+<button type="submit" align="center" class="submit">
+{{ __('Register') }}
+</button>
+</form>
 
 </body>
 </html>
