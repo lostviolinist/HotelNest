@@ -10,10 +10,29 @@ class AdminRoomController extends Controller
     public static function getRoomType($hotelId){
         $roomType = DB::select('select * from room_infos where hotelId = ?',[$hotelId]);
 
-        return json_encode($roomType);
+        $res = [];
+        foreach($roomType as $type){
+            $arr = [
+                $type->type,
+                ($type->addBed > 0) ? ($type->pax . " + " . $type->addBed) : ($type->pax),
+                $type->description,
+                '<button class="btn btn-outline-primary" onclick="editRoomType(this, '.$type->roomId.')">
+                    <i class="fas fa-edit"></i>
+                </button>'
+            ];
+            array_push($res, $arr);
+        }
+        $final = json_decode("{}");
+        $final->data = $res;
+        return json_encode($final);
 
         // [{"hotelId":1,"roomId":1,"type":"Twin Sharing Room D","price":60,"pax":2,"description":"This double room features a electric kettle, air conditioning and satellite TV.","addBed":1,"created_at":null,"updated_at":null},
         // {"hotelId":1,"roomId":2,"type":"Twin Sharing Room LY","price":200,"pax":2,"description":"Good room","addBed":0,"created_at":null,"updated_at":null},
         // {"hotelId":1,"roomId":3,"type":"Standard Single Room","price":150,"pax":1,"description":"Good room for single","addBed":0,"created_at":null,"updated_at":null}]
+    }
+
+    public static function updateRoomType(Request $request, $hotelId){
+        DB::update('UPDATE room_infos SET type=?, description=? WHERE hotelId=? AND roomId=?',
+            [$request->typeName, $request->description, $hotelId, $request->roomId]);
     }
 }

@@ -94,6 +94,8 @@ Route::post('hotel/update', 'HotelController@update')->name('hotel.update');
 Route::get('hotel/destroy/{id}', 'Hotelcontroller@destroy');
 
 Route::get('management/hotel/{hotelId}/bookings', 'BookingController@index')->name('management/hotel/bookings');
+Route::get('management/hotel/{hotelId}/roomTypes', 'AdminRoomController@getRoomType')->name('management/hotel/roomTypes');
+Route::post('management/hotel/{hotelId}/updateRoomTypes', 'AdminRoomController@updateRoomType')->name('management/hotel/updateRoomType');
 
 Route::resource('testbooking', 'BookingController');
 

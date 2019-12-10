@@ -29,6 +29,7 @@ class AdminController extends Controller
                 if (count($results) > 0) {
                     $request->session()->flush();
                     session(['management_admin_id' => $results[0]->id]);
+                    session(['management_hotel_id' => $results[0]->hotelId]);
                     session(['management_hotel_name' => $results[0]->hotelName]);
                     $status = true;
                     $redirect = url('management/book');

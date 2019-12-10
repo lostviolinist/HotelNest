@@ -30,7 +30,7 @@ class BookingController extends Controller
             AND booking_room.hotelId = ?
             GROUP BY booking_room.bookingNum, booking_room.roomId, type) T
             WHERE hotelId = ? AND (T.bookingNum = bookings.bookingNum);',[$hotelId, $hotelId]);
-
+            
             $arr = [];
             foreach ($list as $data){
                 if ( ! array_key_exists($data->bookingNum, $arr) ) {
