@@ -16,7 +16,7 @@ class InsertBookingController extends Controller
        $no = count($current2) + 1;
 
        $t=time();
-       $bookingDate = date("Y-m-d H:i:s",$t);
+       $bookingDate = date("Y-m-d",$t);
     //    print_r($bookingNum); 
         
         $query = 'insert into bookings (bookingNum, fullName, email, phone, icNum, checkInDate, 
@@ -48,11 +48,17 @@ class InsertBookingController extends Controller
         AND (booking_room.roomId = room_infos.roomId)
         AND bookingNum = ? GROUP BY booking_room.roomId, type;',[$bookingNum]);
 
-        array_push($info, $roomInfo);
+        $arr = [];
+        
+        for($i = 0; $i<count($roomInfo); $i++){
+            array_push($arr, $roomInfo[$i]);
+        }
+        $info[0]->rooms = $arr;
+        // array_push($info, $roomInfo);
 
-        $array = json_decode(json_encode($info), True);
+        //$array = json_decode(json_encode($info), True);
 
-        return json_encode($array);
+        return json_encode($info[0]);
         // print_r("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
         // print_r($array[0]["bookingNum"]);
 
