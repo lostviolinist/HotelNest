@@ -16,20 +16,33 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($hotelId)
     {
         // if($request->ajax())
         // {
             // $list = booking::latest()->get();
-            $list = DB::select('select * from bookings where hotelId = ?',[1]);
-
-            $roomInfo = DB::select('select booking_room.bookingNum, booking_room.roomId, type, COUNT(*) as number from booking_room INNER JOIN room_infos
+            $arr = [ ];
+            $list = DB::select('select * FROM bookings
+            INNER JOIN
+            (select booking_room.bookingNum, booking_room.roomId, type, COUNT(*) as number from booking_room 
+            INNER JOIN room_infos
             Where (booking_room.hotelId = room_infos.hotelId)
             AND (booking_room.roomId = room_infos.roomId)
             AND booking_room.hotelId = ?
-            GROUP BY booking_room.bookingNum, booking_room.roomId, type;',[1]);
+            GROUP BY booking_room.bookingNum, booking_room.roomId, type) T
+            WHERE hotelId = ? AND (T.bookingNum = bookings.bookingNum);',[$hotelId, $hotelId]);
 
-            array_push($info, $roomInfo);
+            // for($i = 0; $i<count($list); $i++){
+            //     $arr = [];
+            //     foreach($roomInfo as $room){
+            //         array_push($)
+            //     }
+            //     $list[$i]->rooms = $arr;
+            // }
+            foreach ($list as $data){
+                array_push($arr,$data);
+            }
+            return json_encode($arr);
 
             $res = [];
             
