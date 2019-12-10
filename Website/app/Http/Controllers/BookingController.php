@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DataTables;
 use Validator;
 use App\booking;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -19,7 +20,17 @@ class BookingController extends Controller
     {
         // if($request->ajax())
         // {
-            $list = booking::latest()->get();
+            // $list = booking::latest()->get();
+            $list = DB::select('select * from bookings where hotelId = ?',[1]);
+
+            $roomInfo = DB::select('select booking_room.bookingNum, booking_room.roomId, type, COUNT(*) as number from booking_room INNER JOIN room_infos
+            Where (booking_room.hotelId = room_infos.hotelId)
+            AND (booking_room.roomId = room_infos.roomId)
+            AND booking_room.hotelId = ?
+            GROUP BY booking_room.bookingNum, booking_room.roomId, type;',[1]);
+
+            array_push($info, $roomInfo);
+
             $res = [];
             
             foreach($list as $data) {
