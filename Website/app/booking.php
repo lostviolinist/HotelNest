@@ -8,6 +8,6 @@ class booking extends Model
 {
     protected $fillable = [
         'fullName','email','phone', 'icNum','checkInDate','checkOutDate','remark','adult','child',
-        'totalPrice'
+        'roomNo','totalPrice'
        ];
 }

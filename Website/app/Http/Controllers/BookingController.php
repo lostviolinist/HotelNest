@@ -59,7 +59,9 @@ class BookingController extends Controller
             'remark'=> 'required',
             'adult'=> 'required',
             'child'=> 'required',
-            'totalPrice' => 'required',           
+            'roomNo' => 'required',
+            'totalPrice' => 'required',
+                       
         );
         $error = Validator::make($request->all(), $rules);
 
@@ -78,6 +80,7 @@ class BookingController extends Controller
             'remark'=> $request->remark,
             'adult'=> $request->adult,
             'child'=> $request->child,
+            'roomNo' => $request->child,
             'totalPrice'=> $request->totalPrice,
         );
         booking::create($form_data);
@@ -130,6 +133,7 @@ class BookingController extends Controller
             'remark'=> 'required',
             'adult'=> 'required',
             'child'=> 'required',  
+            'roomNo' => 'required',
             'totalPrice'=> 'required',      
         );
         $error = Validator::make($request->all(), $rules);
@@ -149,6 +153,7 @@ class BookingController extends Controller
             'remark'=> $request->remark,
             'adult'=> $request->adult,
             'child'=> $request->child,
+            'roomNo' => $request->roomNo,
             'totalPrice'=> $request->totalPrice,
         );
 
