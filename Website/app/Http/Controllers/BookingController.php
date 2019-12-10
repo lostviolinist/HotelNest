@@ -21,7 +21,6 @@ class BookingController extends Controller
         // if($request->ajax())
         // {
             // $list = booking::latest()->get();
-            $arr = [ ];
             $list = DB::select('select * FROM bookings
             INNER JOIN
             (select booking_room.bookingNum, booking_room.roomId, type, COUNT(*) as number from booking_room 
@@ -32,38 +31,32 @@ class BookingController extends Controller
             GROUP BY booking_room.bookingNum, booking_room.roomId, type) T
             WHERE hotelId = ? AND (T.bookingNum = bookings.bookingNum);',[$hotelId, $hotelId]);
 
-            // for($i = 0; $i<count($list); $i++){
-            //     $arr = [];
-            //     foreach($roomInfo as $room){
-            //         array_push($)
-            //     }
-            //     $list[$i]->rooms = $arr;
-            // }
+            $arr = [];
             foreach ($list as $data){
-                array_push($arr,$data);
+                if ( ! array_key_exists($data->bookingNum, $arr) ) {
+                    $arr[$data->bookingNum] = [
+                        $data->bookingNum, // no,
+                        date( 'd M Y', strtotime( $data->created_at )), // booking date
+                        date( 'd M Y', strtotime( $data->checkInDate )), // checkin
+                        date( 'd M Y', strtotime( $data->checkOutDate )), // checkout
+                        $data->fullName, // guest name
+                        $data->email, // guest email
+                        $data->phone, // guest mobile
+                        $data->adult . ' Adult', // adult
+                        ($data->child > 0) ? ($data->child . ' Child') : '', // child
+                        $data->number . 'x ' . $data->type . '<br />', // rooms
+                    ];
+                } else {
+                    $arr[$data->bookingNum][9] .= $data->number . 'x ' . $data->type . '<br />';
+                }
             }
-            return json_encode($arr);
 
             $res = [];
-            
-            foreach($list as $data) {
-                $arr = [
-                    $data->bookingNum, // no,
-                    date( 'd M Y', strtotime( $data->created_at )), // booking date
-                    date( 'd M Y', strtotime( $data->checkInDate )), // checkin
-                    date( 'd M Y', strtotime( $data->checkOutDate )), // checkout
-                    $data->fullName, // guest name
-                    $data->email, // guest email
-                    $data->phone, // guest mobile
-                    $data->adult . ' Adult', // adult
-                    ($data->child > 0) ? ($data->child . ' Child') : '', // child
-                    $data->roomNo, // room
-                ];
-                array_push($res, $arr);
+            foreach ($arr as $data) {
+                array_push($res, $data);
             }
             $final = json_decode("{}");
             $final->data = $res;
-
             return json_encode($final);
             
             // return DataTables::of($data)

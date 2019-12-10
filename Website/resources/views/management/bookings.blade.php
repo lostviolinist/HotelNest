@@ -433,7 +433,7 @@ $(document).ready( function () {
     language: {
       searchPlaceholder: "Booking # / Room # / Guest Name"
     },
-    ajax: '{{ route("management/hotel/bookings") }}',
+    ajax: '{{ route("management/hotel/bookings", 1) }}',
     columns: [
       null, 
       { searchable: false }, 
