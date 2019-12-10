@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2019 at 08:13 PM
+-- Generation Time: Dec 10, 2019 at 09:52 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -32,6 +32,7 @@ CREATE TABLE `admins` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hotelId` int(10) NOT NULL,
   `hotelName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -41,16 +42,16 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `email`, `password`, `hotelName`, `created_at`, `updated_at`) VALUES
-(1, 'SWE1704010@xmu.edu.my', 'swe1704010', 'XMUM hotel', NULL, NULL),
-(2, 'SWE1704023@xmu.edu.my', 'swe1704023', 'Smart Boutique Hotel', NULL, NULL),
-(3, 'SWE1704587@xmu.edu.my', 'swe1704587', 'Sahabat Guesthouse', NULL, NULL),
-(4, 'SWE1704211@xmu.edu.my', 'swe1704211', 'Cititel Mid Valley', NULL, NULL),
-(5, 'SWE1704022xmu.edu.my', 'swe1704022', 'Hotel Sentral Seaview @Beachfront', NULL, NULL),
-(6, 'SWE1704033@xmu.edu.my', 'swe1704033', 'OYO 11339 Istay Hotel', NULL, NULL),
-(7, 'SWE1704004@xmu.edu.my', 'swe1704004', 'Wassup Youth Hostel', NULL, NULL),
-(8, 'SWE1704205@xmu.edu.my', 'swe1704205', 'Dragonair Hotel', NULL, NULL),
-(9, 'SWE1704144@xmu.edu.my', 'swe1704144', 'CityView Kotawarisan', NULL, NULL);
+INSERT INTO `admins` (`id`, `email`, `password`, `hotelId`, `hotelName`, `created_at`, `updated_at`) VALUES
+(1, 'SWE1704010@xmu.edu.my', 'swe1704010', 1, 'XMUM hotel', NULL, NULL),
+(2, 'SWE1704023@xmu.edu.my', 'swe1704023', 2, 'Smart Boutique Hotel', NULL, NULL),
+(3, 'SWE1704587@xmu.edu.my', 'swe1704587', 3, 'Sahabat Guesthouse', NULL, NULL),
+(4, 'SWE1704211@xmu.edu.my', 'swe1704211', 4, 'Cititel Mid Valley', NULL, NULL),
+(5, 'SWE1704022xmu.edu.my', 'swe1704022', 5, 'Hotel Sentral Seaview @Beachfront', NULL, NULL),
+(6, 'SWE1704033@xmu.edu.my', 'swe1704033', 6, 'OYO 11339 Istay Hotel', NULL, NULL),
+(7, 'SWE1704004@xmu.edu.my', 'swe1704004', 7, 'Wassup Youth Hostel', NULL, NULL),
+(8, 'SWE1704205@xmu.edu.my', 'swe1704205', 50, 'Dragonair Hotel', NULL, NULL),
+(9, 'SWE1704144@xmu.edu.my', 'swe1704144', 52, 'CityView Kotawarisan', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -81,9 +82,10 @@ CREATE TABLE `bookings` (
 --
 
 INSERT INTO `bookings` (`bookingNum`, `fullName`, `email`, `phone`, `icNum`, `checkInDate`, `checkOutDate`, `remark`, `adult`, `child`, `roomNo`, `totalPrice`, `hotelId`, `created_at`, `updated_at`) VALUES
-(1, 'Heng Jun Xi', 'a@a.com', '012', '12', '2019-12-06', '2019-12-08', 's', 2, 3, 3, 123, 1, NULL, NULL),
-(2, 'Loh Shu Yi', 'loh@loh.com', '0124893823', '980330085972', '2019-12-08', '2019-12-11', 'Please prepare welcome drink.', 2, 2, 2, 123.5, 2, '2019-12-06 02:00:00', NULL),
-(3, 'Joyce', 'joy@joy.com', '016', '981018111112', '2019-12-07', '2019-12-10', ' ', 4, 3, 3, 320, 3, '2019-12-07 10:12:54', NULL);
+(1, 'Heng Jun Xi', 'a@a.com', '012', '12', '2019-12-06', '2019-12-08', 's', 2, 3, 3, 123, 1, '2019-12-03 16:00:00', NULL),
+(2, 'Loh Shu Yi', 'loh@loh.com', '0124893823', '980330085972', '2019-12-08', '2019-12-11', 'Please prepare welcome drink.', 2, 2, 2, 123.5, 2, '2019-12-05 16:00:00', NULL),
+(3, 'Joyce', 'joy@joy.com', '016', '981018111112', '2019-12-07', '2019-12-10', ' ', 4, 3, 3, 320, 3, '2019-12-06 16:00:00', NULL),
+(4, 'Milo Heng', 'milo@milo.com', '456132', '459832321', '2019-12-11', '2019-12-13', 'please ', 2, 0, 1, 200, 1, '2019-12-09 16:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -112,7 +114,8 @@ INSERT INTO `booking_room` (`no`, `bookingNum`, `hotelId`, `roomId`, `addBed`, `
 (5, 2, 2, 2, 0, '1-08'),
 (6, 3, 3, 2, 0, 'pending'),
 (7, 3, 3, 2, 0, 'pending'),
-(8, 3, 3, 3, 0, 'pending');
+(8, 3, 3, 3, 0, 'pending'),
+(9, 4, 1, 2, 0, 'B103');
 
 -- --------------------------------------------------------
 
@@ -842,7 +845,7 @@ ALTER TABLE `bookings`
 -- AUTO_INCREMENT for table `booking_room`
 --
 ALTER TABLE `booking_room`
-  MODIFY `no` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `no` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
