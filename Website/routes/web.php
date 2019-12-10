@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SelectController;
 use App\Http\Controllers\InsertBookingController;
+use App\Http\Controllers\BookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +92,8 @@ Route::resource('hotel', 'HotelController');
 Route::post('hotel/update', 'HotelController@update')->name('hotel.update');
 
 Route::get('hotel/destroy/{id}', 'Hotelcontroller@destroy');
+
+Route::get('management/hotel/bookings', 'BookingController@index')->name('management/hotel/bookings');
 
 Route::resource('testbooking', 'BookingController');
 

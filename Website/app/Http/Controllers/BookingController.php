@@ -6,6 +6,7 @@ use App\Hotel;
 use Illuminate\Http\Request;
 use DataTables;
 use Validator;
+use App\booking;
 
 class BookingController extends Controller
 {
@@ -16,19 +17,40 @@ class BookingController extends Controller
      */
     public function index()
     {
-        if($request->ajax())
-        {
-            $data = booking::latest()->get();
-            return DataTables::of($data)
-                    ->addColumn('action', function($data){
-                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
-                        $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Delete</button>';
-                        return $button;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
-        return view('testbooking');
+        // if($request->ajax())
+        // {
+            $list = booking::latest()->get();
+            $res = [];
+            foreach($list as $data) {
+                $arr = [
+                    $data->bookingNum, // no,
+                    $data->created_at, // booking date
+                    $data->checkInDate, // checkin
+                    $data->checkOutDate, // checkout
+                    $data->fullName, // guest name
+                    $data->email, // guest email
+                    $data->phone, // guest mobile
+                    $data->adult, // adult
+                    $data->child, // child
+                    $data->roomNo, // room
+                ];
+                array_push($res, $arr);
+            }
+            $final = json_decode("{}");
+            $final->data = $res;
+
+            return json_encode($final);
+            
+            // return DataTables::of($data)
+            //         ->addColumn('action', function($data){
+            //             $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
+            //             $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Delete</button>';
+            //             return $button;
+            //         })
+            //         ->rawColumns(['action'])
+            //         ->make(true);
+        // }
+        // return view('testbooking');
     }
 
     /**
