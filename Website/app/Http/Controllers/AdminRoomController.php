@@ -35,4 +35,20 @@ class AdminRoomController extends Controller
         DB::update('UPDATE room_infos SET type=?, description=? WHERE hotelId=? AND roomId=?',
             [$request->typeName, $request->description, $hotelId, $request->roomId]);
     }
+
+    public static function getAllRoom($hotelId){
+        $rooms = DB::select('select roomNum, type, available from rooms
+        inner join room_infos
+        where (rooms.roomId = room_infos.roomId)
+        and rooms.hotelId = ?;',[$hotelId]);
+
+        $final = json_decode("{}");
+        $final->data = $rooms;
+        return json_encode($final);
+    }
+
+    public static function updateRoomAvailability(Request $request, $hotelId, $roomNum){
+        DB::update('update rooms set available = ? where hotelId = ? AND roomNum = ?',
+            [$request->available, $hotelId, $roomNum]);
+    }
 }
