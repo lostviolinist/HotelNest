@@ -21,17 +21,18 @@ class BookingController extends Controller
         // {
             $list = booking::latest()->get();
             $res = [];
+            
             foreach($list as $data) {
                 $arr = [
                     $data->bookingNum, // no,
-                    $data->created_at, // booking date
-                    $data->checkInDate, // checkin
-                    $data->checkOutDate, // checkout
+                    date( 'd M Y', strtotime( $data->created_at )), // booking date
+                    date( 'd M Y', strtotime( $data->checkInDate )), // checkin
+                    date( 'd M Y', strtotime( $data->checkOutDate )), // checkout
                     $data->fullName, // guest name
                     $data->email, // guest email
                     $data->phone, // guest mobile
-                    $data->adult, // adult
-                    $data->child, // child
+                    $data->adult . ' Adult', // adult
+                    ($data->child > 0) ? ($data->child . ' Child') : '', // child
                     $data->roomNo, // room
                 ];
                 array_push($res, $arr);
