@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class AdminRoomController extends Controller
 {
     public static function getRoomType($hotelId){
@@ -51,26 +52,4 @@ class AdminRoomController extends Controller
         DB::update('update rooms set available = ? where hotelId = ? AND roomNum = ?',
             [$request->available, $hotelId, $roomNum]);
     }
-
-    //delete booking
-
-    public static function deleteBooking(Request $request, $hotelId, $bookingNum){
-        
-        try{
-            DB::delete('delete bookings, booking_room from bookings 
-            inner join booking_room
-            on (bookings.bookingNum = booking_room.bookingNum)
-            where bookings.hotelId = ?
-            and bookings.bookingNum = ?;',[$hotelId, $bookingNum]);
-
-        }catch(Exception $e){
-            echo $e;
-            return "false";
-        }
-        return "true";
-    }
-
-    //edit booking
-
-
 }
