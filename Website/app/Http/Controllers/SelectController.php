@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\DB;
 class SelectController extends Controller
 {
     public static function getHotelInfo($hotelId){
-        $info = DB::select('select * from hotels where hotelId = ?',[$hotelId]);
+        $info = DB::select('select * from hotels
+        inner join hotel_facilities
+        on (hotels.hotelId = hotel_facilities.hotelId)
+        where hotels.hotelId = ?',[$hotelId]);
         return json_encode($info);
     }
 
