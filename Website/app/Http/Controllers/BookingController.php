@@ -6,6 +6,8 @@ use App\Hotel;
 use Illuminate\Http\Request;
 use DataTables;
 use Validator;
+use App\booking;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -14,21 +16,68 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($hotelId)
     {
-        if($request->ajax())
-        {
-            $data = booking::latest()->get();
-            return DataTables::of($data)
-                    ->addColumn('action', function($data){
-                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
-                        $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Delete</button>';
-                        return $button;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
-        return view('testbooking');
+        // if($request->ajax())
+        // {
+            // $list = booking::latest()->get();
+            // $list = DB::select('select * FROM bookings
+            // INNER JOIN
+            // (select booking_room.bookingNum, booking_room.roomId, type, COUNT(*) as number from booking_room 
+            // INNER JOIN room_infos
+            // Where (booking_room.hotelId = room_infos.hotelId)
+            // AND (booking_room.roomId = room_infos.roomId)
+            // AND booking_room.hotelId = ?
+            // GROUP BY booking_room.bookingNum, booking_room.roomId, type) T
+            // WHERE hotelId = ? AND (T.bookingNum = bookings.bookingNum);',[$hotelId, $hotelId]);
+
+            $list = DB::select('select * FROM bookings
+            INNER JOIN
+            (select booking_room.bookingNum, booking_room.roomId, type, roomNum as number from booking_room 
+            INNER JOIN room_infos
+            Where (booking_room.hotelId = room_infos.hotelId)
+            AND (booking_room.roomId = room_infos.roomId)
+            AND booking_room.hotelId = ? ) T
+            WHERE hotelId = ? AND (T.bookingNum = bookings.bookingNum);',[$hotelId, $hotelId]);
+            
+            $arr = [];
+            foreach ($list as $data){
+                if ( ! array_key_exists($data->bookingNum, $arr) ) {
+                    $arr[$data->bookingNum] = [
+                        $data->bookingNum, // no,
+                        date( 'd M Y', strtotime( $data->created_at )), // booking date
+                        date( 'd M Y', strtotime( $data->checkInDate )), // checkin
+                        date( 'd M Y', strtotime( $data->checkOutDate )), // checkout
+                        $data->fullName, // guest name
+                        $data->email, // guest email
+                        $data->phone, // guest mobile
+                        $data->adult . ' Adult', // adult
+                        ($data->child > 0) ? ($data->child . ' Child') : '', // child
+                        $data->number . 'x ' . $data->type . '<br />', // rooms
+                    ];
+                } else {
+                    $arr[$data->bookingNum][9] .= $data->number . 'x ' . $data->type . '<br />';
+                }
+            }
+
+            $res = [];
+            foreach ($arr as $data) {
+                array_push($res, $data);
+            }
+            $final = json_decode("{}");
+            $final->data = $res;
+            return json_encode($final);
+            
+            // return DataTables::of($data)
+            //         ->addColumn('action', function($data){
+            //             $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
+            //             $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Delete</button>';
+            //             return $button;
+            //         })
+            //         ->rawColumns(['action'])
+            //         ->make(true);
+        // }
+        // return view('testbooking');
     }
 
     /**
@@ -59,7 +108,9 @@ class BookingController extends Controller
             'remark'=> 'required',
             'adult'=> 'required',
             'child'=> 'required',
-            'totalPrice' => 'required',           
+            'roomNo' => 'required',
+            'totalPrice' => 'required',
+                       
         );
         $error = Validator::make($request->all(), $rules);
 
@@ -78,6 +129,7 @@ class BookingController extends Controller
             'remark'=> $request->remark,
             'adult'=> $request->adult,
             'child'=> $request->child,
+            'roomNo' => $request->child,
             'totalPrice'=> $request->totalPrice,
         );
         booking::create($form_data);
@@ -130,6 +182,7 @@ class BookingController extends Controller
             'remark'=> 'required',
             'adult'=> 'required',
             'child'=> 'required',  
+            'roomNo' => 'required',
             'totalPrice'=> 'required',      
         );
         $error = Validator::make($request->all(), $rules);
@@ -149,6 +202,7 @@ class BookingController extends Controller
             'remark'=> $request->remark,
             'adult'=> $request->adult,
             'child'=> $request->child,
+            'roomNo' => $request->roomNo,
             'totalPrice'=> $request->totalPrice,
         );
 

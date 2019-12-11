@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SelectController;
 use App\Http\Controllers\InsertBookingController;
+use App\Http\Controllers\BookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +93,10 @@ Route::post('hotel/update', 'HotelController@update')->name('hotel.update');
 
 Route::get('hotel/destroy/{id}', 'Hotelcontroller@destroy');
 
+Route::get('management/hotel/{hotelId}/bookings', 'BookingController@index')->name('management/hotel/bookings');
+Route::get('management/hotel/{hotelId}/roomTypes', 'AdminRoomController@getRoomType')->name('management/hotel/roomTypes');
+Route::post('management/hotel/{hotelId}/updateRoomTypes', 'AdminRoomController@updateRoomType')->name('management/hotel/updateRoomType');
+
 Route::resource('testbooking', 'BookingController');
 
 Route::post('testbooking/update', 'BookingController@update')->name('testbooking.update');
@@ -127,7 +132,8 @@ Route::post('registerUser',function(Request $request){
 Route::post('search',function(Request $request){
     //$data = $request->only('city','checkInDate','checkOutDate','adult','child','room');
     try{
-        $hotels = SearchController::getHotelDetails($request->city, $request->checkInDate, $request->checkOutDate, $request->adult, $request->child, $request->room);
+        $hotels = SearchController::getHotelDetails($request->city, $request->checkInDate, $request->checkOutDate, 
+        $request->adult, $request->children, $request->room);
     }catch(Exception $e){
         echo $e;
         return "false";
@@ -136,9 +142,9 @@ Route::post('search',function(Request $request){
 })->name('search');
 
 Route::post('hotelInfo',function(Request $request){
-    $data = $request->only('hotelId');
+    //$data = $request->only('hotelId');
     try{
-        $hotelInfo = SelectController::getHotelInfo($data);
+        $hotelInfo = SelectController::getHotelInfo($request->hotelId);
     }catch(Exception $e){
         echo $e;
         return "false";
@@ -147,9 +153,9 @@ Route::post('hotelInfo',function(Request $request){
 })->name('hotelInfo');
 
 Route::post('roomAvailable',function(Request $request){
-    $data = $request->only('hotelId','checkInDate','checkOutDate');
+    // $data = $request->only('hotelId','checkInDate','checkOutDate');
     try{
-        $roomInfo = SelectController::getRoomInfo($data);
+        $roomInfo = SelectController::getRoomInfo($request->hotelId, $request->checkInDate, $request->checkOutDate);
     }catch(Exception $e){
         echo $e;
         return "false";
@@ -158,13 +164,15 @@ Route::post('roomAvailable',function(Request $request){
 })->name('roomAvailable');
 
 Route::post('createBooking',function(Request $request){
-    $data = $request->only('fullName', 'email', 'phone', 'icNum', 'checkInDate', 'checkOutDate', 
-    'remark', 'adult', 'child', 'roomNum', 'totalPrice', 'hotelId', 'roomId');
+    // $data = $request->only('fullName', 'email', 'phone', 'icNum', 'checkInDate', 'checkOutDate', 
+    // 'remark', 'adult', 'child', 'roomNum', 'totalPrice', 'hotelId', 'roomId');
     
     // roomId must be an array....
     
     try{
-        InsertBookingController::newBooking($data);
+        InsertBookingController::newBooking($request->fullName, $request->email, $request->phone, $request->icNum, 
+        $request->checkInDate, $request->checkOutDate, $request->remark, $request->adult, $request->child,
+         $request->roomNum, $request->totalPrice, $request->hotelId, $request->roomId);
     }catch(Exception $e){
         echo $e;
         return "false";
@@ -173,10 +181,10 @@ Route::post('createBooking',function(Request $request){
 })->name('createBooking');
 
 Route::post('confirmBookingDetails',function(Request $request){
-    $data = $request->only('bookingNum');
+    // $data = $request->only('bookingNum');
 
     try{
-        $details = InsertBookingController::getBookingDetail($data);
+        $details = InsertBookingController::getBookingDetail($request->bookingNum);
     }catch(Exception $e){
         echo $e;
         return "false";

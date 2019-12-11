@@ -433,6 +433,7 @@ $(document).ready( function () {
     language: {
       searchPlaceholder: "Booking # / Room # / Guest Name"
     },
+    ajax: '{{ route("management/hotel/bookings", session("management_hotel_id")) }}',
     columns: [
       null, 
       { searchable: false }, 
@@ -447,7 +448,8 @@ $(document).ready( function () {
     ],
     order: [[0, 'desc']]
   });
-  $('#bookings-table td').on('click', function () {
+  $('#bookings-table').on('click', 'tbody tr td', function () {
+    console.log("fire");
       var tr = $(this).closest('tr');
       var row = table.row( tr );
 

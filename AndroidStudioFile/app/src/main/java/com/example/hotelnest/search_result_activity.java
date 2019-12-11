@@ -28,12 +28,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -62,10 +64,19 @@ public class search_result_activity extends AppCompatActivity {
     private ListView listview;
     private List<HashMap<String, Object>> lstDraftItem;
     private SimpleAdapter adapter;
-    private String[] titleArrayLast=new String[100];
-    private String[] decArrayLast=new String[100];
-    private String[] titleArray=new String[]{"Hotel 1","Hotel 2","Hotel 3","Hotel 4","Hotel 5"};
-    private String[] logoArray=new String[]{"https://liauroufan.com/hotelNest.png","https://liauroufan.com/hotelNest.png","https://liauroufan.com/hotelNest.png","https://liauroufan.com/hotelNest.png","https://liauroufan.com/hotelNest.png"};
+    private ArrayList<String> hotelname = new ArrayList<>();
+    private ArrayList<String>  hotelpicture = new ArrayList<>();
+    private int[][] hotelpictureint = {
+            {R.drawable.images_1_1,R.drawable.images_1_2,R.drawable.images_1_3},
+            {R.drawable.images_2_1,R.drawable.images_2_2,R.drawable.images_2_3,R.drawable.images_2_4,R.drawable.images_2_5},
+            {R.drawable.images_3_1,R.drawable.images_3_2,R.drawable.images_3_3,R.drawable.images_3_4,R.drawable.images_3_5,R.drawable.images_3_6},
+            {R.drawable.images_4_1,R.drawable.images_4_2,R.drawable.images_4_3,R.drawable.images_4_4,R.drawable.images_4_5},
+            {R.drawable.images_5_1,R.drawable.images_5_2,R.drawable.images_5_3,R.drawable.images_5_4,R.drawable.images_5_5,R.drawable.images_5_6,R.drawable.images_5_7,R.drawable.images_5_8},
+            {R.drawable.images_6_1,R.drawable.images_6_2,R.drawable.images_6_3,R.drawable.images_6_4,R.drawable.images_6_5,R.drawable.images_6_6,R.drawable.images_6_7},
+            {R.drawable.images_7_1,R.drawable.images_7_2,R.drawable.images_7_3,R.drawable.images_7_4,R.drawable.images_7_5,R.drawable.images_7_6,R.drawable.images_7_7,R.drawable.images_7_8},
+            {R.drawable.images_50_1,R.drawable.images_50_2,R.drawable.images_50_3,R.drawable.images_50_4,R.drawable.images_50_5,R.drawable.images_50_6,R.drawable.images_50_7,R.drawable.images_50_8},
+            {R.drawable.images_52_1,R.drawable.images_52_2,R.drawable.images_52_3,R.drawable.images_52_4,R.drawable.images_52_5,R.drawable.images_52_6}
+    };
     private String city, adult, child, room, checkInDate, checkOutDate;
 
     private DateFormat format = new SimpleDateFormat("dd MMM yyyy");
@@ -97,6 +108,8 @@ public class search_result_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result_activity);
 
+
+
         city = getIntent().getStringExtra("city");
         adult = getIntent().getStringExtra("adult");
         child = getIntent().getStringExtra("child");
@@ -122,16 +135,25 @@ public class search_result_activity extends AppCompatActivity {
         adapter = new SimpleAdapter(this, lstDraftItem, R.layout.item_list,
                 new String[]{"logo", "title"},
                 new int[]{R.id.img_sub_logo, R.id.tv_sub_title});
-        titleArrayLast=titleArray.clone();
+        //titleArrayLast=(String[])hotelname.toArray();
         //decArrayLast=decArray.clone();
-        for (int i=0;i<titleArray.length;i++){
+        for (int i=0;i<hotelname.size();i++){
             HashMap<String, Object> map = new HashMap<String, Object>();
 
-                map.put("logo", R.drawable.bg1);
+            int x,y;
+            if(hotelpicture.get(i).length()<16) {
+                x = Integer.parseInt(hotelpicture.get(i).substring(8,1));
 
-                Log.i("image", "url error.");
+                y = Integer.parseInt(hotelpicture.get(i).substring(10,1));
+            }else{
+                x = Integer.parseInt(hotelpicture.get(i).substring(8,2));
+                y = Integer.parseInt(hotelpicture.get(i).substring(11,1));
+            }
+            map.put("logo", hotelpictureint[x][y]);
 
-            map.put( "title", titleArrayLast[i]);
+
+
+            map.put( "title", hotelname.get(i));
 
             lstDraftItem.add(map);
         }
@@ -145,13 +167,69 @@ public class search_result_activity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url = "http://10.0.2.2:8000/search";
 
+
+
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.i("test search", response);
+                        Log.i("json response", response);
+                        try {
+                            //JSONObject reader = new JSONObject(response);
+                            JSONArray reader = new JSONArray(response);
+                            for(int i=0; i<reader.length();i++){
+                                Log.i("hotel name", reader.getJSONObject(i).getString("name"));
+                                hotelname.add( reader.getJSONObject(i).getString("name"));
+                                hotelpicture.add(reader.getJSONObject(i).getString("picturePath"));
+                                lstDraftItem = new ArrayList<HashMap<String, Object>>();
+                                //适配器SimpleAdapter数据绑定
+                                //错误:构造函数SimpleAdapter未定义 需把this修改为MainActivity.this
+                                adapter = new SimpleAdapter(getBaseContext(), lstDraftItem, R.layout.item_list,
+                                        new String[]{"logo", "title"},
+                                        new int[]{R.id.img_sub_logo, R.id.tv_sub_title});
+                                //titleArrayLast=(String[])hotelname.toArray();
+                                //decArrayLast=decArray.clone();
+                                for (int j=0;j<hotelname.size();j++){
+                                    HashMap<String, Object> map = new HashMap<String, Object>();
+
+                                    int x,y;
+                                    Log.i("hotelpicture string", hotelpicture.get(j));
+
+                                    if(hotelpicture.get(j).length()<16) {
+                                        x = Integer.parseInt(hotelpicture.get(j).substring(8,9))-1;
+                                        Log.i("x:",hotelpicture.get(j).substring(8,9));
+                                        y = Integer.parseInt(hotelpicture.get(j).substring(10,11))-1;
+                                        Log.i("y:",hotelpicture.get(j).substring(10,11));
+                                    }else{
+                                        x = Integer.parseInt(hotelpicture.get(j).substring(8,10));
+                                        Log.i("x:",hotelpicture.get(j).substring(8,10));
+                                        y = Integer.parseInt(hotelpicture.get(j).substring(11,12))-1;
+                                        Log.i("y:",hotelpicture.get(j).substring(11,12));
+                                        if(x==50){
+                                            x=7;
+                                        }else if(x==52){
+                                            x=8;
+                                        }
+                                    }
+                                    map.put("logo", hotelpictureint[x][y]);
+
+
+
+
+                                    map.put( "title", hotelname.get(j));
+
+                                    lstDraftItem.add(map);
+                                }
+                                listview.setAdapter(adapter);
+
+                            }
+                        }catch(Exception e){
+                            Log.i("test search name", "error");
+                        }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -163,12 +241,12 @@ public class search_result_activity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("city", "abc");
-                params.put("checkInDate", "12-5-2019");
-                params.put("checkOutDate","13-5-2019");
-                params.put("adult", "2");
-                params.put("child", "1");
-                params.put("room", "1");
+                params.put("city", city);
+                params.put("checkInDate", checkInDate);
+                params.put("checkOutDate",checkOutDate);
+                params.put("adult", adult);
+                params.put("child", child);
+                params.put("room", room);
                 Log.i("test search", params.get("city"));
                 return params;
             }

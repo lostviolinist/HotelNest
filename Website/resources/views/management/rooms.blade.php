@@ -25,31 +25,42 @@ Rooms
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <input class="form-control" hidden readonly id="editRoomTypeModalRoomId" />
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label>Room Name</label>
+            <form id="editRoomTypeModalForm">
+                @csrf
+                <div class="modal-body">
+                
+                    <!-- <input class="form-control" value="{{ session('management_hotel_id') }}"
+                        name="hotelId" hidden readonly id="editRoomTypeModalHotelId" /> -->
+                    <input class="form-control" hidden readonly id="editRoomTypeModalRoomId"
+                        name="roomId" />
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label>Room Name</label>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div class="form-group">
+                                <input class="form-control" value="" placeholder="Room name" 
+                                    id="editRoomTypeModalRoomType" name="typeName" />
+                            </div>
                         </div>
                     </div>
-                    <div class="col-9">
-                        <div class="form-group">
-                            <input class="form-control" value="" placeholder="Room name" 
-                                id="editRoomTypeModalRoomType" />
-                        </div>
+                    <div class="form-group">
+                        <label>Room Description</label>
+                        <textarea class="form-control" rows="8" cols="80" id="editRoomTypeModalDescription"
+                            placeholder="Room description" name="description"></textarea>
                     </div>
+                
                 </div>
-                <div class="form-group">
-                    <label>Room Description</label>
-                    <textarea class="form-control" rows="8" cols="80" id="editRoomTypeModalDescription"
-                        placeholder="Room description"></textarea>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <span id='editRoomTypeModalValidator'></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="editRoomTypeModalSaveChangesBtn">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -253,6 +264,7 @@ Rooms
 $(document).ready( function () {
     $('[data-toggle="tooltip"]').tooltip();
     var typeTable = $('#room-type-table').DataTable({
+        ajax: '{{ route("management/hotel/roomTypes", session("management_hotel_id")) }}',
         searching: false, paging: false, info: false,
         columns: [
             { orderable: false, }, 
@@ -317,7 +329,49 @@ $(document).ready( function () {
     // $('#js-rooms-table-filter').on('select2:select', select);
     $('#js-rooms-table-filter').on('select2:close', select);
 
-});
+
+    $('#editRoomTypeModalForm').on('submit', function (e) {
+        console.log("fire");
+        e.preventDefault();
+        $('#editRoomTypeModalSaveChangesBtn').prop('disabled', true);
+        var error = '';
+        if ( !$('#editRoomTypeModalDescription').val() ) {
+            error = 'Room description cannot be empty';
+        }
+        if ( !$('#editRoomTypeModalRoomType').val() ) {
+            error = 'Room type name cannot be empty';
+        }
+        if (error !== '') {
+            $('#editRoomTypeModalValidator').css('color', 'red');;
+            $('#editRoomTypeModalValidator').html(error);
+            $('#editRoomTypeModalSaveChangesBtn').prop('disabled', false);
+        } else {
+            $.ajax({
+                url: "{{ route('management/hotel/updateRoomType', session('management_hotel_id')) }}",
+                method: "POST",
+                data: $('#editRoomTypeModalForm').serialize(),
+                success:function(data) {
+                    // if (data['status'] === true) {
+                    console.log('Edit room type successfully.');
+                        // $(location).attr('href', data['redirect']);
+                    // } else {
+                        // console.log('Failed: ' + data['error']);
+                        // $('#editRoomTypeModalValidator').css('color', 'red');;
+                        // $('#editRoomTypeModalValidator').html(data['error']);
+                    // }
+                    $('#editRoomTypeModalSaveChangesBtn').prop('disabled', false);
+                    $('#room-type-table').DataTable().ajax.reload();
+                    // $('#rooms-table').DataTable().ajax.reload();
+                    $('#editRoomTypeModal').modal('toggle');
+                },
+                error:function(error) {
+                    console.log('Error: ' + error);
+                    $('#editRoomTypeModalSaveChangesBtn').prop('disabled', false);
+                }
+            });
+        }
+    })
+})
 
 function select(e) {
     var data = $('#js-rooms-table-filter').select2('data');
