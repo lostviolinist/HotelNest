@@ -22,7 +22,20 @@ use Illuminate\Support\Facades\DB;
 </head>
 
 <body>
-    <table>
+<div class="container-fluid mt-3">
+    <section class="row">
+      <div class="col-md-8">
+        <h1 class="title">HotelNest</h1>
+      </div>
+      <div class="col-md-4">
+        <div class=" float-right" role="group">
+          <a class="btn btn-secondary btn-md  mr-3" style="background-color: #586BA4;" href="#"> Register </a>
+          <a class="btn btn-md btn-outline-secondary" tyle="border-color: #586BA4;" href="#"> Sign In </a>
+        </div>
+      </div>
+    </section>
+  </div>
+    <table class="ml-0">
         <tr>
             <td>
                 <div class="card ml-5 mt-5 mt-5 " style="width: 700px">
