@@ -133,9 +133,10 @@ Route::post('registerUser',function(Request $request){
 })->name('registerUser');
 
 Route::post('search',function(Request $request){
-    $data = $request->only('city','checkInDate','checkOutDate','adult','child','room');
+    //$data = $request->only('city','checkInDate','checkOutDate','adult','child','room');
     try{
-        $hotels = SearchController::getHotelDetails($data);
+        $hotels = SearchController::getHotelDetails($request->city, $request->checkInDate, $request->checkOutDate, 
+        $request->adult, $request->children, $request->room);
     }catch(Exception $e){
         echo $e;
         return "false";
@@ -144,9 +145,9 @@ Route::post('search',function(Request $request){
 })->name('search');
 
 Route::post('hotelInfo',function(Request $request){
-    $data = $request->only('hotelId');
+    //$data = $request->only('hotelId');
     try{
-        $hotelInfo = SelectController::getHotelInfo($data);
+        $hotelInfo = SelectController::getHotelInfo($request->hotelId);
     }catch(Exception $e){
         echo $e;
         return "false";
@@ -155,9 +156,9 @@ Route::post('hotelInfo',function(Request $request){
 })->name('hotelInfo');
 
 Route::post('roomAvailable',function(Request $request){
-    $data = $request->only('hotelId','checkInDate','checkOutDate');
+    // $data = $request->only('hotelId','checkInDate','checkOutDate');
     try{
-        $roomInfo = SelectController::getRoomInfo($data);
+        $roomInfo = SelectController::getRoomInfo($request->hotelId, $request->checkInDate, $request->checkOutDate);
     }catch(Exception $e){
         echo $e;
         return "false";
@@ -166,13 +167,15 @@ Route::post('roomAvailable',function(Request $request){
 })->name('roomAvailable');
 
 Route::post('createBooking',function(Request $request){
-    $data = $request->only('fullName', 'email', 'phone', 'icNum', 'checkInDate', 'checkOutDate', 
-    'remark', 'adult', 'child', 'roomNum', 'totalPrice', 'hotelId', 'roomId');
+    // $data = $request->only('fullName', 'email', 'phone', 'icNum', 'checkInDate', 'checkOutDate', 
+    // 'remark', 'adult', 'child', 'roomNum', 'totalPrice', 'hotelId', 'roomId');
     
     // roomId must be an array....
     
     try{
-        InsertBookingController::newBooking($data);
+        InsertBookingController::newBooking($request->fullName, $request->email, $request->phone, $request->icNum, 
+        $request->checkInDate, $request->checkOutDate, $request->remark, $request->adult, $request->child,
+         $request->roomNum, $request->totalPrice, $request->hotelId, $request->roomId);
     }catch(Exception $e){
         echo $e;
         return "false";
@@ -181,10 +184,10 @@ Route::post('createBooking',function(Request $request){
 })->name('createBooking');
 
 Route::post('confirmBookingDetails',function(Request $request){
-    $data = $request->only('bookingNum');
+    // $data = $request->only('bookingNum');
 
     try{
-        $details = InsertBookingController::getBookingDetail($data);
+        $details = InsertBookingController::getBookingDetail($request->bookingNum);
     }catch(Exception $e){
         echo $e;
         return "false";

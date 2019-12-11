@@ -99,5 +99,25 @@ class AdminRoomController extends Controller
             [$request->available, $hotelId]);
     }
 
-    
+    //delete booking
+
+    public static function deleteBooking(Request $request, $hotelId, $bookingNum){
+        
+        try{
+            DB::delete('delete bookings, booking_room from bookings 
+            inner join booking_room
+            on (bookings.bookingNum = booking_room.bookingNum)
+            where bookings.hotelId = ?
+            and bookings.bookingNum = ?;',[$hotelId, $bookingNum]);
+
+        }catch(Exception $e){
+            echo $e;
+            return "false";
+        }
+        return "true";
+    }
+
+    //edit booking
+
+
 }

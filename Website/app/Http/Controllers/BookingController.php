@@ -21,14 +21,23 @@ class BookingController extends Controller
         // if($request->ajax())
         // {
             // $list = booking::latest()->get();
+            // $list = DB::select('select * FROM bookings
+            // INNER JOIN
+            // (select booking_room.bookingNum, booking_room.roomId, type, COUNT(*) as number from booking_room 
+            // INNER JOIN room_infos
+            // Where (booking_room.hotelId = room_infos.hotelId)
+            // AND (booking_room.roomId = room_infos.roomId)
+            // AND booking_room.hotelId = ?
+            // GROUP BY booking_room.bookingNum, booking_room.roomId, type) T
+            // WHERE hotelId = ? AND (T.bookingNum = bookings.bookingNum);',[$hotelId, $hotelId]);
+
             $list = DB::select('select * FROM bookings
             INNER JOIN
-            (select booking_room.bookingNum, booking_room.roomId, type, COUNT(*) as number from booking_room 
+            (select booking_room.bookingNum, booking_room.roomId, type, roomNum as number from booking_room 
             INNER JOIN room_infos
             Where (booking_room.hotelId = room_infos.hotelId)
             AND (booking_room.roomId = room_infos.roomId)
-            AND booking_room.hotelId = ?
-            GROUP BY booking_room.bookingNum, booking_room.roomId, type) T
+            AND booking_room.hotelId = ? ) T
             WHERE hotelId = ? AND (T.bookingNum = bookings.bookingNum);',[$hotelId, $hotelId]);
             
             $arr = [];
