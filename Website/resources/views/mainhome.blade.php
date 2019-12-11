@@ -1,49 +1,176 @@
 <?php
+
 use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\DB;
 
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type = "text/css" href="/css/style.css">
-        <title>
-            HotelNest
-        </title>
-    </head>
-    <body>
-        <table>
-            <tr>
-                <td>
-                    <div class="homemain">
-                        <p class="sign" align="center">Book the perfect room for your trip.  </p>
-                        <form class="form1">                             
-                            <input class="city" type="text" align="center" placeholder="City">                                
-                            <input class="start-date" type="date" align="center" placeholder="start">   to   <input class="end-date" type="date" align="center" placeholder="end">                           
-                            <input class="pax" type="number" align="center" placeholder="">   Adults <input class="pax" type="number" align="center" placeholder="">   Child                       
-                            <a class="submit" align="center">Search</a>
-                        </form>
-                    </div>
-                </td>
-                <td>
-                    <div class="recommended">
-                        <p>Kuala Lumpur</p>
-                            <div class="flex-container">
-                                <div class="flex"></div>
-                                <?php 
-                                    $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur")); 
-                                    for($i = 0 ;$i < count($arr); $i++){ ?>
-                                        <div>
-                                            <img src="<?php print_r($arr[$i]) ?>" alt="st.regis" >
-                                            <p>The St.Regis</p>
-                                            <p>RM719/night</p>
-                                        </div>
-                                    <?php } ?>
+
+<head>
+    <!-- Bootstrap 4.3.1 -->
+    <link rel="stylesheet" href="{{ asset('bootstrap-4.3.1/css/bootstrap.min.css') }}">
+    <script src="{{ asset('jquery-3.4.1/jquery-3.4.1.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="{{ asset('bootstrap-4.3.1/js/bootstrap.min.js') }}" charset="utf-8"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    <title>
+        HotelNest
+    </title>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <div class="card ml-5 mt-5 mt-5 " style="width: 700px">
+                    <form class="container">
+                        <div class="form-row p-3">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Where</label>
+                                <input type="text" class="form-control" id="inputEmail4" placeholder="City">
+                            </div>
+
+                        </div>
+                        <div class="form-row p-3">
+                            <div class="form-group col-md-3 mr-5">
+                                <label for="inputAddress">Start Date</label>
+                                <input type="date" class="form-control" id="inputAddress" placeholder="12 Oct 2019">
+                            </div>
+
+
+                            <div class="form-group col-md-3 ml-3">
+                                <label for="inputAddress"> End Date</label>
+                                <input type="date" class="form-control" id="inputAddress" placeholder="13 Oct 2019">
                             </div>
                         </div>
+
+
+                        <div class="form-row p-3">
+                            <div class="form-group col-md-2 mr-5">
+                                <label for="inputCity">Adults</label>
+                                <input type="number" class="form-control" id="inputCity" min="1">
+                            </div>
+                            <div class="form-group col-md-2 ml-5">
+                                <label for="inputState">Children</label>
+                                <input type="number" class="form-control" id="inputCity" min="0">
+                            </div>
+                            <div class="form-group col-md-2 ml-5">
+                                <label for="inputState">Rooms</label>
+                                <input type="number" class="form-control" id="inputCity" min="1">
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="ml-3 mt-5 mb-5 btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </td>
+            <td>
+                <div class="recommended">
+                    <p>Kuala Lumpur</p>
+                    
+                    <?php
+                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
+                        //for ($i = 0; $i < count($arr); $i++) { ?>
+
+                    <div class="row">
+                    
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                            
+                                
+                                <img src="<?php print_r($arr[0]) ?>" alt="St.Regis" style="width:100%">
+                                    
+                                
+                            
+                        
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                            
+
+                                
+                                    <img src="<?php print_r($arr[1]) ?>" alt="St.Regis" style="width:100%">
+                                    
+                                
+                            
+                        
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                            
+                        
+                                
+                                    <img src="<?php print_r($arr[2]) ?>" alt="St.Regis" style="width:100%">
+                                    
+                                
+                            
+                        
+                            </div>
+                        </div>
+                        
                     </div>
-                </td>
-            </tr>
-        </table>          
-    </body>
+                    <div class="mt-5">
+                    <p>Penang</p>
+                    
+                    <?php
+                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
+                        //for ($i = 0; $i < count($arr); $i++) { ?>
+
+                    <div class="row">
+                    
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                            
+                                
+                                <img src="<?php print_r($arr[0]) ?>" alt="St.Regis" style="width:100%">
+                                    
+                                
+                            
+                        
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                            
+
+                                
+                                    <img src="<?php print_r($arr[1]) ?>" alt="St.Regis" style="width:100%">
+                                    
+                                
+                            
+                        
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                            
+                        
+                                
+                                    <img src="<?php print_r($arr[2]) ?>" alt="St.Regis" style="width:100%">
+                                    
+                                
+                            
+                        
+                            </div>
+                        </div>
+                        
+                    </div>
+                    </div>
+                    
+                    
+                </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+
 </html>

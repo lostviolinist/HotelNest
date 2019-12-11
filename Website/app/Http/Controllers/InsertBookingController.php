@@ -30,7 +30,7 @@ class InsertBookingController extends Controller
         $addBed = 0;
         for($i=0; $i<$roomNum; $i++){
             $query2 = 'insert into booking_room (no, bookingNum, hotelId, roomId, addBed, roomNum) VALUES ('
-                .$no.', '.$bookingNum.', '.$hotelId.', '.$roomId[$i].', '.$addBed.', "pending");';
+                .$no.', '.$bookingNum.', '.$hotelId.', '.$roomId[$i].', '.$addBed.', NULL);';
             
             DB::insert($query2);
             $no = $no + 1;

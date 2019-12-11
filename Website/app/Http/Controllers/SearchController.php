@@ -82,7 +82,7 @@ class SearchController extends Controller
         return json_encode($arr);
     }
 
-    public static function getHotelDetails($city="", $checkInDate="", $checkOutDate="", $adult=0, $child=0, $room=""){
+    public static function getHotelDetails($city="", $checkInDate="", $checkOutDate="", $adult=0, $child=0, $room=0){
 
 
         $hotelss = SearchController::searchHotelList($city, $checkInDate, $checkOutDate, $adult, $child, $room);
