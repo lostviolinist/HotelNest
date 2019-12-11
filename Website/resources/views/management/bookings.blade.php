@@ -18,28 +18,6 @@ Bookings
 @endsection
 
 @section('content')
-<!-- The Modal -->
-<!-- <div class="modal" id="myModal" data-backdrop="static" data-keyboard="false" data-show="false">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="spinner-border text-default" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-        <h5 class="mt-2">Processing...</h5>
-      </div>
-    </div>
-  </div>
-</div>
-<script type="text/javascript">
-  $('#myModal').modal({
-    backdrop: 'static',
-    keyboard: false
-  })
-</script> -->
 <!-- The Booking Edit Modal -->
 <div class="modal" id="editBookingModal">
   <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -97,19 +75,19 @@ Bookings
             <div class="form-group row">
               <label class="col-4 col-lg-3">Guest Name:</label>
               <div class="col-8 col-lg-9">
-                <input class="form-control" type="text" value="" />
+                <input class="form-control" type="text" value="" readonly />
               </div>
             </div>
             <div class="form-group row">
               <label class="col-4 col-lg-3">Guest Email:</label>
               <div class="col-8 col-lg-9">
-                <input class="form-control" type="email" value="" />
+                <input class="form-control" type="email" value="" readonly />
               </div>
             </div>
             <div class="form-group row">
               <label class="col-4 col-lg-3">Guest Mobile Number:</label>
               <div class="col-8 col-lg-9">
-                <input class="form-control" type="tel" value="" />
+                <input class="form-control" type="tel" value="" readonly />
               </div>
             </div>
             <div class="form-group row">
