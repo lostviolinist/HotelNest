@@ -25,7 +25,7 @@
     </section>
   </div>
 
-  <div class="container mt-5">
+  <div class="ml-5 mt-5">
     <form class="form-inline">
       <label class="sr-only" for="inlineFormInputName2">Name</label>
       <input type="text" class="form-control mb-2 mr-5" id="inlineFormInputName2" placeholder="Where">
@@ -68,6 +68,17 @@
 
         Children
       </div>
+      <div class="input-group mb-2 mr-sm-2">
+
+        <input type="number" class="form-control" style="width: 50px;" id="inlineFormInputGroupUsername5"
+          placeholder="1">
+      </div>
+      
+      <div class="input-group mb-2 mr-5">
+
+       Rooms
+      </div>
+      
 
 
       <button type="submit" class="btn btn-primary mb-2" style="background-color: #586BA4;">Search</button>
