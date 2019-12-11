@@ -10,19 +10,24 @@ class SearchController extends Controller
 {
 
     public static function calculate($pax, $room){
-        $arr = [ ];
-        $num = $room;
-        for($i=0; $i<$num; $i++){
-            $temp = $pax/$room;
-            settype ($temp, "integer");
-            array_push($arr, $temp);
-            $pax = $pax - $temp;
-            $room = $room - 1;
+        if ($pax + $room == 0){
+            $arr = array(0);
+        }else{
+            $arr = [ ];
+            $num = $room;
+            for($i=0; $i<$num; $i++){
+                $temp = $pax/$room;
+                settype ($temp, "integer");
+                array_push($arr, $temp);
+                $pax = $pax - $temp;
+                $room = $room - 1;
+            }
         }
+        
         return $arr;
     }
 
-    public static function searchHotelList($city="", $checkInDate="", $checkOutDate="", $adult=0, $child=0, $room=""){
+    public static function searchHotelList($city="", $checkInDate="", $checkOutDate="", $adult=0, $child=0, $room=0){
 
         $totalPax = $adult + $child;
         $a = SearchController::calculate($totalPax, $room);
@@ -79,6 +84,7 @@ class SearchController extends Controller
 
     public static function getHotelDetails($city="", $checkInDate="", $checkOutDate="", $adult=0, $child=0, $room=""){
 
+
         $hotelss = SearchController::searchHotelList($city, $checkInDate, $checkOutDate, $adult, $child, $room);
         $list = json_decode($hotelss);
         $arr = [ ];
@@ -92,8 +98,9 @@ class SearchController extends Controller
                 ->groupBy('hotelId','name','city','star', 'description', 'picturePath')
                 ->where('num','=','1')
                 ->where('hotels.hotelId','=',$hotelId)
+                ->where('hotels.city','=',$city)
                 ->get();
-
+                
             foreach ($HotelList as $hotel){
         
                 array_push($arr, $hotel);
