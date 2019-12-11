@@ -71,96 +71,101 @@ use Illuminate\Support\Facades\DB;
             <td>
                 <div class="recommended">
                     <p>Kuala Lumpur</p>
+                    
+                    <?php
+                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
+                        //for ($i = 0; $i < count($arr); $i++) { ?>
+
                     <div class="row">
+                    
                         <div class="col-md-4">
                             <div class="thumbnail">
-                            <?php
-                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
-                        for ($i = 0; $i < count($arr); $i++) { ?>
-
+                            
                                 
-                                    <img src="<?php print_r($arr[$i]) ?>" alt="St.Regis" style="width:100%">
+                                <img src="<?php print_r($arr[0]) ?>" alt="St.Regis" style="width:100%">
                                     
                                 
                             
-                        <?php } ?>
+                        
                                 
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="thumbnail">
-                            <?php
-                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
-                        for ($i = 0; $i < count($arr); $i++) { ?>
+                            
 
                                 
-                                    <img src="<?php print_r($arr[$i]) ?>" alt="St.Regis" style="width:100%">
+                                    <img src="<?php print_r($arr[1]) ?>" alt="St.Regis" style="width:100%">
                                     
                                 
                             
-                        <?php } ?>
+                        
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="thumbnail">
-                            <?php
-                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
-                        for ($i = 0; $i < count($arr); $i++) { ?>
-
+                            
+                        
                                 
-                                    <img src="<?php print_r($arr[$i]) ?>" alt="St.Regis" style="width:100%">
+                                    <img src="<?php print_r($arr[2]) ?>" alt="St.Regis" style="width:100%">
                                     
                                 
                             
-                        <?php } ?>
+                        
                             </div>
                         </div>
+                        
                     </div>
+                    <div class="mt-5">
                     <p>Penang</p>
+                    
+                    <?php
+                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
+                        //for ($i = 0; $i < count($arr); $i++) { ?>
+
                     <div class="row">
+                    
                         <div class="col-md-4">
                             <div class="thumbnail">
-                            <?php
-                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
-                        for ($i = 0; $i < count($arr); $i++) { ?>
-
+                            
                                 
-                                    <img src="<?php print_r($arr[$i]) ?>" alt="St.Regis" style="width:100%">
+                                <img src="<?php print_r($arr[0]) ?>" alt="St.Regis" style="width:100%">
                                     
                                 
                             
-                        <?php } ?>
+                        
+                                
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="thumbnail">
-                            <?php
-                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
-                        for ($i = 0; $i < count($arr); $i++) { ?>
+                            
 
                                 
-                                    <img src="<?php print_r($arr[$i]) ?>" alt="St.Regis" style="width:100%">
+                                    <img src="<?php print_r($arr[1]) ?>" alt="St.Regis" style="width:100%">
                                     
                                 
                             
-                        <?php } ?>
+                        
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="thumbnail">
-                            <?php
-                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
-                        for ($i = 0; $i < count($arr); $i++) { ?>
-
+                            
+                        
                                 
-                                    <img src="<?php print_r($arr[$i]) ?>" alt="St.Regis" style="width:100%">
+                                    <img src="<?php print_r($arr[2]) ?>" alt="St.Regis" style="width:100%">
                                     
                                 
                             
-                        <?php } ?>
+                        
                             </div>
                         </div>
+                        
                     </div>
+                    </div>
+                    
+                    
                 </div>
                 </div>
             </td>

@@ -8,6 +8,31 @@ use Illuminate\Support\Facades\DB;
 
 class AdminRoomController extends Controller
 {
+    public static function getRoomTypeForSelect2($hotelId) {
+        $roomType = DB::select('select roomId, type from room_infos where hotelId = ?',[$hotelId]);
+
+        $res = [];
+        $group = json_decode("{}");
+        $group->text = "Availability";
+        $group->children = json_decode('[{"id": "Enabled", "text": "Enabled"}, {"id": "Disabled", "text": "Disabled"}]');
+        array_push($res, $group);
+        $typeGroup = json_decode("{}");
+        $typeGroup->text = "Room Type";
+        
+        $arr = [];
+        foreach($roomType as $type){
+            $new = json_decode("{}");
+            $new->id = $type->roomId;
+            $new->text = $type->type;
+            array_push($arr, $new);
+        }
+        $typeGroup->children = $arr;
+        array_push($res, $typeGroup);
+        $final = json_decode("{}");
+        $final->results = $res;
+        return json_encode($final);
+    }
+
     public static function getRoomType($hotelId){
         $roomType = DB::select('select * from room_infos where hotelId = ?',[$hotelId]);
 
@@ -37,19 +62,41 @@ class AdminRoomController extends Controller
             [$request->typeName, $request->description, $hotelId, $request->roomId]);
     }
 
-    public static function getAllRoom($hotelId){
-        $rooms = DB::select('select roomNum, type, available from rooms
-        inner join room_infos
-        where (rooms.roomId = room_infos.roomId)
-        and rooms.hotelId = ?;',[$hotelId]);
+    public static function getAllRooms($hotelId){
+        $rooms = DB::select('select roomNum, type, available from rooms 
+        inner join room_infos 
+        on rooms.hotelId = room_infos.hotelId AND rooms.roomId = room_infos.roomId
+        where rooms.hotelId = ?;',[$hotelId]);
 
+        $res = [];
+        foreach ($rooms as $data) {
+            $arr = [
+                $data->roomNum,
+                $data->type,
+                ($data->available)
+                    ? 'Enabled'
+                    : 'Disabled',
+                ($data->available) 
+                    ? '<label class="text-success"><i class="fas fa-check"></i></label>' 
+                    : '<label class="text-danger"><i class="fas fa-minus"></i></label>',
+            ];
+            array_push($res, $arr);
+        }
+        
         $final = json_decode("{}");
-        $final->data = $rooms;
+        $final->data = $res;
         return json_encode($final);
     }
 
-    public static function updateRoomAvailability(Request $request, $hotelId, $roomNum){
-        DB::update('update rooms set available = ? where hotelId = ? AND roomNum = ?',
-            [$request->available, $hotelId, $roomNum]);
+    public static function updateRoomsAvailability(Request $request, $hotelId){
+        $text = "";
+        for ($i = 0; $i < count($request->rooms); $i++) {
+            $text .= "'" . $request->rooms[$i] . "'";
+            if ($i != count($request->rooms)-1)
+                $text .= ",";
+        }
+        // return $request->available . " " . $hotelId;
+        return DB::update('UPDATE rooms SET available=? WHERE hotelId=? AND roomNum IN (' . $text . ') ;',
+            [$request->available, $hotelId]);
     }
 }
