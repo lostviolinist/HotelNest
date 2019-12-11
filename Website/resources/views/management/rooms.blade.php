@@ -275,6 +275,7 @@ $(document).ready( function () {
         order: [[1, 'asc']]
     });
     var roomTable = $('#rooms-table').DataTable({
+        ajax: '{{ route("management/hotel/rooms", session("management_hotel_id")) }}',
         dom: 
             "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
             "<'d-flex justify-content-end'<B>>" +
@@ -282,7 +283,7 @@ $(document).ready( function () {
             "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
         buttons: [
             {
-                text: 'Select filtered',
+                text: 'Select all',
                 action: function() {
                     roomTable.rows({
                         search: 'applied'
@@ -291,17 +292,17 @@ $(document).ready( function () {
             },
             'selectNone',
             {
-                text: 'Enable selected',
+                text: 'Enable rooms',
                 enabled: false,
                 action: function ( e, dt, node, config ) {
-                    // dt.ajax.reload();
+                    changeAvailability(e,dt,node,config,1);
                 }
             },
             {
-                text: 'Disable selected',
+                text: 'Disable rooms',
                 enabled: false,
                 action: function ( e, dt, node, config ) {
-                    // dt.ajax.reload();
+                    changeAvailability(e,dt,node,config,0);
                 }
             },
         ],
@@ -324,14 +325,38 @@ $(document).ready( function () {
     } );
     $('#js-rooms-table-filter').select2({
         tokenSeparators: [',', ' '],
-        placeholder: 'Select filters'
+        placeholder: 'Select filters',
+        ajax: {
+            url: '{{ route("management/hotel/roomTypesForSelect2", session("management_hotel_id")) }}',
+            dataType: 'json',
+            type: "GET",
+            // quietMillis: 50,
+            data: function (term) {
+                console.log(term);
+                console.log("term" + term);
+                return {
+                    term: term
+                };
+            },
+            results: function (data) {
+                console.log("data" + data);
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.completeName,
+                            slug: item.slug,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
     });
     // $('#js-rooms-table-filter').on('select2:select', select);
     $('#js-rooms-table-filter').on('select2:close', select);
 
 
     $('#editRoomTypeModalForm').on('submit', function (e) {
-        console.log("fire");
         e.preventDefault();
         $('#editRoomTypeModalSaveChangesBtn').prop('disabled', true);
         var error = '';
@@ -372,6 +397,38 @@ $(document).ready( function () {
         }
     })
 })
+
+function changeAvailability( e, dt, node, config, availability ) {
+    dt.buttons().disable();
+    var data = dt.rows( { selected: true } ).data();
+    var list = [];
+    for (var i = 0; i < data.length; i++)
+        list.push(data[i][0]);
+    var json = {
+        _token: "{{ csrf_token() }}",
+        available: availability,
+        rooms: list,
+    }
+    
+    $.ajax({
+        url: "{{ route('management/hotel/updateRoomsAvailability', session('management_hotel_id')) }}",
+        method: "POST",
+        data: json,
+        success:function(data) {
+            console.log('Change rooms availability successfully.');
+            // node.prop('disabled', false);
+            dt.button( 0 ).enable();
+            dt.ajax.reload();
+        },
+        error:function(request, status, error) {
+            console.log('Request: ' + request.responseText);
+            console.log('Status: ' + status);
+            console.log('Error: ' + error);
+            dt.buttons().enable();
+            // node.prop('disabled', false);
+        }
+    });
+}
 
 function select(e) {
     var data = $('#js-rooms-table-filter').select2('data');
