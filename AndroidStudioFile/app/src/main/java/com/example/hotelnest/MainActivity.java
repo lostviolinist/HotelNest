@@ -3,6 +3,7 @@ package com.example.hotelnest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private String email_string;
     private String password_string;
 
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         email=findViewById(R.id.loginEmail);
         password=findViewById(R.id.loginPassword);
         signUpButton = findViewById(R.id.signUpButton);
+        preferences = getSharedPreferences("Wodget", MODE_PRIVATE);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +68,11 @@ public class MainActivity extends AppCompatActivity {
                                     // Display the first 500 characters of the response string.
                                         if(response.equals(password_string)){
                                             message.setText("Login Successful!");
+                                            SharedPreferences.Editor editor = preferences.edit();
+                                            int count = preferences.getInt("count", 0);
+                                            editor.putInt("count", ++count);// 存入数据
+                                            editor.commit();// 提交修改
+                                            openHomeActivity();
                                         }else{
                                             message.setText("The email or password is wrong!");
                                         }
@@ -99,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openHomeActivity(){
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, home_activity.class);
         startActivity(intent);
     }
 }

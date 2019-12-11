@@ -10,7 +10,10 @@ class SearchController extends Controller
 {
 
     public static function calculate($pax, $room){
-        $arr = [ ];
+        if($pax+$room == 0){
+		$arr = [(0)];
+	}else{
+		$arr = [ ];
         $num = $room;
         for($i=0; $i<$num; $i++){
             $temp = $pax/$room;
@@ -18,6 +21,8 @@ class SearchController extends Controller
             array_push($arr, $temp);
             $pax = $pax - $temp;
             $room = $room - 1;
+		}
+	
         }
         return $arr;
     }
@@ -77,7 +82,7 @@ class SearchController extends Controller
         return json_encode($arr);
     }
 
-    public static function getHotelDetails($city="", $checkInDate="", $checkOutDate="", $adult=0, $child=0, $room=""){
+    public static function getHotelDetails($city="", $checkInDate="", $checkOutDate="", $adult=0, $child=0, $room=0){
 
         $hotelss = SearchController::searchHotelList($city, $checkInDate, $checkOutDate, $adult, $child, $room);
         $list = json_decode($hotelss);

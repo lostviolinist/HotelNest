@@ -125,9 +125,9 @@ Route::post('registerUser',function(Request $request){
 })->name('registerUser');
 
 Route::post('search',function(Request $request){
-    $data = $request->only('city','checkInDate','checkOutDate','adult','child','room');
+    //$data = $request->only('city','checkInDate','checkOutDate','adult','child','room');
     try{
-        $hotels = SearchController::getHotelDetails($data);
+        $hotels = SearchController::getHotelDetails($request->city, $request->checkInDate, $request->checkOutDate, $request->adult, $request->child, $request->room);
     }catch(Exception $e){
         echo $e;
         return "false";

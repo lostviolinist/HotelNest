@@ -68,7 +68,7 @@
             android:textColor="#8E8E8E"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/city" />
 
         <TextView
             android:id="@+id/textView13"
@@ -83,7 +83,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView12" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/city"
             android:layout_width="248dp"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
@@ -97,7 +97,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/searchButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="20dp"
@@ -105,8 +105,8 @@
             android:padding="8dp"
             android:radius="30dp"
             android:scaleType="fitCenter"
-            app:layout_constraintStart_toEndOf="@+id/editText"
-            app:layout_constraintTop_toTopOf="@+id/editText"
+            app:layout_constraintStart_toEndOf="@+id/city"
+            app:layout_constraintTop_toTopOf="@+id/city"
             app:srcCompat="@drawable/search_icon" />
 
         <androidx.cardview.widget.CardView
