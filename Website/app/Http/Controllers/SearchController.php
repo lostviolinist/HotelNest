@@ -32,9 +32,11 @@ class SearchController extends Controller
         $totalPax = $adult + $child;
         $a = SearchController::calculate($totalPax, $room);
 
-        $x =1;
+        
+        $x =1; //number in arr a
         $num1 = $a[0];
         $num2 = 0;
+
         $numRoom1 = count($a);
         $numRoom2 = 0;
 
@@ -52,7 +54,7 @@ class SearchController extends Controller
         }
 
         $query = 'select hotelId from (
-            select rooms.hotelId,(pax + addBed) AS b, COUNT(*) from rooms INNER JOIN room_infos 
+            select rooms.hotelId,(pax + addBed) AS b, pax, COUNT(*) from rooms INNER JOIN room_infos 
             where rooms.hotelId = room_infos.hotelId 
             AND rooms.roomId = room_infos.roomId 
             AND (rooms.hotelId, rooms.roomNum) 
@@ -60,16 +62,16 @@ class SearchController extends Controller
             where (bookings.bookingNum = booking_room.bookingNum) 
             AND ( (checkInDate <= "'.$checkInDate.'" AND checkOutDate > "'.$checkInDate.'") 
             OR (checkInDate >= "'.$checkInDate.'" AND checkInDate < "'.$checkOutDate.'"))) 
-            And ( pax + addBed =' . $num1 .
-            ($x > 1 ? ' OR pax + addBed ='.$num2 : ' ' ).
+            And ( (pax + addBed =' . $num1 . ' or pax = '. $num1 .')'.
+            ($x > 1 ? ' OR pax + addBed ='.$num2.' or pax ='.$num2.')' : ' ' ).
             ')
-            GROUP BY hotelId,(pax + addBed)
-            HAVING (COUNT(*)>= '. $numRoom1 .' and b= '.$num1.') '.
+            GROUP BY hotelId,(pax + addBed), pax
+            HAVING (COUNT(*)>= '. $numRoom1 .' and b= '.$num1.' or pax = '.$num1.') '.
             
-            ($x > 1 ? ' OR (COUNT(*)>= '.$numRoom2. ' and b= '.$num2. ') ' : "") .
+            ($x > 1 ? ' OR (COUNT(*)>= '.$numRoom2. ' and b= '.$num2. ' or pax = '.$num2.') ' : "") .
             ') T 
             GROUP by hotelId
-            HAVING COUNT(*)= '.$x;              
+            HAVING COUNT(*)= '.$x.' or count(*) = '.($x+1);              
             
         
         $results = DB::select($query);
