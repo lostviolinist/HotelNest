@@ -31,8 +31,12 @@ Route::get('/choose',function(){
     return view('choose');
 });
 
-Route::get('/hotel',function(){
-    return view('hotel');
+Route::get('/hotelpage',function(){
+    return view('hotelpage');
+});
+
+Route::get('/room',function(){
+    return view('room');
 });
 
 // ------------------------------------- MANAGEMENT ----------------------------------- //
