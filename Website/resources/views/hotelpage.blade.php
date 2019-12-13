@@ -17,7 +17,7 @@
     <div class="container-fluid mt-3">
         <section class="row">
             <div class="col-md-8">
-                <h1 class="title">HotelNet</h1>
+                <h1 class="title">HotelNest</h1>
             </div>
             <div class="col-md-4">
                 <div class=" float-right" role="group">
