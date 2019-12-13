@@ -43,6 +43,10 @@ Route::get('/confirm',function(){
     return view('confirm');
 });
 
+Route::get('/booking',function(){
+    return view('booking');
+});
+
 // ------------------------------------- MANAGEMENT ----------------------------------- //
 
 Route::get('management/book', function() {
