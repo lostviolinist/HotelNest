@@ -39,6 +39,10 @@ Route::get('/room',function(){
     return view('room');
 });
 
+Route::get('/confirm',function(){
+    return view('confirm');
+});
+
 // ------------------------------------- MANAGEMENT ----------------------------------- //
 
 Route::get('management/book', function() {
