@@ -175,7 +175,7 @@
           <div class="col"><button class="btn btn-outline-info">Top Reviewed</button></div>
 
         </div>
-        <div style="height: 300px overflow: scroll;">
+        <div style="height: 300px overflow = scroll;">
           <div class="card mb-3 mt-5" style="max-width: 1000px;">
             <div class="row no-gutters">
               <div class="col-md-4">
