@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".hotel_details"></activity>
         <activity
             android:name=".welcome"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -25,9 +25,7 @@
         <activity android:name=".search_result_activity" />
         <activity android:name=".home_activity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

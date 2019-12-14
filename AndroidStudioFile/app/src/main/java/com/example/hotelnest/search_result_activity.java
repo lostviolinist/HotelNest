@@ -3,9 +3,11 @@ package com.example.hotelnest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -66,6 +69,8 @@ public class search_result_activity extends AppCompatActivity {
     private SimpleAdapter adapter;
     private ArrayList<String> hotelname = new ArrayList<>();
     private ArrayList<String>  hotelpicture = new ArrayList<>();
+    private ArrayList<String> hoteldescription = new ArrayList<>();
+    private ArrayList<Integer> hotelprice = new ArrayList<>();
     private int[][] hotelpictureint = {
             {R.drawable.images_1_1,R.drawable.images_1_2,R.drawable.images_1_3},
             {R.drawable.images_2_1,R.drawable.images_2_2,R.drawable.images_2_3,R.drawable.images_2_4,R.drawable.images_2_5},
@@ -79,35 +84,30 @@ public class search_result_activity extends AppCompatActivity {
     };
     private String city, adult, child, room, checkInDate, checkOutDate;
 
-    private DateFormat format = new SimpleDateFormat("dd MMM yyyy");
+    private Button button;
 
-    private ArrayList<String> hotelList = new ArrayList<>();
 
-    private TextView message,goingCity, checkin, checkout;
 
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            Log.e("src",src);
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            Log.e("Bitmap","returned");
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("Exception",e.getMessage());
-            return null;
-        }
-    }
+
+
+
+    private TextView goingCity, checkin, checkout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result_activity);
 
+        button = findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), hotel_details.class);
+                startActivity(intent);
+            }
+        });
 
 
         city = getIntent().getStringExtra("city");
@@ -124,8 +124,57 @@ public class search_result_activity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LayoutInflater inflater = LayoutInflater.from(getParent());
-                View popup = inflater.inflate(R.layout.popup_view, null);
+
+                View popup = getLayoutInflater().inflate(R.layout.popup_view, null);
+                TextView info, des, title, price;
+                ImageView pic;
+                info = popup.findViewById(R.id.info);
+                des = popup.findViewById(R.id.des);
+                pic = popup.findViewById(R.id.popup_image);
+                title = view.findViewById(R.id.tv_sub_title);
+                price = popup.findViewById(R.id.price);
+                Log.i("title:",title.getText().toString());
+                price.setText("From: RM"+hotelprice.get(hotelname.indexOf(title.getText())));
+                info.setText(title.getText());
+                des.setText(hoteldescription.get(hotelname.indexOf(title.getText())));
+                int x,y;
+
+
+                if(hotelpicture.get(hotelname.indexOf(title.getText())).length()<16) {
+                    x = Integer.parseInt(hotelpicture.get(hotelname.indexOf(title.getText())).substring(8,9))-1;
+                    Log.i("x:",hotelpicture.get(hotelname.indexOf(title.getText())).substring(8,9));
+                    y = Integer.parseInt(hotelpicture.get(hotelname.indexOf(title.getText())).substring(10,11))-1;
+                    Log.i("y:",hotelpicture.get(hotelname.indexOf(title.getText())).substring(10,11));
+                }else{
+                    x = Integer.parseInt(hotelpicture.get(hotelname.indexOf(title.getText())).substring(8,10));
+                    Log.i("x:",hotelpicture.get(hotelname.indexOf(title.getText())).substring(8,10));
+                    y = Integer.parseInt(hotelpicture.get(hotelname.indexOf(title.getText())).substring(11,12))-1;
+                    Log.i("y:",hotelpicture.get(hotelname.indexOf(title.getText())).substring(11,12));
+                    if(x==50){
+                        x=7;
+                    }else if(x==52){
+                        x=8;
+                    }
+                }
+                pic.setImageDrawable(getResources().getDrawable(hotelpictureint[x][y]));
+
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popup, width, height, focusable);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window tolken
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                // dismiss the popup window when touched
+                popup.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                });
 
             }
         });
@@ -183,6 +232,8 @@ public class search_result_activity extends AppCompatActivity {
                                 Log.i("hotel name", reader.getJSONObject(i).getString("name"));
                                 hotelname.add( reader.getJSONObject(i).getString("name"));
                                 hotelpicture.add(reader.getJSONObject(i).getString("picturePath"));
+                                hoteldescription.add(reader.getJSONObject(i).getString("description"));
+                                hotelprice.add(reader.getJSONObject(i).getInt("lowestPrice"));
                                 lstDraftItem = new ArrayList<HashMap<String, Object>>();
                                 //适配器SimpleAdapter数据绑定
                                 //错误:构造函数SimpleAdapter未定义 需把this修改为MainActivity.this
