@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php 
+  use App\Http\Controllers\SearchController;
+
+  $city =  $_REQUEST['city'];
+  $checkInDate =  $_REQUEST['checkInDate'];
+  $checkOutDate =  $_REQUEST['checkOutDate'];
+  $adult =  $_REQUEST['adult'];
+  $child =  $_REQUEST['child'];
+  $room =  $_REQUEST['room'];
+
+  $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $checkOutDate, $adult, $child, $room));
+  
+?>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,8 +92,6 @@
 
        Rooms
       </div>
-      
-
 
       <button type="submit" class="btn btn-primary mb-2" style="background-color: #586BA4;">Search</button>
     </form>
@@ -173,9 +185,44 @@
           <div class="col"><button class="btn btn-outline-info">Lowest Stars</button></div>
           <div class="col"><button class="btn btn-outline-info">Star and Price</button></div>
           <div class="col"><button class="btn btn-outline-info">Top Reviewed</button></div>
-
         </div>
+
+
         <div style="height: 300px overflow = scroll;">
+
+          <?php 
+            for($i=0; $i<count($arr); $i++){
+          ?>
+              <div class="card mb-3 mt-5" style="max-width: 1000px;">
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <img src="<?php echo $arr[$i]->picturePath ?>" class="card-img" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title"><?php echo $arr[$i]->name ?></h5>
+                      <p class="card-text"><?php echo $arr[$i]->description ?></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <?php } ?>
+
+          <!-- <div class="card mb-3 mt-5" style="max-width: 1000px;">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="112963088.png" class="card-img" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">The St. Regis</h5>
+                  <p class="card-text">Description description description description description Description
+                    description description description description</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="card mb-3 mt-5" style="max-width: 1000px;">
             <div class="row no-gutters">
               <div class="col-md-4">
@@ -186,11 +233,11 @@
                   <h5 class="card-title">The St. Regis</h5>
                   <p class="card-text">Description description description description description Description
                     description description description description</p>
-
                 </div>
               </div>
             </div>
           </div>
+
           <div class="card mb-3 mt-5" style="max-width: 1000px;">
             <div class="row no-gutters">
               <div class="col-md-4">
@@ -201,11 +248,11 @@
                   <h5 class="card-title">The St. Regis</h5>
                   <p class="card-text">Description description description description description Description
                     description description description description</p>
-
                 </div>
               </div>
             </div>
           </div>
+
           <div class="card mb-3 mt-5" style="max-width: 1000px;">
             <div class="row no-gutters">
               <div class="col-md-4">
@@ -216,41 +263,11 @@
                   <h5 class="card-title">The St. Regis</h5>
                   <p class="card-text">Description description description description description Description
                     description description description description</p>
-
                 </div>
               </div>
             </div>
-          </div>
-          <div class="card mb-3 mt-5" style="max-width: 1000px;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="112963088.png" class="card-img" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">The St. Regis</h5>
-                  <p class="card-text">Description description description description description Description
-                    description description description description</p>
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card mb-3 mt-5" style="max-width: 1000px;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="112963088.png" class="card-img" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">The St. Regis</h5>
-                  <p class="card-text">Description description description description description Description
-                    description description description description</p>
-
-                </div>
-              </div>
-            </div>
-          </div>
+          </div> -->
+          
         </div>
 
       </div>

@@ -29,7 +29,7 @@ Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('/choose',function(){
     return view('choose');
-});
+})->name('choose');
 
 Route::get('/hotelpage',function(){
     return view('hotelpage');
@@ -46,6 +46,7 @@ Route::get('/confirm',function(){
 Route::get('/booking',function(){
     return view('booking');
 });
+
 
 // ------------------------------------- MANAGEMENT ----------------------------------- //
 

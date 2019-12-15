@@ -39,24 +39,24 @@ use Illuminate\Support\Facades\DB;
         <tr>
             <td>
                 <div class="card ml-5 mt-5 mt-5 " style="width: 700px">
-                    <form class="container">
+                    <form class="container" method="get" action="{{ route('choose') }}">
                         <div class="form-row p-3">
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Where</label>
-                                <input type="text" class="form-control" id="inputEmail4" placeholder="City">
+                                <input type="text" class="form-control" id="inputEmail4" placeholder="City" name="city">
                             </div>
 
                         </div>
                         <div class="form-row p-3">
                             <div class="form-group col-md-3 mr-5">
                                 <label for="inputAddress">Start Date</label>
-                                <input type="date" class="form-control" id="inputAddress" placeholder="12 Oct 2019">
+                                <input type="date" class="form-control" id="inputAddress" placeholder="12 Oct 2019" name="checkInDate">
                             </div>
 
 
                             <div class="form-group col-md-3 ml-3">
                                 <label for="inputAddress"> End Date</label>
-                                <input type="date" class="form-control" id="inputAddress" placeholder="13 Oct 2019">
+                                <input type="date" class="form-control" id="inputAddress" placeholder="13 Oct 2019" name="checkOutDate">
                             </div>
                         </div>
 
@@ -64,15 +64,15 @@ use Illuminate\Support\Facades\DB;
                         <div class="form-row p-3">
                             <div class="form-group col-md-2 mr-5">
                                 <label for="inputCity">Adults</label>
-                                <input type="number" class="form-control" id="inputCity" min="1">
+                                <input type="number" class="form-control" id="inputCity" min="1" name="adult">
                             </div>
                             <div class="form-group col-md-2 ml-5">
                                 <label for="inputState">Children</label>
-                                <input type="number" class="form-control" id="inputCity" min="0">
+                                <input type="number" class="form-control" id="inputCity" min="0" name="child">
                             </div>
                             <div class="form-group col-md-2 ml-5">
                                 <label for="inputState">Rooms</label>
-                                <input type="number" class="form-control" id="inputCity" min="1">
+                                <input type="number" class="form-control" id="inputCity" min="1" name="room">
                             </div>
 
                         </div>
@@ -96,10 +96,7 @@ use Illuminate\Support\Facades\DB;
                             
                                 
                                 <img src="<?php print_r($arr[0]) ?>" alt="St.Regis" style="width:100%">
-                                    
-                                
-                            
-                        
+
                                 
                             </div>
                         </div>
