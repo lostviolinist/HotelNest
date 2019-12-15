@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<?php
+
+use App\Http\Controllers\SelectController;
+use Illuminate\Http\Request;
+
+$url = $request->path(); 
+echo $url;
+
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

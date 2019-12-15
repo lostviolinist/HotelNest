@@ -31,9 +31,9 @@ Route::get('/choose',function(){
     return view('choose');
 })->name('choose');
 
-Route::get('/hotelpage',function(){
+Route::get('/hotelpage/{hotelId}',function(){
     return view('hotelpage');
-});
+})->name('hotelpage');
 
 Route::get('/room',function(){
     return view('room');

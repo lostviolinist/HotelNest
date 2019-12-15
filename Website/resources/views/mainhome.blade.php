@@ -48,13 +48,13 @@ use Illuminate\Support\Facades\DB;
 
                         </div>
                         <div class="form-row p-3">
-                            <div class="form-group col-md-3 mr-5">
+                            <div class="form-group col-md-4 mr-5">
                                 <label for="inputAddress">Start Date</label>
                                 <input type="date" class="form-control" id="inputAddress" placeholder="12 Oct 2019" name="checkInDate">
                             </div>
 
 
-                            <div class="form-group col-md-3 ml-3">
+                            <div class="form-group col-md-4 ml-3">
                                 <label for="inputAddress"> End Date</label>
                                 <input type="date" class="form-control" id="inputAddress" placeholder="13 Oct 2019" name="checkOutDate">
                             </div>
@@ -130,7 +130,7 @@ use Illuminate\Support\Facades\DB;
                     <p>Penang</p>
                     
                     <?php
-                        $arr = json_decode(ImageController::getHomeImage("Kuala Lumpur"));
+                        $arr = json_decode(ImageController::getHomeImage("George Town"));
                         //for ($i = 0; $i < count($arr); $i++) { ?>
 
                     <div class="row">
