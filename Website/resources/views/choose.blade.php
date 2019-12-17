@@ -41,64 +41,6 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
     </section>
   </div>
 
-  <!-- <div class="ml-5 mt-5">
-    <form class="form-inline">
-      <label class="sr-only" for="inlineFormInputName2">Name</label>
-      <input type="text" class="form-control mb-2 mr-5" id="inlineFormInputName2" placeholder="Where">
-
-      <label class="sr-only" for="inlineFormInputGroupUsername2">Check in</label>
-      <div class="input-group mb-2 mr-sm-2">
-
-        <input type="date" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Check in">
-      </div>
-
-      <label class="sr-only" for="inlineFormInputGroupUsername2">to</label>
-      <div class="input-group mb-2 mr-sm-2">
-
-        to
-      </div>
-      <label class="sr-only" for="inlineFormInputGroupUsername2">Check Out</label>
-      <div class="input-group mb-2 mr-5">
-
-        <input type="date" class="form-control" id="inlineFormInputGroupUsername3" placeholder="Check Out">
-      </div>
-      <label class="sr-only" for="inlineFormInputGroupUsername2">Pax</label>
-      <div class="input-group mb-2 mr-sm-2">
-
-        <input type="number" class="form-control" style="width: 50px;" id="inlineFormInputGroupUsername4"
-          placeholder="1">
-      </div>
-      <label class="sr-only" for="inlineFormInputGroupUsername2">Pax</label>
-      <label class="sr-only" for="inlineFormInputGroupUsername2">to</label>
-      <div class="input-group mb-2 mr-5">
-
-        Adults
-      </div>
-      <div class="input-group mb-2 mr-sm-2">
-
-        <input type="number" class="form-control" style="width: 50px;" id="inlineFormInputGroupUsername5"
-          placeholder="1">
-      </div>
-      <label class="sr-only" for="inlineFormInputGroupUsername2">to</label>
-      <div class="input-group mb-2 mr-5">
-
-        Children
-      </div>
-      <div class="input-group mb-2 mr-sm-2">
-
-        <input type="number" class="form-control" style="width: 50px;" id="inlineFormInputGroupUsername5"
-          placeholder="1">
-      </div>
-      
-      <div class="input-group mb-2 mr-5">
-
-       Rooms
-      </div>
-
-      <button type="submit" class="btn btn-primary mb-2" style="background-color: #586BA4;">Search</button>
-    </form>
-  </div> -->
-
   <div class="ml-5 mt-5">
     <div class="row">
       <div class="col-sm">
@@ -139,10 +81,6 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
       <div class="col-md-9">
         <div class="row">
           <div class="col"> <button class="btn btn-success"> Recommended </button> </div>
-          <!-- <div class="col"> <button class="btn btn-outline-info">Cheapest</button></div>
-          <div class="col"><button class="btn btn-outline-info">Lowest Stars</button></div>
-          <div class="col"><button class="btn btn-outline-info">Star and Price</button></div>
-          <div class="col"><button class="btn btn-outline-info">Top Reviewed</button></div> -->
         </div>
 
 
@@ -167,67 +105,6 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
               </div>
             </div>
           <?php } ?>
-
-          <!-- <div class="card mb-3 mt-5" style="max-width: 1000px;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="112963088.png" class="card-img" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">The St. Regis</h5>
-                  <p class="card-text">Description description description description description Description
-                    description description description description</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card mb-3 mt-5" style="max-width: 1000px;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="112963088.png" class="card-img" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">The St. Regis</h5>
-                  <p class="card-text">Description description description description description Description
-                    description description description description</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card mb-3 mt-5" style="max-width: 1000px;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="112963088.png" class="card-img" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">The St. Regis</h5>
-                  <p class="card-text">Description description description description description Description
-                    description description description description</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card mb-3 mt-5" style="max-width: 1000px;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="112963088.png" class="card-img" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">The St. Regis</h5>
-                  <p class="card-text">Description description description description description Description
-                    description description description description</p>
-                </div>
-              </div>
-            </div>
-          </div> -->
-
         </div>
 
       </div>
