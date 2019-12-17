@@ -154,5 +154,49 @@ echo $url;
         </div>
 
     </div>
+    <div class="container mt-5">
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Room type</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Twin Room</th>
+                <td>Description description</td>
+                <td>RM719/night</td>
+                <td class="ml-5"><button type="button" class="btn btn-outline-primary">Book now</button> </td>
+              </tr>
+              <tr>
+                <th scope="row">King Room</th>
+                <td>Description description</td>
+                <td>RM819/night</td>
+                <td class="ml-5"><button type="button" class="btn btn-outline-primary">Book now</button> </td>
+              </tr>
+              <tr>
+                <th scope="row">Family Room</th>
+                <td>Description description</td>
+                <td>RM1000/night</td>
+                <td class="ml-5"><button type="button" class="btn btn-outline-primary">Book now</button> </td>
+              </tr>
+              <tr>
+                <th scope="row">Family Room</th>
+                <td>Description description</td>
+                <td>RM1000/night</td>
+                <td class="ml-5"><button type="button" class="btn btn-outline-primary">Book now</button> </td>
+              </tr>
+              <tr>
+                <th scope="row">Family Room</th>
+                <td>Description description</td>
+                <td>RM1000/night</td>
+                <td class="ml-5"><button type="button" class="btn btn-outline-primary">Book now</button> </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
 </body>
 </html>
