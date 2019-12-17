@@ -4,10 +4,16 @@
 <?php
 
 use App\Http\Controllers\SelectController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 
-$url = $request->path(); 
-echo $url;
+$checkInDate =  $_REQUEST['cid'];
+$checkOutDate =  $_REQUEST['cod'];
+$hotelId = $_REQUEST['id'];
+
+$arr = json_decode(SelectController::getHotelInfo($hotelId));
+$image = json_decode(ImageController::getImage($hotelId));
+$room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $checkOutDate));
 
 ?>
 
@@ -38,74 +44,37 @@ echo $url;
             </div>
         </section>
     </div>
-
     <div class="container">
-
-  
-
   <hr class="mt-2 mb-5">
 
-  <div class="row text-center text-lg-left">
+  <!-- <div class="row text-center text-lg-left"> -->
 
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/pWkk7iiCoDM/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/aob0ukAYfuI/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/EUfxH-pze7s/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/M185_qYH8vg/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/sesveuG_rNo/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/AvhMzHwiE_0/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/2gYsZUmockw/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/EMSDtjVHdQ8/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/8mUEy0ABdNE/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/G9Rfc1qccH4/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/aJeH0KcFkuc/400x300" alt="">
-          </a>
-    </div>
-    <div class="col-lg-3 col-md-4 col-6">
-      <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/p2TQ-3Bh3Oo/400x300" alt="">
-          </a>
+  <!-- <?php //for($i=0; $i<count($image); $i++){ ?>
+      <div class="col-lg-3 col-md-4 col-6">
+        <a href="#" class="d-block mb-4 h-100">
+              <img class="img-fluid img-thumbnail" src="<?php //print_r($image[$i]) ?>" alt="">
+            </a>
+      </div>
+    <?php //} ?> -->
+    <div class="container px-0">
+    <div class="row px-0 mx-0">
+      <img class="picture-big col-lg-4 col-md-6 col-sm-8 px-0" src="<?php print_r($image[0]) ?>" alt="hotel" />
+      <div class="col-lg-8 col-md-6 col-sm-4 px-0 mx-0">
+        <div class="row px-0 mx-0">
+          <div class="col-lg-4 col-md-6 px-0 mx-0 d-flex d-sm-block">
+            <img class="picture-small col-6 col-sm-12 px-0" src="<?php print_r($image[1]) ?>" alt="hotel" />
+            <img class="picture-small col-6 col-sm-12 px-0" src="<?php print_r($image[2]) ?>" alt="hotel" />
+          </div>
+          <div class="col-lg-4 col-md-6 px-0 d-none d-md-block">
+            <img class="picture-small col-sm-12 px-0" src="<?php print_r($image[3]) ?>" alt="hotel" />
+            <img class="picture-small col-sm-12 px-0" src="<?php print_r($image[4]) ?>" alt="hotel" />
+          </div>
+          <div class="col-md-4 px-0 d-none d-lg-block">
+            <img class="picture-small col-12 px-0" src="<?php print_r($image[5]) ?>" alt="hotel" />
+            <img class="picture-small col-12 px-0" src="<?php print_r($image[6]) ?>" alt="hotel" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -114,11 +83,10 @@ echo $url;
     <div class="container mt-5">
         <div class="row">
             <div class="col">
-                <h1>The St. Regis</h1>
-                <h4>Kuala Lumpur</h4>
-                <p>Description description description
-                    description description description
-                    description description description.
+                <h1><?php echo $arr[0]->name ?></h1>
+                <h4><?php echo $arr[0]->city ?></h4>
+                <p><?php echo $arr[0]->operationTime ?><br>
+                <?php echo $arr[0]->description ?>
                 </p>
             </div>
             <div class="col">
@@ -149,7 +117,6 @@ echo $url;
             </div>
             <div class="col">
                     <a class="btn btn-md btn-outline-secondary signin-button" href="#"> More Photos </a>
-                    RM719/night
             </div>
         </div>
 
@@ -165,36 +132,14 @@ echo $url;
               </tr>
             </thead>
             <tbody>
+              <?php for($i=0; $i<count($room); $i++) { ?>
               <tr>
-                <th scope="row">Twin Room</th>
-                <td>Description description</td>
-                <td>RM719/night</td>
+                <th scope="row"><?php echo $room[$i]->type ?></th>
+                <td><?php echo $room[$i]->description ?></td>
+                <td>RM<?php echo $room[$i]->price ?>/night</td>
                 <td class="ml-5"><button type="button" class="btn btn-outline-primary">Book now</button> </td>
               </tr>
-              <tr>
-                <th scope="row">King Room</th>
-                <td>Description description</td>
-                <td>RM819/night</td>
-                <td class="ml-5"><button type="button" class="btn btn-outline-primary">Book now</button> </td>
-              </tr>
-              <tr>
-                <th scope="row">Family Room</th>
-                <td>Description description</td>
-                <td>RM1000/night</td>
-                <td class="ml-5"><button type="button" class="btn btn-outline-primary">Book now</button> </td>
-              </tr>
-              <tr>
-                <th scope="row">Family Room</th>
-                <td>Description description</td>
-                <td>RM1000/night</td>
-                <td class="ml-5"><button type="button" class="btn btn-outline-primary">Book now</button> </td>
-              </tr>
-              <tr>
-                <th scope="row">Family Room</th>
-                <td>Description description</td>
-                <td>RM1000/night</td>
-                <td class="ml-5"><button type="button" class="btn btn-outline-primary">Book now</button> </td>
-              </tr>
+              <?php } ?>
             </tbody>
           </table>
     </div>

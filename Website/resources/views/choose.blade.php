@@ -99,7 +99,7 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
                     <h5 class="card-title"><?php echo $arr[$i]->name ?></h5>
                     <p class="card-text"><?php echo $arr[$i]->description ?></p>
                     <p class="card-text">RM<?php echo $arr[$i]->lowestPrice ?>/night</p>
-                    <a class="btn btn-primary float-right mt-2 mb-4" href="{{ route('hotelpage', ['hotelId' =>$arr[$i]-> hotelId])}}" role="button">See More</a>
+                    <a class="btn btn-primary float-right mt-2 mb-4" href="{{ route('hotelpage', ['id'=> $arr[$i]->hotelId, 'cid'=> $checkInDate, 'cod'=>$checkOutDate])}}" role="button">See More</a>
                   </div>
                 </div>
               </div>
