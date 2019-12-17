@@ -21,6 +21,11 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/bootstrap-4.3.1/css/bootstrap.min.css">
   <title>Choose a Hotel</title>
@@ -51,14 +56,29 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
               <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter a city..." name = "city">
 
             </div>
-            <div class="form-group p-2">
-              <label for="exampleInputPassword1">Check-in-date</label>
-              <input type="date" class="form-control" id="exampleInputPassword1" name = "checkInDate">
-            </div>
-            <div class="form-group p-2">
-              <label for="exampleInputPassword1">Check-out-date</label>
-              <input type="date" class="form-control" id="exampleInputPassword1" name = "checkOutDate">
-            </div>
+            <div class="container">
+                            
+                                Start Date <input id="checkInDate" width="260" name="checkInDate"/>
+                                End Date <input id="checkOutDate" width="260" name="checkOutDate"/>
+                            </div>
+                            <script>
+                                var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+                                $('#checkInDate').datepicker({
+                                    uiLibrary: 'bootstrap4',
+                                    iconsLibrary: 'fontawesome',
+                                    minDate: today,
+                                    maxDate: function() {
+                                        return $('#checkOutDate').val();
+                                    }
+                                });
+                                $('#checkOutDate').datepicker({
+                                    uiLibrary: 'bootstrap4',
+                                    iconsLibrary: 'fontawesome',
+                                    minDate: function() {
+                                        return $('#checkInDate').val();
+                                    }
+                                });
+                            </script>
             <div class="form-row p-2">
               <div class="form-group col-md-3 m-3">
                 <label for="inputCity">Adults</label>
