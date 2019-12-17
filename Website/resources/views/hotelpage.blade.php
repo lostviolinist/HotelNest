@@ -58,20 +58,20 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
     <?php //} ?> -->
     <div class="container px-0">
     <div class="row px-0 mx-0">
-      <img class="picture-big col-lg-4 col-md-6 col-sm-8 px-0" src="<?php print_r($image[0]) ?>" alt="hotel" />
+      <img class="picture-big col-lg-4 col-md-6 col-sm-8 px-0" src="<?php print_r($image[0]) ?>" style="height:310px" alt="hotel" />
       <div class="col-lg-8 col-md-6 col-sm-4 px-0 mx-0">
         <div class="row px-0 mx-0">
           <div class="col-lg-4 col-md-6 px-0 mx-0 d-flex d-sm-block">
-            <img class="picture-small col-6 col-sm-12 px-0" src="<?php print_r($image[1]) ?>" alt="hotel" />
-            <img class="picture-small col-6 col-sm-12 px-0" src="<?php print_r($image[2]) ?>" alt="hotel" />
+            <img class="picture-small col-6 col-sm-12 px-0" style="width:250.5px; height:155px" src="<?php print_r($image[1]) ?>" alt="hotel" />
+            <img class="picture-small col-6 col-sm-12 px-0" style="width:250.5px; height:155px" src="<?php print_r($image[2]) ?>" alt="hotel" />
           </div>
           <div class="col-lg-4 col-md-6 px-0 d-none d-md-block">
-            <img class="picture-small col-sm-12 px-0" src="<?php print_r($image[3]) ?>" alt="hotel" />
-            <img class="picture-small col-sm-12 px-0" src="<?php print_r($image[4]) ?>" alt="hotel" />
+            <img class="picture-small col-sm-12 px-0" style="width:250.5px; height:155px" src="<?php print_r($image[3]) ?>" alt="hotel" />
+            <img class="picture-small col-sm-12 px-0" style="width:250.5px; height:155px" src="<?php print_r($image[4]) ?>" alt="hotel" />
           </div>
           <div class="col-md-4 px-0 d-none d-lg-block">
-            <img class="picture-small col-12 px-0" src="<?php print_r($image[5]) ?>" alt="hotel" />
-            <img class="picture-small col-12 px-0" src="<?php print_r($image[6]) ?>" alt="hotel" />
+            <img class="picture-small col-12 px-0" style="width:250.5px; height:155px" src="<?php print_r($image[5]) ?>" alt="hotel" />
+            <img class="picture-small col-12 px-0" style="width:250.5px; height:155px" src="<?php print_r($image[6]) ?>" alt="hotel" />
           </div>
         </div>
       </div>

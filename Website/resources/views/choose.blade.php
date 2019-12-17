@@ -92,14 +92,14 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
             <div class="card mb-3 mt-3" style="max-width: 1000px;">
               <div class="row no-gutters">
                 <div class="col-md-4">
-                  <img src="<?php echo $arr[$i]->picturePath ?>" class="card-img" alt="...">
+                  <img src="<?php echo $arr[$i]->picturePath ?>" class="card-img" style="height:250px " alt="...">
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title"><?php echo $arr[$i]->name ?></h5>
                     <p class="card-text"><?php echo $arr[$i]->description ?></p>
                     <p class="card-text">RM<?php echo $arr[$i]->lowestPrice ?>/night</p>
-                    <a class="btn btn-primary float-right mt-2 mb-4" href="{{ route('hotelpage', ['id'=> $arr[$i]->hotelId, 'cid'=> $checkInDate, 'cod'=>$checkOutDate])}}" role="button">See More</a>
+                    <a class="btn btn-primary float-right float-bottom mt-2 mb-2" href="{{ route('hotelpage', ['id'=> $arr[$i]->hotelId, 'cid'=> $checkInDate, 'cod'=>$checkOutDate])}}" role="button">See More</a>
                   </div>
                 </div>
               </div>
