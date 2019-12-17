@@ -55,7 +55,7 @@ use Illuminate\Support\Facades\DB;
 
 
                             <div class="form-group col-md-4 ml-3">
-                                <label for="inputAddress"> End Date</label>
+                                <label for="inputAddress">End Date</label>
                                 <input type="date" class="form-control" id="inputAddress" placeholder="13 Oct 2019" name="checkOutDate">
                             </div>
                         </div>
