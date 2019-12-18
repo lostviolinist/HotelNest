@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2019 at 09:52 AM
+-- Generation Time: Dec 18, 2019 at 02:59 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -84,8 +84,7 @@ CREATE TABLE `bookings` (
 INSERT INTO `bookings` (`bookingNum`, `fullName`, `email`, `phone`, `icNum`, `checkInDate`, `checkOutDate`, `remark`, `adult`, `child`, `roomNo`, `totalPrice`, `hotelId`, `created_at`, `updated_at`) VALUES
 (1, 'Heng Jun Xi', 'a@a.com', '012', '12', '2019-12-06', '2019-12-08', 's', 2, 3, 3, 123, 1, '2019-12-03 16:00:00', NULL),
 (2, 'Loh Shu Yi', 'loh@loh.com', '0124893823', '980330085972', '2019-12-08', '2019-12-11', 'Please prepare welcome drink.', 2, 2, 2, 123.5, 2, '2019-12-05 16:00:00', NULL),
-(3, 'Joyce', 'joy@joy.com', '016', '981018111112', '2019-12-07', '2019-12-10', ' ', 4, 3, 3, 320, 3, '2019-12-06 16:00:00', NULL),
-(4, 'Milo Heng', 'milo@milo.com', '456132', '459832321', '2019-12-11', '2019-12-13', 'please ', 2, 0, 1, 200, 1, '2019-12-09 16:00:00', NULL);
+(3, 'Joyce', 'joy@joy.com', '016', '981018111112', '2019-12-07', '2019-12-10', ' ', 4, 3, 3, 320, 3, '2019-12-10 16:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -99,7 +98,7 @@ CREATE TABLE `booking_room` (
   `hotelId` bigint(20) NOT NULL,
   `roomId` bigint(20) NOT NULL,
   `addBed` tinyint(1) NOT NULL,
-  `roomNum` varchar(50) NOT NULL
+  `roomNum` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -112,10 +111,9 @@ INSERT INTO `booking_room` (`no`, `bookingNum`, `hotelId`, `roomId`, `addBed`, `
 (3, 1, 1, 3, 0, 'B103'),
 (4, 2, 2, 2, 0, '1-07'),
 (5, 2, 2, 2, 0, '1-08'),
-(6, 3, 3, 2, 0, 'pending'),
-(7, 3, 3, 2, 0, 'pending'),
-(8, 3, 3, 3, 0, 'pending'),
-(9, 4, 1, 2, 0, 'B103');
+(6, 3, 3, 2, 0, NULL),
+(7, 3, 3, 2, 0, NULL),
+(8, 3, 3, 3, 0, NULL);
 
 -- --------------------------------------------------------
 
