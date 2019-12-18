@@ -93,7 +93,7 @@ Bookings
             <div class="form-group row">
               <label class="col-4 col-lg-3">Adult:</label>
               <div class="col-8 col-lg-9">
-                <input class="form-control" type="number" min="0" value="" />
+                <input class="form-control" type="number" min="1" value="" />
               </div>
             </div>
             <div class="form-group row">
@@ -225,22 +225,29 @@ Bookings
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input js-room-type-filter" type="checkbox" value="" id="filter-single-room">
-          <label class="form-check-label" for="filter-single-room">
-            Single Room
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input js-room-type-filter" type="checkbox" value="" id="filter-double-room">
-          <label class="form-check-label" for="filter-double-room">
-            Double Room
-          </label>
-        </div>
-        <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="filter-has-children">
           <label class="form-check-label" for="filter-has-children">
             Has Children
           </label>
+        </div>
+        <div id="filter-room-type">
+          <div class="d-flex justify-content-center my-3">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+          <!-- <div class="form-check">
+            <input class="form-check-input js-room-type-filter" type="checkbox" value="" id="filter-single-room">
+            <label class="form-check-label" for="filter-single-room">
+              Single Room
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input js-room-type-filter" type="checkbox" value="" id="filter-double-room">
+            <label class="form-check-label" for="filter-double-room">
+              Double Room
+            </label>
+          </div> -->
         </div>
       </div>
     </aside>
@@ -327,7 +334,7 @@ function formatExtraBookingDetail ( d ) {
             '</div>'+
             '<div class="col-1">'+
             '<button class="btn btn-outline-primary px-1 py-0" onclick="editBooking(this)"><i class="fas fa-fw fa-edit"></i></button>'+
-            '<button class="btn btn-outline-danger px-1 py-0"><i class="fas fa-fw fa-trash"></i></button>'+
+            '<button class="btn btn-outline-danger px-1 py-0" onclick="deleteBooking(this)"><i class="fas fa-fw fa-trash"></i></button>'+
             '</div>'+
           '</div>';
 }
@@ -405,11 +412,80 @@ function editBooking(element) {
   $('#editBookingRoomCollapse').collapse('show');
 }
 
+function deleteBooking(element) {
+  console.log(element);
+  $(element).prop("disabled", true);
+  var tr = $(element).closest('tr').prev();
+  var row = $('#bookings-table').DataTable().row( tr );
+  var data = row.data();
+  console.log(data[0]);
+  var url = "{{ route('management/hotel/booking/delete', [session('management_hotel_id'), ':bookingNum']) }}";
+  console.log(url);
+  url = url.replace(':bookingNum',data[0]);
+  $.ajax({
+    url: url,
+    method: "POST",
+    data: {
+      _token: "{{ csrf_token() }}"
+    },
+    success:function(data) {
+      if (data === "true") {
+        console.log("Delete booking success");
+        $('#bookings-table').DataTable().ajax.reload();
+      } else {
+        console.log("Delete booking failed");
+      }
+      $(element).prop("disabled", false);
+    },
+    error:function(error) {
+      console.log('Error: ' + error);
+      $(element).prop("disabled", false);
+    }
+  });
+  $('#js-modal-booking-id').text(data[0]);
+}
+
 $(document).ready( function () {
+  var filter = [];
+  $.ajax({
+    url: "{{ route('management/hotel/roomTypes', session('management_hotel_id')) }}",
+    method: "GET",
+    success:function(data) {
+      var json = JSON.parse(data);
+      console.log(json['data']);
+      console.log('Get room types successfully.');
+      var res = "";
+      for (var i = 0; i < json['data'].length; i++) {
+        var type = json['data'][i][0];
+        var text = '<div class="form-check">'+
+            '<input class="form-check-input js-room-type-filter" type="checkbox" value="" id="filter-'+type+'">'+
+            '<label class="form-check-label" for="filter-'+type+'">'+
+              type+
+            '</label>'+
+          '</div>';
+        res += text;
+      }
+      console.log(res);
+      $('#filter-room-type').html(res);
+      $('.js-room-type-filter').each(function(index, element) {
+        $(this).change(function() {
+          applyCumulativeFilter(filter, table.column(9), element, $(this).next().text().trim());
+        });
+      });
+    },
+    error:function(error) {
+        console.log('Error: ' + error);
+    }
+  });
   $('#fetch-data-datetime').text(new Date().toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'full' }));
   var table = $('#bookings-table').DataTable({
+    createdRow: function( row, data, dataIndex ) {
+      $(row).addClass( 'js-bookings-td' );
+    },
     language: {
-      searchPlaceholder: "Booking # / Room # / Guest Name"
+      searchPlaceholder: "Booking # / Room # / Guest Name",
+      loadingRecords: '<div class="d-flex justify-content-center my-3"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div></div>'
+      // '<span class="sr-only text-primary">Loading...</span> ',
     },
     ajax: '{{ route("management/hotel/bookings", session("management_hotel_id")) }}',
     columns: [
@@ -426,8 +502,7 @@ $(document).ready( function () {
     ],
     order: [[0, 'desc']]
   });
-  $('#bookings-table').on('click', 'tbody tr td', function () {
-    console.log("fire");
+  $('#bookings-table').on('click', '.js-bookings-td', function () {
       var tr = $(this).closest('tr');
       var row = table.row( tr );
 
@@ -443,12 +518,7 @@ $(document).ready( function () {
       }
   });
   
-  var filter = [];
-  $('.js-room-type-filter').each(function(index, element) {
-    $(this).change(function() {
-      applyCumulativeFilter(filter, table.column(9), element, $(this).next().text().trim());
-    });
-  });
+  
 
   $('#filter-check-in-today').change(function() { 
     const date = new Date().toLocaleString('en-GB', { dateStyle: 'medium'});

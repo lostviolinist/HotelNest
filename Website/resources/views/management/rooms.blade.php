@@ -139,15 +139,7 @@ Rooms
         </div> -->
         <div class="form-group">
             <select class="form-control" id="js-rooms-table-filter" style="width: 100%;" multiple="multiple">
-                <optgroup label="Availability">
-                    <option>Enabled</option>
-                    <option>Disabled</option>
-                </optgroup>
-                <optgroup label="Room Type">
-                    <option>Single Room</option>
-                    <option>Double Room</option>
-                    <option>Quadruple Room</option>
-                </optgroup>
+                
             </select>
         </div>
         <table id="rooms-table" class="table table-hover table-fixed text-center booking-table" width="100%">
@@ -262,7 +254,7 @@ Rooms
 </div>
 <script>
 $(document).ready( function () {
-    $('[data-toggle="tooltip"]').tooltip();
+    // $('[data-toggle="tooltip"]').tooltip();
     var typeTable = $('#room-type-table').DataTable({
         ajax: '{{ route("management/hotel/roomTypes", session("management_hotel_id")) }}',
         searching: false, paging: false, info: false,
@@ -272,7 +264,10 @@ $(document).ready( function () {
             { orderable: false, searchable: false, className: 'text-left', },
             { orderable: false, searchable: false, className: 'text-right', },
         ],
-        order: [[1, 'asc']]
+        order: [[1, 'asc']],
+        language: {
+            loadingRecords: '<div class="d-flex justify-content-center my-3"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div></div>'
+        }
     });
     var roomTable = $('#rooms-table').DataTable({
         ajax: '{{ route("management/hotel/rooms", session("management_hotel_id")) }}',
@@ -309,6 +304,7 @@ $(document).ready( function () {
         select: true,
         language: {
             searchPlaceholder: 'Room No.',
+            loadingRecords: '<div class="d-flex justify-content-center my-3"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div></div>'
         },
         columns: [
             null, 
@@ -323,7 +319,7 @@ $(document).ready( function () {
         roomTable.button( 2 ).enable( selectedRows > 0 );
         roomTable.button( 3 ).enable( selectedRows > 0 );
     } );
-    $('#js-rooms-table-filter').select2({
+    var roomTableFilter = $('#js-rooms-table-filter').select2({
         tokenSeparators: [',', ' '],
         placeholder: 'Select filters',
         ajax: {
@@ -332,14 +328,14 @@ $(document).ready( function () {
             type: "GET",
             // quietMillis: 50,
             data: function (term) {
-                console.log(term);
-                console.log("term" + term);
+                // console.log(term);
+                // console.log("term" + term);
                 return {
                     term: term
                 };
             },
             results: function (data) {
-                console.log("data" + data);
+                // console.log("data" + data);
                 return {
                     results: $.map(data, function (item) {
                         return {
@@ -353,8 +349,18 @@ $(document).ready( function () {
         }
     });
     // $('#js-rooms-table-filter').on('select2:select', select);
-    $('#js-rooms-table-filter').on('select2:close', select);
+    roomTableFilter.on('select2:close', select);
 
+    // roomTableFilter.on('select2:selecting', function(event) {
+    //     console.log(event);
+        
+    //     var text = event.params.args.data['id'];
+    //     if (text === 'Disabled' || text === 'Enabled') {
+    //         console.log(roomTableFilter);
+    //     } else {
+    //         console.log(roomTableFilter);
+    //     } 
+    // });
 
     $('#editRoomTypeModalForm').on('submit', function (e) {
         e.preventDefault();
@@ -432,7 +438,7 @@ function changeAvailability( e, dt, node, config, availability ) {
 
 function select(e) {
     var data = $('#js-rooms-table-filter').select2('data');
-    console.log(data);
+    // console.log(data);
     var roomTable = $('#rooms-table').DataTable();
     var query = '';
     for (var i = 0; i < data.length; i++) {
