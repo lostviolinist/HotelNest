@@ -9,15 +9,14 @@ class InsertBookingController extends Controller
 {
     public static function newBooking($fullName, $email, $phone, $icNum, $checkInDate, $checkOutDate, 
     $remark, $adult, $child, $roomNum, $totalPrice, $hotelId, $roomId){
-       $current = DB::select('select * from bookings');
-       $bookingNum = count($current) + 1;
+       $current = DB::select('select bookingNum FROM bookings ORDER BY bookingNum DESC LIMIT 1');
+        $bookingNum = ($current[0]->bookingNum)+1;
 
        $current2 = DB::select('select * from booking_room');
        $no = count($current2) + 1;
 
        $t=time();
        $bookingDate = date("Y-m-d",$t);
-    //    print_r($bookingNum); 
         
         $query = 'insert into bookings (bookingNum, fullName, email, phone, icNum, checkInDate, 
         checkOutDate, remark, adult, child, roomNo, totalPrice, hotelId, created_at, updated_at) 
@@ -35,7 +34,7 @@ class InsertBookingController extends Controller
             DB::insert($query2);
             $no = $no + 1;
         }
-        return "successful!!!";
+        return $bookingNum;
     }
 
     public static function getBookingDetail($bookingNum)
