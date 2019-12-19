@@ -99,4 +99,24 @@ class AdminRoomController extends Controller
         return DB::update('UPDATE rooms SET available=? WHERE hotelId=? AND roomNum IN (' . $text . ') ;',
             [$request->available, $hotelId]);
     }
+
+    public static function getAvailableRoomNo($hotelId, $checkInDate, $checkOutDate){
+        $rooms = DB::select('Select rooms.roomId, type, roomNum, price, addBed from rooms
+        inner join room_infos 
+        on ((rooms.roomId = room_infos.roomId) and (rooms.hotelId = room_infos.hotelId)) 
+        where (rooms.hotelId, rooms.roomNum) not in (Select booking_room.hotelId, booking_room.roomNum from bookings
+        inner join booking_room
+        where (bookings.bookingNum = booking_room.bookingNum) AND
+        ( (checkInDate <= "'.$checkInDate.'" AND checkOutDate > "'.$checkInDate.'") OR 
+        (checkInDate >= "'.$checkInDate.'" AND checkInDate < "'.$checkOutDate.'")))
+        and rooms.hotelId = ?; ',[$hotelId]);
+
+        return json_encode($rooms);
+    }
+
+    public static function getBookingRoom($bookingNum){
+        $rooms = DB::select('select roomId, addBed, roomNum from booking_room where bookingNum = ?',[$bookingNum]);
+
+        return json_encode($rooms);
+    }
 }
