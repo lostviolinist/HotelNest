@@ -14,23 +14,28 @@ Profile
 @endsection
 
 @section('content')
+
+<?php
+  use App\Http\Controllers\ImageController;
+  $image = json_decode(ImageController::getImage(session('management_hotel_id')));
+?>
 <div class="">
   <div class="container px-0">
     <div class="row px-0 mx-0">
-      <img class="picture-big col-lg-4 col-md-6 col-sm-8 px-0" src="{{ asset('images/management/hotel.png') }}" alt="hotel" />
+      <img class="picture-big col-lg-4 col-md-6 col-sm-8 px-0" src="{{ asset($image[0]) }}" alt="hotel" />
       <div class="col-lg-8 col-md-6 col-sm-4 px-0 mx-0">
         <div class="row px-0 mx-0">
           <div class="col-lg-4 col-md-6 px-0 mx-0 d-flex d-sm-block">
-            <img class="picture-small col-6 col-sm-12 px-0" src="{{ asset('images/management/hotel2.png') }}" alt="hotel" />
-            <img class="picture-small col-6 col-sm-12 px-0" src="{{ asset('images/management/hotel3.png') }}" alt="hotel" />
+            <img class="picture-small col-6 col-sm-12 px-0" src="{{ asset($image[1]) }}" alt="hotel" />
+            <img class="picture-small col-6 col-sm-12 px-0" src="{{ asset($image[2]) }}" alt="hotel" />
           </div>
           <div class="col-lg-4 col-md-6 px-0 d-none d-md-block">
-            <img class="picture-small col-sm-12 px-0" src="{{ asset('images/management/hotel4.png') }}" alt="hotel" />
-            <img class="picture-small col-sm-12 px-0" src="{{ asset('images/management/hotel5.png') }}" alt="hotel" />
+            <img class="picture-small col-sm-12 px-0" src="{{ asset($image[3]) }}" alt="hotel" />
+            <img class="picture-small col-sm-12 px-0" src="{{ asset($image[4]) }}" alt="hotel" />
           </div>
           <div class="col-md-4 px-0 d-none d-lg-block">
-            <img class="picture-small col-12 px-0" src="{{ asset('images/management/hotel6.png') }}" alt="hotel" />
-            <img class="picture-small col-12 px-0" src="{{ asset('images/management/hotel7.png') }}" alt="hotel" />
+            <img class="picture-small col-12 px-0" src="{{ asset($image[5]) }}" alt="hotel" />
+            <img class="picture-small col-12 px-0" src="{{ asset($image[6]) }}" alt="hotel" />
           </div>
         </div>
       </div>
