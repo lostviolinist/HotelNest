@@ -115,7 +115,7 @@ Rooms
         </h5>
     </div>
     <div class="show" id="roomListCollapse">
-        <!-- <div class="form-group">
+        <div class="form-group">
             <div class="row">
                 <div class="col-3">
                     <input class="form-control" placeholder="Room No."/>
@@ -136,7 +136,7 @@ Rooms
                     </button>
                 </div>
             </div>
-        </div> -->
+        </div>
         <div class="form-group">
             <select class="form-control" id="js-rooms-table-filter" style="width: 100%;" multiple="multiple">
                 
@@ -152,102 +152,7 @@ Rooms
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>601</td>
-                    <td>Single Room</td>
-                    <td>Enabled</td>
-                    <td>
-                        <label class="text-success"><i class="fas fa-check"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>611</td>
-                    <td>Double Room</td>
-                    <td>Disabled</td>
-                    <td>
-                        <label class="text-danger"><i class="fas fa-minus"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>601</td>
-                    <td>Single Room</td>
-                    <td>Enabled</td>
-                    <td>
-                        <label class="text-success"><i class="fas fa-check"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>611</td>
-                    <td>Double Room</td>
-                    <td>Disabled</td>
-                    <td>
-                        <label class="text-danger"><i class="fas fa-minus"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>601</td>
-                    <td>Single Room</td>
-                    <td>Enabled</td>
-                    <td>
-                        <label class="text-success"><i class="fas fa-check"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>611</td>
-                    <td>Double Room</td>
-                    <td>Disabled</td>
-                    <td>
-                        <label class="text-danger"><i class="fas fa-minus"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>601</td>
-                    <td>Single Room</td>
-                    <td>Enabled</td>
-                    <td>
-                        <label class="text-success"><i class="fas fa-check"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>611</td>
-                    <td>Double Room</td>
-                    <td>Disabled</td>
-                    <td>
-                        <label class="text-danger"><i class="fas fa-minus"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>601</td>
-                    <td>Single Room</td>
-                    <td>Enabled</td>
-                    <td>
-                        <label class="text-success"><i class="fas fa-check"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>611</td>
-                    <td>Double Room</td>
-                    <td>Disabled</td>
-                    <td>
-                        <label class="text-danger"><i class="fas fa-minus"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>601</td>
-                    <td>Single Room</td>
-                    <td>Enabled</td>
-                    <td>
-                        <label class="text-success"><i class="fas fa-check"></i></label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>611</td>
-                    <td>Double Room</td>
-                    <td>Disabled</td>
-                    <td>
-                        <label class="text-danger"><i class="fas fa-minus"></i></label>
-                    </td>
-                </tr>
+                
             </tbody>
         </table>
     </div>

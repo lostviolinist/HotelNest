@@ -33,7 +33,7 @@ class BookingController extends Controller
 
             $list = DB::select('select * FROM bookings
             INNER JOIN
-            (select booking_room.bookingNum, booking_room.roomId, type, roomNum as number from booking_room 
+            (select booking_room.bookingNum, booking_room.roomId, type, roomNum as number, booking_room.addBed from booking_room 
             INNER JOIN room_infos
             Where (booking_room.hotelId = room_infos.hotelId)
             AND (booking_room.roomId = room_infos.roomId)
@@ -53,10 +53,11 @@ class BookingController extends Controller
                         $data->phone, // guest mobile
                         $data->adult . ' Adult', // adult
                         ($data->child > 0) ? ($data->child . ' Child') : '', // child
-                        $data->type . ' (' . ($data->number == '' ? 'N/A' : $data->number) . ')<br />', // rooms
+                        $data->type . ($data->addBed>0?' +&nbsp;<i class="fas fa-bed"></i>':'') . ' (' . ($data->number == '' ? 'N/A' : $data->number) . ')<br />', // rooms
+                        $data->remark,
                     ];
                 } else {
-                    $arr[$data->bookingNum][9] .= $data->type . ' (' . ($data->number == '' ? 'N/A' : $data->number) . ')<br />'; // rooms
+                    $arr[$data->bookingNum][9] .= $data->type . ($data->addBed>0?' +&nbsp;<i class="fas fa-bed"></i>':'') . ' (' . ($data->number == '' ? 'N/A' : $data->number) . ')<br />'; // rooms
                 }
             }
 

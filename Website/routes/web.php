@@ -57,7 +57,7 @@ Route::get('management/book', function() {
 
 Route::get('management/bookings', function() {
     return view('management/bookings');
-});
+})->name('management/bookings');
 
 Route::get('management/rooms', function() {
     return view('management/rooms');
@@ -191,7 +191,7 @@ Route::post('createBooking',function(Request $request){
     
     // roomId must be an array....
     // addBed must be an array.... correspond to roomId
-    
+
     try{
         return InsertBookingController::newBooking($request->fullName, $request->email, $request->phone, $request->icNum, 
         $request->checkInDate, $request->checkOutDate, $request->remark, $request->adult, $request->child,

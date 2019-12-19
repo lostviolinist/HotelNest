@@ -186,27 +186,6 @@ Bookings
 <div class="container">
   <div class="row">
     <aside class="query-container col-3">
-      <div class="search-container">
-        <div class="form-group">
-          <label for="sel1" class="h5">Search</label>
-          <select class="form-control" id="sel1">
-            <option>Booking Number</option>
-            <option>Room Number</option>
-            <option>Guest Name</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <input class="form-control" type="text" name="" value="" placeholder="Query">
-        </div>
-        <div class="form-group row">
-          <div class="col-12">
-            <button type="button" name="button" class="btn btn-default float-right"  data-toggle="modal" data-target="#myModal">
-              <i class="fas fa-search fa-fw"></i>&nbsp;
-              Search
-            </button>
-          </div>
-        </div>
-      </div>
       <div>
         <button id="clear-filter" class="float-right btn btn-link p-0">Clear</button>
         <h5>Filter</h5>
@@ -228,6 +207,18 @@ Bookings
           <input class="form-check-input" type="checkbox" value="" id="filter-has-children">
           <label class="form-check-label" for="filter-has-children">
             Has Children
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="filter-added-bed">
+          <label class="form-check-label" for="filter-added-bed">
+            Added Bed
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="filter-not-assigned">
+          <label class="form-check-label" for="filter-not-assigned">
+            Not Assigned
           </label>
         </div>
         <div id="filter-room-type">
@@ -271,11 +262,12 @@ Bookings
             <th>Adult</th>
             <th>Child</th>
             <th>Room</th>
+            <th>Remark</th>
             <!-- Hidden End -->
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <!-- <tr>
             <td>45690</td>
             <td>12 Oct 2019</td>
             <td>24 Oct 2019</td>
@@ -303,7 +295,7 @@ Bookings
             <td>
               1x Single Room (604)
             </td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
@@ -336,7 +328,12 @@ function formatExtraBookingDetail ( d ) {
             '<button class="btn btn-outline-primary px-1 py-0" onclick="editBooking(this)"><i class="fas fa-fw fa-edit"></i></button>'+
             '<button class="btn btn-outline-danger px-1 py-0" onclick="deleteBooking(this)"><i class="fas fa-fw fa-trash"></i></button>'+
             '</div>'+
-          '</div>';
+          '</div>'+
+          (d[10] == '' 
+            ? ''
+            : '<div class="text-left">'+
+            '<span class="font-weight-bold">Remark:&nbsp;</span><span>'+d[10]+'</span>'+
+          '</div>');
 }
 
 function applyCumulativeFilter(filterList, column, filterControl, item) {
@@ -499,6 +496,7 @@ $(document).ready( function () {
       { orderable: false, visible: false, searchable: false },
       { orderable: false, visible: false },
       { orderable: false, visible: false },
+      { orderable: false, visible: false, searchable: false },
     ],
     order: [[0, 'desc']]
   });
@@ -523,7 +521,8 @@ $(document).ready( function () {
   $('#filter-check-in-today').change(function() { 
     const date = new Date().toLocaleString('en-GB', { dateStyle: 'medium'});
     if (this.checked) {
-      table.column(2).search(date).draw();
+      console.log(date);
+      table.column(2).search(date, false, false).draw();
     } else {
       table.column(2).search('').draw();
     }
@@ -531,7 +530,8 @@ $(document).ready( function () {
   $('#filter-check-out-today').change(function() { 
     const date = new Date().toLocaleString('en-GB', { dateStyle: 'medium'});
     if (this.checked) {
-      table.column(3).search(date).draw();
+      console.log(date);
+      table.column(3).search(date, false, false).draw();
     } else {
       table.column(3).search('').draw();
     }
@@ -542,6 +542,12 @@ $(document).ready( function () {
     } else {
       table.column(8).search('').draw();
     }
+  });
+  $('#filter-added-bed').change(function() {
+    applyCumulativeFilter(filter, table.column(9), this, ' + ');
+  });
+  $('#filter-not-assigned').change(function() {
+    applyCumulativeFilter(filter, table.column(9), this, 'N/A');
   });
   $('#clear-filter').click(function() {
     table.column(2).search('');

@@ -238,7 +238,7 @@ $(document).ready(function() {
               html += '<tr>';
               html += '<td class="font-weight-bold">' + json[i]['type'] + '</td>';
               html += '<td>' + json[i]['description'] + '</td>';
-              html += '<td class="text-center">' + json[i]['pax'] + '+' + json[i]['addBed'] + '<i class="fas fa-bed"></i>' + '</td>';
+              html += '<td class="text-center">' + json[i]['pax'] + '+' + json[i]['addBed'] + '&nbsp;<i class="fas fa-bed"></i>' + '</td>';
               html += '<td>' + 'RM' + (json[i]['price'] + 30) + '/night' + '</td>';
               html += '<td><input class="form-control" type="number" min="0" max="' + json[i]['availableNum'] + '" value="0" style="width: 128px;" data-roomId="' + json[i]['roomId'] + '" data-addBed="1" data-price="'+(json[i]['price'] + 30)+'" onchange="updateTotal()" />';
               html += '</tr>';
@@ -322,6 +322,7 @@ $(document).ready(function() {
         } else {
           console.log("Book success");
           console.log(data);
+          $(location).attr('href', '{{ route("management/bookings") }}');
         }
         $('#confirmBookingBtn').prop("disabled", false);
       },
