@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class InsertBookingController extends Controller
 {
     public static function newBooking($fullName, $email, $phone, $icNum, $checkInDate, $checkOutDate, 
-    $remark, $adult, $child, $roomNum, $totalPrice, $hotelId, $roomId){
+    $remark, $adult, $child, $roomNum, $totalPrice, $hotelId, $roomId,$addBed){
        $current = DB::select('select bookingNum FROM bookings ORDER BY bookingNum DESC LIMIT 1');
         $bookingNum = ($current[0]->bookingNum)+1;
 
@@ -26,10 +26,11 @@ class InsertBookingController extends Controller
 
         DB::insert($query);
 
-        $addBed = 0;
+        
         for($i=0; $i<$roomNum; $i++){
+            
             $query2 = 'insert into booking_room (no, bookingNum, hotelId, roomId, addBed, roomNum) VALUES ('
-                .$no.', '.$bookingNum.', '.$hotelId.', '.$roomId[$i].', '.$addBed.', NULL);';
+                .$no.', '.$bookingNum.', '.$hotelId.', '.$roomId[$i].', '.$addBed[$i].', NULL);';
             
             DB::insert($query2);
             $no = $no + 1;

@@ -7,6 +7,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SelectController;
 use App\Http\Controllers\InsertBookingController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -189,11 +190,12 @@ Route::post('createBooking',function(Request $request){
     // 'remark', 'adult', 'child', 'roomNum', 'totalPrice', 'hotelId', 'roomId');
     
     // roomId must be an array....
+    // addBed must be an array.... correspond to roomId
     
     try{
         InsertBookingController::newBooking($request->fullName, $request->email, $request->phone, $request->icNum, 
         $request->checkInDate, $request->checkOutDate, $request->remark, $request->adult, $request->child,
-         $request->roomNum, $request->totalPrice, $request->hotelId, $request->roomId);
+         $request->roomNum, $request->totalPrice, $request->hotelId, $request->roomId, $request->addBed);
     }catch(Exception $e){
         echo $e;
         return "false";
@@ -213,3 +215,17 @@ Route::post('confirmBookingDetails',function(Request $request){
     return $details;
 
 })->name('confirmBookingDetail');
+
+Route::get('userProfile', function(Request $request){
+    try{
+        $userInfo = UserController::getUserInfo($request->userId);
+        $bookingInfo = UserController::getBookingHistory($request->email);
+        
+    }catch(Exception $e){
+        echo $e;
+        return "false";
+    }
+
+    return json_encode(array_merge(json_decode($userInfo, true),json_decode($bookingInfo, true)));
+
+})->name('userProfile');
