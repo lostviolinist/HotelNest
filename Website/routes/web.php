@@ -195,7 +195,7 @@ Route::post('createBooking',function(Request $request){
     try{
         return InsertBookingController::newBooking($request->fullName, $request->email, $request->phone, $request->icNum, 
         $request->checkInDate, $request->checkOutDate, $request->remark, $request->adult, $request->child,
-         $request->roomNum, $request->totalPrice, $request->hotelId, $request->roomId, $request->addBed);
+         $request->totalPrice, $request->hotelId, $request->roomId, $request->addBed);
     }catch(Exception $e){
         echo $e;
         return "false";
