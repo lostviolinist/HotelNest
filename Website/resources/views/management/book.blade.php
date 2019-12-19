@@ -260,12 +260,25 @@ $(document).ready(function() {
     });
   });
   $('#bookBtn').click(function() {
-    var totalPrice = $('#totalPrice').text();
-    if (totalPrice === '' || totalPrice === 'RM0/night') {
+    var list = $('#searchResult').find('input');
+    var num = 0;
+    for (var i = 0; i < list.length; i++) {
+      num += parseInt($(list[i]).val());
+    }
+    console.log(num);
+    
+    var room = $('#inputRoom').val();
+    if (room == 0) {
+      $('#inputRoom').focus();
       $('#bookValidator').text('Please specify the number of rooms to book');
       return;
     }
-    $('#modalTotalPrice').text(totalPrice);
+
+    if (num != room) {
+      $('#bookValidator').text('Please select ' + room + ' room(s)');
+      return;
+    }
+    $('#modalTotalPrice').text($('#totalPrice').text());
     $('#bookModal').modal('toggle');
   });
   $('#confirmBookingBtn').click(function() {
@@ -288,39 +301,36 @@ $(document).ready(function() {
         email: $('#inputGuestEmail').val(),
         phone: $('#inputPhoneNumber').val(),
         icNum: $('#inputICNumber').val(),
-        checkInDate: $('#inputCheckIn').val(),
-        checkOutDate: $('#inputCheckOut').val(),
+        checkInDate: new Date ($('#inputCheckIn').val()).toISOString().split('.')[0],
+        checkOutDate: new Date ($('#inputCheckOut').val()).toISOString().split('.')[0],
         remark: $('#inputRemark').val(),
         adult: $('#inputAdult').val(),
         child: $('#inputChildren').val(),
-        roomNum: $('#inputRoom').val(),
         totalPrice: sum,
         hotelId: '{{ session("management_hotel_id") }}',
         roomId: idList,
         addBed: addBedList,
     }
     console.log(json);
-    // $.ajax({
-    //   url: "{{ route('createBooking') }}",
-    //   method: "POST",
-    //   data: json,
-    //   success:function(data) {
-    //     if (data === "false") {
-    //       console.log("Book failed");
-    //     } else {
-    //       console.log("Book success");
-    //       console.log(data);
-          
-    //     }
+    $.ajax({
+      url: "{{ route('createBooking') }}",
+      method: "POST",
+      data: json,
+      success:function(data) {
+        if (data === "false") {
+          console.log("Book failed");
+        } else {
+          console.log("Book success");
+          console.log(data);
+        }
+        $('#confirmBookingBtn').prop("disabled", false);
+      },
+      error:function(error) {
+        console.log('Error: ' + error);
         
-    //     $('#confirmBookingBtn').prop("disabled", false);
-    //   },
-    //   error:function(error) {
-    //     console.log('Error: ' + error);
-        
-    //     $('#confirmBookingBtn').prop("disabled", false);
-    //   }
-    // });
+        $('#confirmBookingBtn').prop("disabled", false);
+      }
+    });
   });
 });
 function updateTotal() {
