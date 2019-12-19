@@ -193,14 +193,14 @@ Route::post('createBooking',function(Request $request){
     // addBed must be an array.... correspond to roomId
     
     try{
-        InsertBookingController::newBooking($request->fullName, $request->email, $request->phone, $request->icNum, 
+        return InsertBookingController::newBooking($request->fullName, $request->email, $request->phone, $request->icNum, 
         $request->checkInDate, $request->checkOutDate, $request->remark, $request->adult, $request->child,
          $request->roomNum, $request->totalPrice, $request->hotelId, $request->roomId, $request->addBed);
     }catch(Exception $e){
         echo $e;
         return "false";
     }
-    return "true";
+    
 })->name('createBooking');
 
 Route::post('confirmBookingDetails',function(Request $request){
