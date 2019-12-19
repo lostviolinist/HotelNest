@@ -57,13 +57,9 @@ class InsertBookingController extends Controller
             array_push($arr, $roomInfo[$i]);
         }
         $info[0]->rooms = $arr;
-        // array_push($info, $roomInfo);
-
-        //$array = json_decode(json_encode($info), True);
 
         return json_encode($info[0]);
-        // print_r("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
-        // print_r($array[0]["bookingNum"]);
+        
 
     }
 
