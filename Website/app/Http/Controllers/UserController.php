@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public static function getUserInfo($userId){
         $user = DB::select('select firstName, lastName, email, phone from users where id = ?',[$userId]);
-        return json_encode($user);
+        return $user;
     }
 
     public static function updateUserInfo(Request $request, $userId){
@@ -30,7 +30,8 @@ class UserController extends Controller
         on (T.roomId = room_infos.roomId)
         where room_infos.roomId = T.roomId and room_infos.hotelId = T.hotelId;',[$email]);
 
-        return json_encode($booking);
+
+        return $booking;
 
     }
 }

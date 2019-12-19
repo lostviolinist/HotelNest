@@ -220,14 +220,14 @@ Route::get('userProfile', function(Request $request){
     try{
         $userInfo = UserController::getUserInfo($request->userId);
         $bookingInfo = UserController::getBookingHistory($request->email);
-        
+
+        $userInfo[0]->bookingInfo = $bookingInfo;
 
     }catch(Exception $e){
         echo $e;
         return "false";
     }
-    array_push(json_decode($userInfo), json_decode($bookingInfo));
 
-    return $userInfo;
+    return json_encode($userInfo);
 
 })->name('userProfile');
