@@ -203,7 +203,7 @@ Route::post('createBooking',function(Request $request){
     
 })->name('createBooking');
 
-Route::post('confirmBookingDetails',function(Request $request){
+Route::get('confirmBookingDetails',function(Request $request){
     // $data = $request->only('bookingNum');
 
     try{
@@ -221,11 +221,13 @@ Route::get('userProfile', function(Request $request){
         $userInfo = UserController::getUserInfo($request->userId);
         $bookingInfo = UserController::getBookingHistory($request->email);
         
+
     }catch(Exception $e){
         echo $e;
         return "false";
     }
+    array_push(json_decode($userInfo), json_decode($bookingInfo));
 
-    return json_encode(array_merge(json_decode($userInfo, true),json_decode($bookingInfo, true)));
+    return $userInfo;
 
 })->name('userProfile');
