@@ -8,9 +8,12 @@ use Illuminate\Support\Facades\DB;
 class InsertBookingController extends Controller
 {
     public static function newBooking($fullName, $email, $phone, $icNum, $checkInDate, $checkOutDate, 
-    $remark, $adult, $child, $roomNum, $totalPrice, $hotelId, $roomId,$addBed){
+    $remark, $adult, $child, $totalPrice, $hotelId, $roomId,$addBed){
        $current = DB::select('select bookingNum FROM bookings ORDER BY bookingNum DESC LIMIT 1');
-        $bookingNum = ($current[0]->bookingNum)+1;
+        
+       $bookingNum = ($current[0]->bookingNum)+1;
+
+       $roomNum = count($roomId);
 
        $current2 = DB::select('select * from booking_room');
        $no = count($current2) + 1;
