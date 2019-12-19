@@ -53,10 +53,10 @@ class BookingController extends Controller
                         $data->phone, // guest mobile
                         $data->adult . ' Adult', // adult
                         ($data->child > 0) ? ($data->child . ' Child') : '', // child
-                        $data->type . ' (' . $data->number . ')<br />', // rooms
+                        $data->type . ' (' . ($data->number == '' ? 'N/A' : $data->number) . ')<br />', // rooms
                     ];
                 } else {
-                    $arr[$data->bookingNum][9] .= $data->type . ' (' . $data->number . ')<br />'; // rooms
+                    $arr[$data->bookingNum][9] .= $data->type . ' (' . ($data->number == '' ? 'N/A' : $data->number) . ')<br />'; // rooms
                 }
             }
 
