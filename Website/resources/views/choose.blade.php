@@ -53,32 +53,32 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
           <form method="get" action="{{ route('choose') }}">
             <div class="form-group p-2">
               <label for="exampleInputEmail1">City</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter a city..." name = "city">
+              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter a city..." name="city">
 
             </div>
             <div class="container">
-                            
-                                Start Date <input id="checkInDate" width="260" name="checkInDate"/>
-                                End Date <input id="checkOutDate" width="260" name="checkOutDate"/>
-                            </div>
-                            <script>
-                                var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-                                $('#checkInDate').datepicker({
-                                    uiLibrary: 'bootstrap4',
-                                    iconsLibrary: 'fontawesome',
-                                    minDate: today,
-                                    maxDate: function() {
-                                        return $('#checkOutDate').val();
-                                    }
-                                });
-                                $('#checkOutDate').datepicker({
-                                    uiLibrary: 'bootstrap4',
-                                    iconsLibrary: 'fontawesome',
-                                    minDate: function() {
-                                        return $('#checkInDate').val();
-                                    }
-                                });
-                            </script>
+
+              Start Date <input id="checkInDate" width="260" name="checkInDate" />
+              End Date <input id="checkOutDate" width="260" name="checkOutDate" />
+            </div>
+            <script>
+              var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+              $('#checkInDate').datepicker({
+                uiLibrary: 'bootstrap4',
+                iconsLibrary: 'fontawesome',
+                minDate: today,
+                maxDate: function() {
+                  return $('#checkOutDate').val();
+                }
+              });
+              $('#checkOutDate').datepicker({
+                uiLibrary: 'bootstrap4',
+                iconsLibrary: 'fontawesome',
+                minDate: function() {
+                  return $('#checkInDate').val();
+                }
+              });
+            </script>
             <div class="form-row p-2">
               <div class="form-group col-md-3 m-3">
                 <label for="inputCity">Adults</label>
@@ -108,7 +108,7 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
 
           <?php
           for ($i = 0; $i < count($arr); $i++) {
-            ?>
+          ?>
             <div class="card mb-3 mt-3" style="max-width: 1000px;">
               <div class="row no-gutters">
                 <div class="col-md-4">
