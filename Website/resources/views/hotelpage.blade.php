@@ -83,7 +83,7 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
       </div>
       <div class="col">
         <div class="container">
-          Start Date: <input type="datetime" disabled> <br> <br>
+          Start Date: <input type="datetime" disabled> <?php print_r($arr[0]->checkInDate) ?> <br> <br>
           End Date: <input type="datetime" disabled>
         </div>
         
@@ -112,7 +112,7 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
             <th scope="row"><?php echo $room[$i]->type ?></th>
             <td><?php echo $room[$i]->description ?></td>
             <td>RM<?php echo $room[$i]->price ?>/night</td>
-            <td class="ml-5"><input type="number" min="0">
+            <td class="ml-5"><input type="number" min="0" max="<?php echo $room[$i]->availableNum?>">
           </tr>
         <?php } ?>
       </tbody>

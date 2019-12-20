@@ -22,7 +22,7 @@ class SelectController extends Controller
         and rooms.hotelId = '.$hotelId. 
         ' and (rooms.hotelId, rooms.roomNum) not in (select booking_room.hotelId, booking_room.roomNum from bookings
         inner join booking_room
-        where (bookings.bookingNum = booking_room.bookingNum) AND
+        where booking_room.roomNum is NOT NULL AND (bookings.bookingNum = booking_room.bookingNum) AND
         ( (checkInDate <= "'.$checkInDate.'" AND checkOutDate > "'.$checkInDate.'") 
         OR (checkInDate >= "'.$checkInDate.'" AND checkInDate < "'.$checkOutDate.'")))
         GROUP BY roomId, type, price, pax, description, addBed) T inner join room_facilities 

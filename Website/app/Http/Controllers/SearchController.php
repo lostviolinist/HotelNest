@@ -59,7 +59,7 @@ class SearchController extends Controller
             AND rooms.roomId = room_infos.roomId 
             AND (rooms.hotelId, rooms.roomNum) 
             not in (Select booking_room.hotelId, booking_room.roomNum from bookings inner join booking_room 
-            where (bookings.bookingNum = booking_room.bookingNum) 
+            where booking_room.roomNum is NOT NULL AND (bookings.bookingNum = booking_room.bookingNum) 
             AND ( (checkInDate <= "'.$checkInDate.'" AND checkOutDate > "'.$checkInDate.'") 
             OR (checkInDate >= "'.$checkInDate.'" AND checkInDate < "'.$checkOutDate.'"))) 
             And ( (pax + addBed =' . $num1 . ' or pax = '. $num1 .')'.
