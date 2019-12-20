@@ -41,7 +41,7 @@ Bookings
             <div class="form-group row">
               <label class="col-4 col-lg-3">Booking Number:</label>
               <div class="col-8 col-lg-9">
-                <input readonly class="form-control" type="text" value="" />
+                <input readonly class="form-control" type="text" value="" id="editBookingDetailBookingNumber" />
               </div>
             </div>
             <div class="form-group row">
@@ -93,13 +93,13 @@ Bookings
             <div class="form-group row">
               <label class="col-4 col-lg-3">Adult:</label>
               <div class="col-8 col-lg-9">
-                <input class="form-control" type="number" min="1" value="" />
+                <input class="form-control" type="number" min="1" value="" readonly />
               </div>
             </div>
             <div class="form-group row">
               <label class="col-4 col-lg-3">Children:</label>
               <div class="col-8 col-lg-9">
-                <input class="form-control" type="number" min="0" value="" />
+                <input class="form-control" type="number" min="0" value="" readonly />
               </div>
             </div>
           </div>
@@ -112,22 +112,17 @@ Bookings
             </h6>
           </div>
           <div class="show" id="editBookingRoomCollapse">
-            <div class="form-group row mr-0">
+            <!-- <div class="form-group row mr-0">
               <label class="col-4 col-lg-3 font-weight-bold">Add Room</label>
               <div class="col-8">
                 <select class="form-control" id="js-modal-room-type-select">
-                  <optgroup label="Select Room Type">
-                    <option>Single Room</option>
-                    <option>Double Room</option>
-                    <option>Quadruple Room</option>
-                  </optgroup>
                 </select>
               </div>
               <button class="btn btn-outline-primary col-1" type="button" onclick="addRoom()">
                   <i class="fas fa-plus"></i>
                 </button>
-            </div>
-            <div class="form-group row mr-0">
+            </div> -->
+            <!-- <div class="form-group row mr-0">
               <label class="col-4 col-lg-3">Single Room</label>
               <div class="col-8">
                 <select class="form-control">
@@ -171,12 +166,17 @@ Bookings
               <button class="btn btn-outline-danger col-1" type="button" onclick="removeRoom(this)">
                 <i class="fas fa-times"></i>
               </button>
+            </div> -->
+          </div>
+          <div class="d-none justify-content-center" id="editBookingRoomSpinner">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" onclick="updateBooking(this)">Save changes</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -353,7 +353,7 @@ function applyCumulativeFilter(filterList, column, filterControl, item) {
 function addRoom() {
   var html = '<div class="form-group row mr-0">'+
                 '<label class="col-4 col-lg-3">'+
-                  $('#js-modal-room-type-select').val()+
+                  $('#js-modal-room-type-select option:selected').text()+
                 '</label>'+
                 '<div class="col-8">'+
                   '<select class="form-control">'+
@@ -372,20 +372,10 @@ function addRoom() {
 }
 
 function removeRoom(element) {
-  console.log(element);
-  console.log($(element));
-  console.log($(element).closest('.form-group'));
   $(element).closest('.form-group').remove();
 }
 
 function editBooking(element) {
-  // console.log(element);
-  // console.log($(element));
-  // TODO: fetch latest data (refresh) ?
-  // TODO: search the booking number / id ?
-  // TODO: expand the row (show extra detail) ?
-  
-  // TODO: check last edit date
 
   // TODO: populate edit modal
   var tr = $(element).closest('tr').prev();
@@ -403,6 +393,137 @@ function editBooking(element) {
     } else 
       $(element).val(data[index]);
   });
+  var bookingNum = data[0];
+  // show loading
+  $('#editBookingRoomCollapse').css('display', 'none');
+  $('#editBookingRoomSpinner').addClass('d-flex');
+  $.ajax({
+    url: "{{ route('management/getAvailableRoomNo') }}",
+    method: "GET",
+    data: {
+      _token: "{{ csrf_token() }}",
+      hotelId: "{{ session('management_hotel_id') }}",
+      checkInDate: moment(data[2]).format('YYYY-MM-DD'),
+      checkOutDate: moment(data[3]).format('YYYY-MM-DD'),
+    },
+    success:function(data) {
+      var json = JSON.parse(data);
+      var res = {};
+      console.log(json);
+      for (var i = 0; i < json.length; i++) {
+        if (res.hasOwnProperty(json[i]['roomId'])) {
+          res[json[i]['roomId']]['rooms'].push(json[i]['roomNum']);
+        } else {
+          res[json[i]['roomId']] = {
+            type: json[i]['type'],
+            price: json[i]['price'],
+            addBed: json[i]['addBed'],
+            rooms:[
+              json[i]['roomNum']
+            ]
+          };
+          // $('#js-modal-room-type-select').append('<option value='+json[i]['roomId']+'>'+json[i]['type']+'</option>');
+        } 
+      }
+      // var list = $('#editBookingRoomCollapse select');
+      // for (var i = 0; i < list.length; i++) {
+      //   var html = '';
+      //   var arr = res[$(list[i]).attr('data-roomId')]['rooms'];
+      //   for (var j = 0; j < arr.length; j++)
+      //     html += '<option>' + arr[j] + '</option>';
+      //   $(list[i]).append(html);
+      // }
+
+      // console.log(list);
+      // console.log(res);
+      $.ajax({
+        url: "{{ route('management/getBookingRoom') }}",
+        method: "GET",
+        data: {
+          _token: "{{ csrf_token() }}",
+          bookingNum: bookingNum
+        },
+        success:function(data) {
+          var json = JSON.parse(data);
+          var html = '';
+          for (var i = 0; i < json.length; i++) {
+            html += '<div class="form-group row mr-0">'+
+                  '<label class="col-4 col-lg-4 font-weight-bold">'+json[i]['type']+(json[i]['addBed']>0?'&nbsp;+&nbsp;<i class="fas fa-bed"></i>':'')+'</label>'+
+                  '<div class="col-8">'+
+                    '<select class="form-control" data-roomId="'+json[i]['roomId']+'" data-no="'+json[i]['no']+'">'+
+                      // (json[i]['roomNum'] == null
+                        '<option>N/A</option>'+
+                        // : '<option value='+json[i]['roomNum']+'>'+json[i]['roomNum']+'</option>')+
+                    '</select>'+
+                  '</div>'+
+                '</div>';
+          }
+          console.log(json);
+          console.log(res);
+          for (var i = 0; i < json.length; i++) {
+            if (json[i]['roomNum'] != null)
+              res[json[i]['roomId']]['rooms'].push(json[i]['roomNum']);
+          }
+          $('#editBookingRoomCollapse').html(html);
+          $('#editBookingRoomCollapse select').each(function(index) {
+            var roomId = $(this).attr('data-roomId');
+            var list = res[roomId]['rooms'];
+            var html = '';
+            for (var i = 0; i < list.length; i++) {
+              html += '<option value='+list[i]+'>'+list[i]+'</option>';
+            }
+            $(this).append(html);
+            if (json[index]['roomNum'] != null) {
+              // $(this).prepend("<option value="+json[index]['roomNum']"+>"+json[index]['roomNum']+"</option>");
+              // $(this).prepend("<option value="+json[index]['roomNum']+">"+json[index]['roomNum']+"</option>");
+              $(this).val(json[index]['roomNum']);
+            }
+          });
+          // initialise
+          var selected = [];
+          $('#editBookingRoomCollapse select').each(function() {
+            $(this).find('option').prop('hidden', false);     // reset all to visible
+            selected.push($(this).val());                     // record all selected into array
+          });
+          $('#editBookingRoomCollapse select').each(function() {
+            for (var i = 0; i < selected.length; i++) {
+              if ($(this).val() != selected[i])
+                $(this).find('option[value="'+selected[i]+'"]').prop('hidden', true); // hide if selected
+            }
+          });
+          // end initialise 
+          $('#editBookingRoomCollapse select').change(function() {
+            selected = [];                                      // reset array
+            $('#editBookingRoomCollapse select').each(function() {
+              $(this).find('option').prop('hidden', false);     // reset all to visible
+              selected.push($(this).val());                     // record all selected into array
+            });
+            $('#editBookingRoomCollapse select').each(function() {
+              for (var i = 0; i < selected.length; i++) {
+                if ($(this).val() != selected[i])
+                  $(this).find('option[value="'+selected[i]+'"]').prop('hidden', true); // hide if selected
+              }
+            });
+          });
+          $('#editBookingRoomCollapse').css('display', 'block');
+          $('#editBookingRoomSpinner').removeClass('d-flex');
+          $('#editBookingRoomSpinner').addClass('d-none');
+        },
+        error:function(error, a, b) {
+          console.log('Error: ' + error);
+          console.log('Error: ' + a);
+          console.log('Error: ' + b);
+          // $(element).prop("disabled", false);
+        }
+      });
+    },
+    error:function(error, a, b) {
+      console.log('Error: ' + error);
+      console.log('Error: ' + a);
+      console.log('Error: ' + b);
+    }
+  });
+  
   // TODO: show edit modal
   $("#editBookingModal").modal('toggle');
   $('#editBookingDetailCollapse').collapse('hide');
@@ -410,14 +531,11 @@ function editBooking(element) {
 }
 
 function deleteBooking(element) {
-  console.log(element);
   $(element).prop("disabled", true);
   var tr = $(element).closest('tr').prev();
   var row = $('#bookings-table').DataTable().row( tr );
   var data = row.data();
-  console.log(data[0]);
   var url = "{{ route('management/hotel/booking/delete', [session('management_hotel_id'), ':bookingNum']) }}";
-  console.log(url);
   url = url.replace(':bookingNum',data[0]);
   $.ajax({
     url: url,
@@ -429,6 +547,7 @@ function deleteBooking(element) {
       if (data === "true") {
         console.log("Delete booking success");
         $('#bookings-table').DataTable().ajax.reload();
+        $('#fetch-data-datetime').text(new Date().toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'full' }));
       } else {
         console.log("Delete booking failed");
       }
@@ -462,7 +581,6 @@ $(document).ready( function () {
           '</div>';
         res += text;
       }
-      console.log(res);
       $('#filter-room-type').html(res);
       $('.js-room-type-filter').each(function(index, element) {
         $(this).change(function() {
@@ -521,7 +639,6 @@ $(document).ready( function () {
   $('#filter-check-in-today').change(function() { 
     const date = new Date().toLocaleString('en-GB', { dateStyle: 'medium'});
     if (this.checked) {
-      console.log(date);
       table.column(2).search(date, false, false).draw();
     } else {
       table.column(2).search('').draw();
@@ -530,7 +647,6 @@ $(document).ready( function () {
   $('#filter-check-out-today').change(function() { 
     const date = new Date().toLocaleString('en-GB', { dateStyle: 'medium'});
     if (this.checked) {
-      console.log(date);
       table.column(3).search(date, false, false).draw();
     } else {
       table.column(3).search('').draw();
@@ -564,5 +680,44 @@ $(document).ready( function () {
     $('#filter-has-children').prop('checked', false);
   });
 } );
+function updateBooking(element) {
+  $(element).prop('disabled', true);
+  console.log('fire');
+  console.log(element);
+  var list = $('#editBookingRoomCollapse').find('select');
+  var no = [];
+  var roomNum = [];
+  for (var i = 0; i < list.length; i++) {
+    no.push($(list[i]).attr('data-no'));
+    var value = $(list[i]).val();
+    roomNum.push( ( value === 'N/A' ? null : value) );
+    console.log($(list[i]).attr('data-no'));
+    console.log(( value === 'N/A' ? null : value));
+  }
+  $.ajax({
+    url: "{{ route('management/updateBooking') }}",
+    method: "POST",
+    data: {
+      _token: "{{ csrf_token() }}",
+      hotelId: "{{ session('management_hotel_id') }}",
+      bookingNum: $('#editBookingDetailBookingNumber').val(),
+      checkInDate: moment($('#check-in-datepicker').val()).format('YYYY-MM-DD'),
+      checkOutDate: moment($('#check-out-datepicker').val()).format('YYYY-MM-DD'),
+      no: no,
+      roomNum: roomNum,
+    },
+    success:function(data) {
+      console.log('Update booking successfully.');
+      $(element).prop('disabled', false);
+      $('#editBookingModal').modal('toggle');
+      $('#bookings-table').DataTable().ajax.reload();
+      $('#fetch-data-datetime').text(new Date().toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'full' }));
+    },
+    error:function(error) {
+      console.log('Error: ' + error);
+      $(element).prop('disabled', false);
+    }
+  });
+}
 </script>
 @endsection

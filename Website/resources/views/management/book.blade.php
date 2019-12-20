@@ -295,14 +295,18 @@ $(document).ready(function() {
         addBedList.push($(list[i]).attr('data-addBed'));
       }
     }
+    // var checkInDate = new Date ($('#inputCheckIn').val());
+    // checkInDate.setDate(checkInDate.getDate() + 1);
+    // var checkOutDate = new Date ($('#inputCheckOut').val());
+    // checkOutDate.setDate(checkOutDate.getDate() + 1);
     var json = {
         _token: "{{ csrf_token() }}",
         fullName: $('#inputFullName').val(),
         email: $('#inputGuestEmail').val(),
         phone: $('#inputPhoneNumber').val(),
         icNum: $('#inputICNumber').val(),
-        checkInDate: new Date ($('#inputCheckIn').val()).toISOString().split('.')[0],
-        checkOutDate: new Date ($('#inputCheckOut').val()).toISOString().split('.')[0],
+        checkInDate: moment($('#inputCheckIn').val()).format('YYYY-MM-DD'),
+        checkOutDate: moment($('#inputCheckOut').val()).format('YYYY-MM-DD'),
         remark: $('#inputRemark').val(),
         adult: $('#inputAdult').val(),
         child: $('#inputChildren').val(),
