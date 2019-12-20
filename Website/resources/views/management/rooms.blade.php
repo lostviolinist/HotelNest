@@ -80,29 +80,11 @@ Rooms
                     <th>Pax</th>
                     <th class="text-center">Room Description</th>
                     <th></th>
+                    <th>Amenities</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Single Room</td>
-                    <td>1 + 1</td>
-                    <td>This single room has air conditioning.</td>
-                    <td>
-                        <button class="btn btn-outline-primary" onclick="editRoomType(this, 1)">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Double Room</td>
-                    <td>2 + 1</td>
-                    <td>This double room features a electric kettle, air conditioning and satellite TV.</td>
-                    <td>
-                        <button class="btn btn-outline-primary" onclick="editRoomType(this, 2)">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
+                
             </tbody>
         </table>
     </div>
@@ -158,9 +140,14 @@ Rooms
     </div>
 </div>
 <script>
+function formatRoomTypeAmenity(d) {
+    return '<div><h6>Room Amenities</h6><div>'+d[4]+'</div></div>';
+}
 $(document).ready( function () {
-    // $('[data-toggle="tooltip"]').tooltip();
     var typeTable = $('#room-type-table').DataTable({
+        createdRow: function( row, data, dataIndex ) {
+          $(row).addClass( 'js-room-type-td' );
+        },
         ajax: '{{ route("management/hotel/roomTypes", session("management_hotel_id")) }}',
         searching: false, paging: false, info: false,
         columns: [
@@ -168,11 +155,27 @@ $(document).ready( function () {
             null,
             { orderable: false, searchable: false, className: 'text-left', },
             { orderable: false, searchable: false, className: 'text-right', },
+            { orderable: false, searchable: false, visible: false, },
         ],
         order: [[1, 'asc']],
         language: {
             loadingRecords: '<div class="d-flex justify-content-center my-3"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div></div>'
         }
+    });
+    typeTable.on('click', '.js-room-type-td', function () {
+      var tr = $(this).closest('tr');
+      var row = typeTable.row( tr );
+      if ( row.child.isShown() ) {
+          // This row is already open - close it
+          row.child.hide();
+          tr.removeClass('shown');
+      }
+      else {
+          // Open this row
+          row.child( formatRoomTypeAmenity(row.data()) ).show();
+          tr.addClass('shown');
+          $('[data-toggle="tooltip"]').tooltip();
+      }
     });
     var roomTable = $('#rooms-table').DataTable({
         ajax: '{{ route("management/hotel/rooms", session("management_hotel_id")) }}',

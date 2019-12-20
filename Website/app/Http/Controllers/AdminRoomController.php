@@ -34,17 +34,24 @@ class AdminRoomController extends Controller
     }
 
     public static function getRoomType($hotelId){
-        $roomType = DB::select('select * from room_infos where hotelId = ?',[$hotelId]);
-
+        $roomType = DB::select('select * from room_infos ri inner join room_facilities rf on (ri.roomId=rf.roomId and ri.hotelId=rf.hotelId) where ri.hotelId = ?',[$hotelId]);
+        
         $res = [];
         foreach($roomType as $type){
+            $html = "";
+            foreach($type as $attr => $value) {
+                if ($value == 1 && $attr !="pax" && $attr !="roomId" && $attr!="price" && $attr!="description" && $attr!="hotelId" && $attr!="type")
+                    $html .= '<img class="m-2" src="' . asset('images/icons/'.$attr.'.png') . 
+                        '" alt="'.$attr.'" data-toggle="tooltip" data-placement="bottom" title="'.$attr.'" style="width: 32px;" />';
+            }
             $arr = [
                 $type->type,
                 ($type->addBed > 0) ? ($type->pax . " + " . $type->addBed) : ($type->pax),
                 $type->description,
                 '<button class="btn btn-outline-primary" onclick="editRoomType(this, '.$type->roomId.')">
                     <i class="fas fa-edit"></i>
-                </button>'
+                </button>',
+                $html
             ];
             array_push($res, $arr);
         }

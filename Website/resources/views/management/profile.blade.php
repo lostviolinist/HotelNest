@@ -52,28 +52,34 @@ Profile
   <div class="container profile-container">
     <form id="update-profile-form">
       @csrf
-      <div class="form-group row">
-        <label for="" class="col-md-2 col-sm-4 col-form-label font-weight-bold">Hotel Name</label>
-        <div class="col-md-10 col-sm-8">
-          <input readonly class="form-control-plaintext" type="text" value="{{ $hotel->name }}">
+      <div class="d-flex align-items-center">
+        <h1>{{ $hotel->name }}</h1>
+        <div class="ml-5">
+          <?php
+            $remain = 5 - $hotel->star;
+            for ($i=0; $i < $hotel->star; $i++) {
+              echo '<img src='.asset('images/icons/filled_star.png').' style="width: 24px;" />';
+            }
+            for ($i=0; $i < $remain; $i++) {
+              echo '<img src='.asset('images/icons/empty_star.png').' style="width: 24px;" />';
+            }
+          ?>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group row">
-            <label for="" class="col-sm-4 col-form-label font-weight-bold">Hotel Stars</label>
-            <div class="col-sm-8">
-              <input readonly class="form-control-plaintext" type="text" value="{{ $hotel->star }}">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group row">
-            <label for="" class="col-sm-4 col-form-label font-weight-bold">Operation Hour</label>
-            <div class="col-sm-8">
-              <input readonly class="form-control-plaintext" type="text" value="{{ $hotel->operationTime }}">
-            </div>
-          </div>
+      <h5 class="" for=""><i class="far fa-clock"></i>&nbsp;Open {{ $hotel->operationTime }}</h5>
+      <div class="my-3">
+        <h6>Hotel Facilities</h6>
+        <div>
+          <?php
+            use App\Http\Controllers\SelectController;
+            $hotelInfo = json_decode(SelectController::getHotelInfo($hotel->hotelId));
+            // print_r($hotelInfo[0]);
+            foreach($hotelInfo[0] as $attr => $value) {
+              if ($value == 1 && $attr!="hotelId"&&$attr!="star"&&$attr!="description"&&$attr!="operationTime"&&$attr!="name"&&$attr!="city"&&$attr!="address")
+                echo '<img class="m-2" src="' . asset('images/icons/'.$attr.'.png') . 
+                  '" alt="'.$attr.'" data-toggle="tooltip" data-placement="bottom" title="'.$attr.'" style="width: 32px;" />';
+            }
+          ?>
         </div>
       </div>
       <div class="form-group">
@@ -130,49 +136,52 @@ Profile
   </div>
 </div>
 <script>
-  $('#update-profile-form').on('submit', function(e) {
-    e.preventDefault();
-    $('#update-profile-btn').prop('disabled', true);
-    var error = '';
-    if ( !$('#hotel-description').val() ) {
-      error = "Description cannot be empty";
-    }
-    if ( !$('#check-out-timepicker').val() ) {
-      error = "Check-out time cannot be empty";
-    }
-    if ( !$('#check-in-timepicker').val() ) {
-      error = "Check-in time cannot be empty";
-    }
-    
-    if (error !== '') {
-      $('#update-profile-validator').css('color', 'red');;
-      $('#update-profile-validator').html(error);
-      $('#update-profile-btn').prop('disabled', false);
-    } else {
-      $.ajax({
-        url: "{{ route('management/update-profile') }}",
-        method: "POST",
-        data: $('#update-profile-form').serialize(),
-        success:function(data) {
-          var html = '';
-          if (data['status'] === true) {
-            console.log('Profile updated successfully');
-            $('#update-profile-validator').css('color', 'green');
-            html = 'Profile updated successfully';
-          } else {
-            console.log('Failed: ' + data['error']);
-            $('#update-profile-validator').css('color', 'red');;
-            html = data['error'];
-          }
-          $('#update-profile-validator').html(html);
-          $('#update-profile-btn').prop('disabled', false);
-        },
-        error:function(jqxhr, textStatus, error) {
-          console.log('Error: ' + error);
-          $('#update-profile-btn').prop('disabled', false);
+$(document).ready($(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+}));
+$('#update-profile-form').on('submit', function(e) {
+  e.preventDefault();
+  $('#update-profile-btn').prop('disabled', true);
+  var error = '';
+  if ( !$('#hotel-description').val() ) {
+    error = "Description cannot be empty";
+  }
+  if ( !$('#check-out-timepicker').val() ) {
+    error = "Check-out time cannot be empty";
+  }
+  if ( !$('#check-in-timepicker').val() ) {
+    error = "Check-in time cannot be empty";
+  }
+  
+  if (error !== '') {
+    $('#update-profile-validator').css('color', 'red');;
+    $('#update-profile-validator').html(error);
+    $('#update-profile-btn').prop('disabled', false);
+  } else {
+    $.ajax({
+      url: "{{ route('management/update-profile') }}",
+      method: "POST",
+      data: $('#update-profile-form').serialize(),
+      success:function(data) {
+        var html = '';
+        if (data['status'] === true) {
+          console.log('Profile updated successfully');
+          $('#update-profile-validator').css('color', 'green');
+          html = 'Profile updated successfully';
+        } else {
+          console.log('Failed: ' + data['error']);
+          $('#update-profile-validator').css('color', 'red');;
+          html = data['error'];
         }
-      });
-    }
-  });
+        $('#update-profile-validator').html(html);
+        $('#update-profile-btn').prop('disabled', false);
+      },
+      error:function(jqxhr, textStatus, error) {
+        console.log('Error: ' + error);
+        $('#update-profile-btn').prop('disabled', false);
+      }
+    });
+  }
+});
 </script>
 @endsection
