@@ -48,18 +48,6 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
   <div class="container">
     <hr class="mt-2 mb-5">
 
-    <!-- <div class="row text-center text-lg-left"> -->
-
-    <!-- <?php //for($i=0; $i<count($image); $i++){ 
-          ?>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-              <img class="img-fluid img-thumbnail" src="<?php //print_r($image[$i]) 
-                                                        ?>" alt="">
-            </a>
-      </div>
-    <?php //} 
-    ?> -->
     <div class="container px-0">
       <div class="row px-0 mx-0">
         <img class="picture-big col-lg-4 col-md-6 col-sm-8 px-0" src="<?php print_r($image[0]) ?>" style="height:310px" alt="hotel" />
