@@ -29,8 +29,7 @@
         @if (session('management_admin_id') != null)
             <!-- Brand -->
             <a class="title text-default text-decoration-none" href="{{ url('management/book') }}" style="font-size: x-large;">
-                <!-- HotelNest -->
-                <img src="{{ asset('images/hotelnest-logo.jpeg') }}" alt="logo" style="width: 48px;" />
+                <img src="{{ asset('images/hotelnest-logo.png') }}" alt="logo" style="width: 64px;" />
                 HotelNest
             </a>
 
@@ -65,7 +64,10 @@
                 </div>
             </div>
         @else
-            <img src="{{ asset('images/management/logo.png') }}" alt="logo" style="width: 64px;" />
+            <a class="title text-default text-decoration-none" href="" style="font-size: x-large;">
+                <img src="{{ asset('images/hotelnest-logo.png') }}" alt="logo" style="width: 64px;" />
+                HotelNest
+            </a>
         @endif
       </nav>
     </header>
