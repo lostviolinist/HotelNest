@@ -115,7 +115,7 @@ Rooms
         </h5>
     </div>
     <div class="show" id="roomListCollapse">
-        <div class="form-group">
+        <!-- <div class="form-group">
             <div class="row">
                 <div class="col-3">
                     <input class="form-control" placeholder="Room No."/>
@@ -136,7 +136,7 @@ Rooms
                     </button>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="form-group">
             <select class="form-control" id="js-rooms-table-filter" style="width: 100%;" multiple="multiple">
                 
