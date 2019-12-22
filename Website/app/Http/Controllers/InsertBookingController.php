@@ -13,7 +13,10 @@ class InsertBookingController extends Controller
         
        $bookingNum = ($current[0]->bookingNum)+1;
 
-       $roomNum = count($roomId);
+       $temp = json_decode($roomId);
+       $temp2  = json_decode($addBed);
+
+       $roomNum = count($temp);
 
        $current2 = DB::select('select * from booking_room');
        $no = count($current2) + 1;
@@ -33,7 +36,7 @@ class InsertBookingController extends Controller
         for($i=0; $i<$roomNum; $i++){
             
             $query2 = 'insert into booking_room (no, bookingNum, hotelId, roomId, addBed, roomNum) VALUES ('
-                .$no.', '.$bookingNum.', '.$hotelId.', '.$roomId[$i].', '.$addBed[$i].', NULL);';
+                .$no.', '.$bookingNum.', '.$hotelId.', '.$temp[$i].', '.$temp2[$i].', NULL);';
             
             DB::insert($query2);
             $no = $no + 1;
