@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openHomeActivity(){
         Intent intent = new Intent(this, home_activity.class);
+        intent.putExtra("email", email_string);
         startActivity(intent);
     }
 }

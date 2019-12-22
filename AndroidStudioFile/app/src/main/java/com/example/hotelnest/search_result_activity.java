@@ -57,12 +57,8 @@ import java.util.Map;
 import java.util.zip.Inflater;
 
 public class search_result_activity extends AppCompatActivity {
-    private static final String TAG_HOTEL_ID = "hotelId";
-    private static final String TAG_NAME = "name";
-    private static final String TAG_CITY = "city";
-    private static final String TAG_STAR = "star";
-    private static final String TAG_DESCRIPTION = "description";
-    private static final String TAG_PICTURE_PATH = "picturePath";
+
+    private String email;
 
     private ListView listview;
     private List<HashMap<String, Object>> lstDraftItem;
@@ -71,6 +67,7 @@ public class search_result_activity extends AppCompatActivity {
     private ArrayList<String>  hotelpicture = new ArrayList<>();
     private ArrayList<String> hoteldescription = new ArrayList<>();
     private ArrayList<Integer> hotelprice = new ArrayList<>();
+    private ArrayList<String> hotelId = new ArrayList<>();
     private int[][] hotelpictureint = {
             {R.drawable.images_1_1,R.drawable.images_1_2,R.drawable.images_1_3},
             {R.drawable.images_2_1,R.drawable.images_2_2,R.drawable.images_2_3,R.drawable.images_2_4,R.drawable.images_2_5},
@@ -83,15 +80,11 @@ public class search_result_activity extends AppCompatActivity {
             {R.drawable.images_52_1,R.drawable.images_52_2,R.drawable.images_52_3,R.drawable.images_52_4,R.drawable.images_52_5,R.drawable.images_52_6}
     };
     private String city, adult, child, room, checkInDate, checkOutDate;
-
-    private Button button;
-
-
-
-
+    private int nights;
 
 
     private TextView goingCity, checkin, checkout;
+
 
 
     @Override
@@ -99,17 +92,9 @@ public class search_result_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result_activity);
 
-        button = findViewById(R.id.button);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), hotel_details.class);
-                startActivity(intent);
-            }
-        });
-
-
+        nights = getIntent().getIntExtra("nights",0);
+        email = getIntent().getStringExtra("email");
         city = getIntent().getStringExtra("city");
         adult = getIntent().getStringExtra("adult");
         child = getIntent().getStringExtra("child");
@@ -125,57 +110,19 @@ public class search_result_activity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                View popup = getLayoutInflater().inflate(R.layout.popup_view, null);
-                TextView info, des, title, price;
-                ImageView pic;
-                info = popup.findViewById(R.id.info);
-                des = popup.findViewById(R.id.des);
-                pic = popup.findViewById(R.id.popup_image);
-                title = view.findViewById(R.id.tv_sub_title);
-                price = popup.findViewById(R.id.price);
-                Log.i("title:",title.getText().toString());
-                price.setText("From: RM"+hotelprice.get(hotelname.indexOf(title.getText())));
-                info.setText(title.getText());
-                des.setText(hoteldescription.get(hotelname.indexOf(title.getText())));
-                int x,y;
+                TextView title = view.findViewById(R.id.tv_sub_title);
+                String intentId = hotelId.get(hotelname.indexOf(title.getText().toString()));
 
 
-                if(hotelpicture.get(hotelname.indexOf(title.getText())).length()<16) {
-                    x = Integer.parseInt(hotelpicture.get(hotelname.indexOf(title.getText())).substring(8,9))-1;
-                    Log.i("x:",hotelpicture.get(hotelname.indexOf(title.getText())).substring(8,9));
-                    y = Integer.parseInt(hotelpicture.get(hotelname.indexOf(title.getText())).substring(10,11))-1;
-                    Log.i("y:",hotelpicture.get(hotelname.indexOf(title.getText())).substring(10,11));
-                }else{
-                    x = Integer.parseInt(hotelpicture.get(hotelname.indexOf(title.getText())).substring(8,10));
-                    Log.i("x:",hotelpicture.get(hotelname.indexOf(title.getText())).substring(8,10));
-                    y = Integer.parseInt(hotelpicture.get(hotelname.indexOf(title.getText())).substring(11,12))-1;
-                    Log.i("y:",hotelpicture.get(hotelname.indexOf(title.getText())).substring(11,12));
-                    if(x==50){
-                        x=7;
-                    }else if(x==52){
-                        x=8;
-                    }
-                }
-                pic.setImageDrawable(getResources().getDrawable(hotelpictureint[x][y]));
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popup, width, height, focusable);
-
-                // show the popup window
-                // which view you pass in doesn't matter, it is only used for the window tolken
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-                // dismiss the popup window when touched
-                popup.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-
+                Intent intent = new Intent(getBaseContext(), hotel_details.class);
+                intent.putExtra("hotelId", intentId);
+                intent.putExtra("checkInDate", checkInDate);
+                intent.putExtra("checkOutDate", checkOutDate);
+                intent.putExtra("adult", adult);
+                intent.putExtra("child", child);
+                intent.putExtra("email", email);
+                intent.putExtra("nights", nights);
+                startActivity(intent);
             }
         });
         lstDraftItem = new ArrayList<HashMap<String, Object>>();
@@ -184,29 +131,7 @@ public class search_result_activity extends AppCompatActivity {
         adapter = new SimpleAdapter(this, lstDraftItem, R.layout.item_list,
                 new String[]{"logo", "title"},
                 new int[]{R.id.img_sub_logo, R.id.tv_sub_title});
-        //titleArrayLast=(String[])hotelname.toArray();
-        //decArrayLast=decArray.clone();
-        for (int i=0;i<hotelname.size();i++){
-            HashMap<String, Object> map = new HashMap<String, Object>();
 
-            int x,y;
-            if(hotelpicture.get(i).length()<16) {
-                x = Integer.parseInt(hotelpicture.get(i).substring(8,1));
-
-                y = Integer.parseInt(hotelpicture.get(i).substring(10,1));
-            }else{
-                x = Integer.parseInt(hotelpicture.get(i).substring(8,2));
-                y = Integer.parseInt(hotelpicture.get(i).substring(11,1));
-            }
-            map.put("logo", hotelpictureint[x][y]);
-
-
-
-            map.put( "title", hotelname.get(i));
-
-            lstDraftItem.add(map);
-        }
-        listview.setAdapter(adapter);
 
         goingCity.setText(city);
         checkin.setText(checkInDate);
@@ -230,10 +155,12 @@ public class search_result_activity extends AppCompatActivity {
                             JSONArray reader = new JSONArray(response);
                             for(int i=0; i<reader.length();i++){
                                 Log.i("hotel name", reader.getJSONObject(i).getString("name"));
+                                hotelId.add(reader.getJSONObject(i).getString("hotelId"));
                                 hotelname.add( reader.getJSONObject(i).getString("name"));
                                 hotelpicture.add(reader.getJSONObject(i).getString("picturePath"));
                                 hoteldescription.add(reader.getJSONObject(i).getString("description"));
                                 hotelprice.add(reader.getJSONObject(i).getInt("lowestPrice"));
+
                                 lstDraftItem = new ArrayList<HashMap<String, Object>>();
                                 //适配器SimpleAdapter数据绑定
                                 //错误:构造函数SimpleAdapter未定义 需把this修改为MainActivity.this

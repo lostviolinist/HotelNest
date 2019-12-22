@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lay_item_room"
+        android:paddingBottom="20dp"
+
+        android:orientation="horizontal"
+        android:background="#FFFFFF">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/room_con"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/room_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/airbnb_cereal_bold"
+                android:text="room_name"
+                android:textColor="#1F1F1F"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/room_name4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/airbnb_cereal_medium"
+                android:text="Room Facilities"
+                android:textColor="#1F1F1F"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@+id/room_name"
+                app:layout_constraintTop_toBottomOf="@+id/room_description" />
+
+            <TextView
+                android:id="@+id/room_description"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/airbnb_cereal_medium"
+                android:text="description"
+                android:textColor="#8E8B8B"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/room_person_icon" />
+
+            <TextView
+                android:id="@+id/room_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/airbnb_cereal_medium"
+                android:text="price"
+                android:textColor="#1F1F1F"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/room_facilities2" />
+
+            <TextView
+                android:id="@+id/room_available_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="sans-serif-medium"
+                android:text="6 rooms left"
+                android:textColor="#8E8B8B"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/room_price"
+                app:layout_constraintTop_toTopOf="@id/room_person_icon" />
+
+            <LinearLayout
+                android:id="@+id/room_person_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@+id/room_name"
+                app:layout_constraintTop_toBottomOf="@id/room_name">
+
+                <ImageView
+                    android:id="@+id/person1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:id="@+id/person2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:id="@+id/person3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:id="@+id/person4"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:id="@+id/add"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:id="@+id/bed"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/room_facilities1"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@id/room_name"
+                app:layout_constraintTop_toBottomOf="@id/room_name4">
+
+                <ImageView
+                    android:id="@+id/facility1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="20dp"/>
+
+                <ImageView
+                    android:id="@+id/facility2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="20dp"/>
+
+                <ImageView
+                    android:id="@+id/facility3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="20dp"/>
+
+                <ImageView
+                    android:id="@+id/facility4"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/room_facilities2"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@id/room_name"
+                app:layout_constraintTop_toBottomOf="@id/room_facilities1">
+
+                <ImageView
+                    android:id="@+id/facility5"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="20dp"/>
+
+                <ImageView
+                    android:id="@+id/facility6"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="20dp"/>
+
+                <ImageView
+                    android:id="@+id/facility7"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="20dp"/>
+
+                <ImageView
+                    android:id="@+id/facility8"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/number"
+                android:layout_width="25dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_transparent"
+                android:ems="10"
+                android:padding="0dp"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="#1F1F1F"
+                app:layout_constraintStart_toStartOf="@+id/room_available_number"
+                app:layout_constraintTop_toTopOf="@+id/room_name" />
+
+
+            <ImageButton
+                android:id="@+id/minus"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/plusminus_button"
+                android:scaleType="fitCenter"
+                android:onClick="Decrement"
+                app:layout_constraintEnd_toStartOf="@id/number"
+                app:layout_constraintTop_toTopOf="@+id/number"
+                app:srcCompat="@drawable/minus_button" />
+
+            <ImageButton
+                android:id="@+id/plus"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/plusminus_button"
+                android:scaleType="fitCenter"
+                android:onClick="Increment"
+                app:layout_constraintStart_toEndOf="@+id/number"
+                app:layout_constraintTop_toTopOf="@+id/number"
+                app:srcCompat="@drawable/plus_button" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</LinearLayout>

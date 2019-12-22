@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,13 @@ import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SearchFragment extends Fragment {
     private CalendarView calendarView;
@@ -48,13 +52,17 @@ public class SearchFragment extends Fragment {
 
     private ImageButton search_button;
 
-    private Button signout;
+    private String email;
+
+    private int nights;
 
     private SharedPreferences preferences;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        email = getActivity().getIntent().getStringExtra("email");
+
         checkInDate = view.findViewById(R.id.checkInDate);
         checkOutDate = view.findViewById(R.id.checkOutDate);
         calendarView = view.findViewById(R.id.calendarView);
@@ -68,7 +76,6 @@ public class SearchFragment extends Fragment {
         room_minus = view.findViewById(R.id.room_minus_button);
         room_number = view.findViewById(R.id.room_number);
         city_edittext = view.findViewById(R.id.city);
-        signout = view.findViewById(R.id.signout_buton);
         search_button = view.findViewById(R.id.searchButton);
         preferences = getActivity().getSharedPreferences("Wodget", Context.MODE_PRIVATE);
 
@@ -89,20 +96,9 @@ public class SearchFragment extends Fragment {
         calendars.add(today);
         calendars.add(tomorrow);
         calendarView.setSelectedDates(calendars);
+        nights = 1;
 
-        signout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = preferences.edit();
-                int count = preferences.getInt("count", 0);
-                // 存入数据
-                editor.putInt("count", 0);
-                // 提交修改
-                editor.commit();
-                startActivity(new Intent(getActivity(), MainActivity.class));
 
-            }
-        });
 
         calendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
@@ -129,6 +125,7 @@ public class SearchFragment extends Fragment {
 
                     currentSelecting=null;
                 }
+
 
 
 
@@ -202,6 +199,12 @@ public class SearchFragment extends Fragment {
                     checkInDateT = checkInDate.getText().toString().substring(5);
                     checkOutDateT = checkOutDate.getText().toString().substring(5);
 
+                        Date date1 = format.parse(checkInDateT);
+                        Date date2 = format.parse(checkOutDateT);
+                        long diff = date2.getTime() - date1.getTime();
+                        System.out.println ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+
+                    nights = (int)(diff / (1000*60*60*24));
                     Intent intent = new Intent(getActivity(), search_result_activity.class);
                     intent.putExtra("city", city);
                     intent.putExtra("adult", adult);
@@ -209,6 +212,8 @@ public class SearchFragment extends Fragment {
                     intent.putExtra("room", room);
                     intent.putExtra("checkInDate", checkInDateT);
                     intent.putExtra("checkOutDate", checkOutDateT);
+                    intent.putExtra("email", email);
+                    intent.putExtra("nights", nights);
                     startActivity(intent);
                 }catch(Exception e){
 
