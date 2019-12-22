@@ -110,23 +110,25 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
       <tbody>
         <?php for ($i = 0; $i < count($room); $i++) { ?>
           <tr>
-            <th scope="row" rowspan="2"><?php echo $room[$i]->type ?></th>
-            <td rowspan="2"><?php echo $room[$i]->description ?></td>
-            <td>RM{{ $room[$i]->price }}/night</td>
-            
+
+            <th scope="row" rowspan="{{ ($room[$i]->addBed > 0 ? 2 : 1) }}"><?php echo $room[$i]->type ?></th>
+            <td rowspan="{{ ($room[$i]->addBed > 0 ? 2 : 1) }}"><?php echo $room[$i]->description ?></td>
+            <td>RM{{ $room[$i]->price}}/night</td>
+              <td>{{ $room[$i]->pax }}</td>
+              <td class="ml-5"><input type="number" min="0" max="<?php echo $room[$i]->availableNum?>"></td>
+            </tr>
             <?php 
             if ($room[$i]->addBed > 0){
             ?>
-              <td>{{ $room[$i]->pax }} + {{ $room[$i]->addBed }} bed </td>
-            <?php
-            }
-            ?>
-            else {
-              <td>{{ $room[$i]->pax }}</td>
-            }
-            <td class="ml-5"><input type="number" min="0" max="<?php echo $room[$i]->availableNum?>">
-          </tr>
-        <?php } ?>
+               <tr>
+            <td>RM{{ $room[$i]->price  + ($room[$i]->addBed > 0 ? 30 : 0 ) }}/night</td>
+              <td>{{ $room[$i]->pax }}  + {{ $room[$i]->addBed }} bed </td>
+              <td class="ml-5"><input type="number" min="0" max="{{ $room[$i]->availableNum }}"></td>
+             </tr>
+            
+            
+          
+        <?php }} ?>
       </tbody>
     </table>
   </div>
