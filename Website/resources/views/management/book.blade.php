@@ -324,8 +324,8 @@ $(document).ready(function() {
         child: $('#inputChildren').val(),
         totalPrice: sum,
         hotelId: '{{ session("management_hotel_id") }}',
-        roomId: idList,
-        addBed: addBedList,
+        roomId: JSON.stringify(idList),
+        addBed: JSON.stringify(addBedList),
     }
     console.log(json);
     $.ajax({

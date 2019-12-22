@@ -227,8 +227,8 @@ for(var i of search_params) {
         child: search_params.get('child'),
         totalPrice: sum,
         hotelId: search_params.get('id'),
-        roomId: idList, // [1,1,2,3]
-        addBed: addBedList, // [0,1,0,1]
+        roomId: JSON.stringify(idList), // [1,1,2,3]
+        addBed: JSON.stringify(addBedList), // [0,1,0,1]
     }
     console.log(json);
       $.ajax({
