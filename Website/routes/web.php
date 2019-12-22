@@ -146,7 +146,8 @@ Route::post('loginUser',function(Request $request){
 
     if (Auth::attempt($credentials)) {
         // Authentication passed...
-        return $credentials['password'];
+        $userId = DB::select('select id from users where email=?;', [$request->email]);
+        return $userId;
     }else{
         return "false";
     }
