@@ -119,7 +119,7 @@
             android:background="#FFFFFF"
             android:cacheColorHint="@android:color/transparent"
             android:divider="#CCCCCC"
-            android:dividerHeight="10dp"
+            android:dividerHeight="1dp"
             android:fadeScrollbars="false"
             android:fadingEdge="none"
             android:listSelector="@android:color/transparent"
@@ -128,11 +128,5 @@
         </ListView>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="325dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

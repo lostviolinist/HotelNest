@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,13 +70,24 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     // Display the first 500 characters of the response string.
-                                        if(response.equals(password_string)){
+                                        if(!response.equals("false")){
                                             message.setText("Login Successful!");
                                             SharedPreferences.Editor editor = preferences.edit();
                                             int count = preferences.getInt("count", 0);
                                             editor.putInt("count", ++count);// 存入数据
                                             editor.commit();// 提交修改
-                                            openHomeActivity();
+                                            Log.i("Response userId", response);
+                                            try {
+                                                JSONArray reader = new JSONArray(response);
+                                                int userId = reader.getJSONObject(0).getInt("id");
+                                                SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit();
+                                                prefEditor.putString("userId", String.valueOf(userId));
+                                                prefEditor.putString("email", email_string);
+                                                prefEditor.apply();
+                                                openHomeActivity(userId);
+                                            }catch(Exception e){
+
+                                            }
                                         }else{
                                             message.setText("The email or password is wrong!");
                                         }
@@ -106,8 +121,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openHomeActivity(){
+    public void openHomeActivity(int userId){
         Intent intent = new Intent(this, home_activity.class);
+        intent.putExtra("email", email_string);
+        intent.putExtra("userId", String.valueOf(userId));
+
         startActivity(intent);
     }
 }

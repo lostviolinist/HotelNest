@@ -235,12 +235,12 @@ Route::get('userProfile', function(Request $request){
         $bookingInfo = UserController::getBookingHistory($request->email);
 
         $userInfo[0]->bookingInfo = $bookingInfo;
-
+	return json_encode($userInfo);
     }catch(Exception $e){
         echo $e;
         return "false";
     }
 
-    return json_encode($userInfo);
+    
 
 })->name('userProfile');
