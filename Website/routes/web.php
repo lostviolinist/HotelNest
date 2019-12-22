@@ -42,11 +42,11 @@ Route::get('/room',function(){
 
 Route::get('/confirm',function(){
     return view('confirm');
-});
+})->name('confirm');
 
 Route::get('/booking',function(){
     return view('booking');
-});
+})->name('booking');
 
 
 // ------------------------------------- MANAGEMENT ----------------------------------- //

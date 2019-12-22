@@ -82,15 +82,15 @@ use Illuminate\Support\Facades\DB;
                         <div class="form-row p-3">
                             <div class="form-group col-md-2 mr-5">
                                 <label for="inputCity">Adults</label>
-                                <input type="number" class="form-control" id="inputCity" min="1" name="adult">
+                                <input type="number" class="form-control" id="inputCity" min="1" value="1" name="adult">
                             </div>
                             <div class="form-group col-md-2 ml-5">
                                 <label for="inputState">Children</label>
-                                <input type="number" class="form-control" id="inputCity" min="0" name="child">
+                                <input type="number" class="form-control" id="inputCity" min="0" value="0" name="child">
                             </div>
                             <div class="form-group col-md-2 ml-5">
                                 <label for="inputState">Rooms</label>
-                                <input type="number" class="form-control" id="inputCity" min="1" name="room">
+                                <input type="number" class="form-control" id="inputCity" min="1" value="1" name="room">
                             </div>
 
                         </div>

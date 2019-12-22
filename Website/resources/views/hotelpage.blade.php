@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 $checkInDate =  $_REQUEST['cid'];
 $checkOutDate =  $_REQUEST['cod'];
 $hotelId = $_REQUEST['id'];
+$adult =  $_REQUEST['adult'];
+$child =  $_REQUEST['child'];
+$roomList =  $_REQUEST['room'];
+
 
 $arr = json_decode(SelectController::getHotelInfo($hotelId));
 $image = json_decode(ImageController::getImage($hotelId));
@@ -23,7 +27,7 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <!-- <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script> -->
@@ -107,7 +111,7 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
           <th scope="col">Number of Rooms</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="searchResult">
         <?php for ($i = 0; $i < count($room); $i++) { ?>
           <tr>
 
@@ -115,7 +119,7 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
             <td rowspan="{{ ($room[$i]->addBed > 0 ? 2 : 1) }}"><?php echo $room[$i]->description ?></td>
             <td>RM{{ $room[$i]->price}}/night</td>
               <td>{{ $room[$i]->pax }}</td>
-              <td class="ml-5"><input type="number" min="0" max="<?php echo $room[$i]->availableNum?>"></td>
+              <td class="ml-5"><input type="number" min="0" value="0" max="<?php echo $room[$i]->availableNum?>" data-roomId="{{$room[$i]->roomId}}" data-addBedId="0" data-price="{{$room[$i]->price}}" ></td>
             </tr>
             <?php 
             if ($room[$i]->addBed > 0){
@@ -123,7 +127,7 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
                <tr>
             <td>RM{{ $room[$i]->price  + ($room[$i]->addBed > 0 ? 30 : 0 ) }}/night</td>
               <td>{{ $room[$i]->pax }}  + {{ $room[$i]->addBed }} bed </td>
-              <td class="ml-5"><input type="number" min="0" max="{{ $room[$i]->availableNum }}"></td>
+              <td class="ml-5"><input type="number" min="0" value="0" max="{{ $room[$i]->availableNum }}" data-roomId="{{$room[$i]->roomId}}" data-addBedId="1" data-price="{{ $room[$i]->price  + ($room[$i]->addBed > 0 ? 30 : 0 ) }}"></td>
              </tr>
             
             
@@ -134,9 +138,44 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
   </div>
   <div class="d-flex justify-content-center mb-3 mt-3">
 
-    <button class="btn btn-primary">Book Now</button>
+    
+    <a id="bookBtn" class= "btn btn-primary" role="button">Book Now</a>
 
   </div>
 </body>
+<script>
+  $(document).ready(function () {
+    
+    $('#bookBtn').click(function() {
+    var list = $('#searchResult').find('input');
+    var json = [];
+    for (var i = 0; i < list.length; i++) {
+      var obj = {};
+      obj['roomId'] = $(list[i]).attr('data-roomId');
+      obj['addBed'] = $(list[i]).attr('data-addBedId');
+      obj['num'] = $(list[i]).val();
+      obj['price'] = $(list[i]).attr('data-price');
+     
+      
+      json.push(obj);
+    }
+    console.log(json);
+    console.log('hello');
+    console.log("{{$arr[0]->hotelId}}");
+    console.log("{{$checkInDate}}");
+    console.log("{{$checkOutDate}}");
+    
 
+    var url ='{{ route("booking") }}';
+    url+='?id={{$arr[0]->hotelId}}&cid={{$checkInDate}}&cod={{$checkOutDate}}&adult={{$adult}}&child={{$child}}&room={{$roomList}}&data=' + JSON.stringify(json);
+    console.log(url);
+    // "{{ session(['booking_check_in' => $checkInDate]) }}";
+    // "{{ session(['booking_check_out' => $checkOutDate]) }}";
+    // "{{ session(['booking_adult' => $checkInDate]) }}";
+    $(location).attr('href', url);
+    
+  })
+  });
+  
+</script>
 </html>
