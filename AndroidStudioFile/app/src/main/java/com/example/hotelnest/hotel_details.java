@@ -84,7 +84,7 @@ public class hotel_details extends AppCompatActivity {
 
     private Button book_button;
 
-    private String hotel_name;
+    private String hotel_name, userId;
 
 
 
@@ -93,6 +93,8 @@ public class hotel_details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_details);
 
+        userId = getIntent().getStringExtra("userId");
+        Log.i("h_details take userId", userId);
         nights = getIntent().getIntExtra("nights", 0);
         email = getIntent().getStringExtra("email");
         hotelId = getIntent().getStringExtra("hotelId");
@@ -625,13 +627,13 @@ public class hotel_details extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), booking.class);
                 intent.putExtra("room_number", room_number);
                 intent.putExtra("room_name", room_name);
-                intent.putExtra("hotelId", hotelId);
+                intent.putExtra("hotelId", Integer.parseInt(hotelId));
                 intent.putExtra("room_Id", room_id );
                 intent.putExtra("checkInDate", checkInDate);
                 intent.putExtra("checkOutDate", checkOutDate);
                 intent.putExtra("totalPrice", total);
-                intent.putExtra("adult", adult);
-                intent.putExtra("child", child);
+                intent.putExtra("adult", Integer.parseInt(adult));
+                intent.putExtra("child", Integer.parseInt(child));
                 intent.putExtra("email", email);
                 intent.putExtra("hotel_name", hotel_name);
                 intent.putExtra("room_selected_addbed", room_selected_addbed);
@@ -639,6 +641,8 @@ public class hotel_details extends AppCompatActivity {
                 intent.putExtra("nights", nights);
                 intent.putExtra("hotelicon_drawable", hotelicon_drawable);
                 intent.putExtra("hotel_star", hotel_star);
+                intent.putExtra("userId", userId);
+                Log.i("h_details put userId", userId);
                 startActivity(intent);
 
             }

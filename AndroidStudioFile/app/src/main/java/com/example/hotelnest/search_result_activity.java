@@ -79,7 +79,7 @@ public class search_result_activity extends AppCompatActivity {
             {R.drawable.images_50_1,R.drawable.images_50_2,R.drawable.images_50_3,R.drawable.images_50_4,R.drawable.images_50_5,R.drawable.images_50_6,R.drawable.images_50_7,R.drawable.images_50_8},
             {R.drawable.images_52_1,R.drawable.images_52_2,R.drawable.images_52_3,R.drawable.images_52_4,R.drawable.images_52_5,R.drawable.images_52_6}
     };
-    private String city, adult, child, room, checkInDate, checkOutDate;
+    private String city, adult, child, room, checkInDate, checkOutDate, userId;
     private int nights;
 
 
@@ -92,7 +92,8 @@ public class search_result_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result_activity);
 
-
+        userId = getIntent().getStringExtra("userId");
+        Log.i("s_result take userId", userId);
         nights = getIntent().getIntExtra("nights",0);
         email = getIntent().getStringExtra("email");
         city = getIntent().getStringExtra("city");
@@ -104,6 +105,21 @@ public class search_result_activity extends AppCompatActivity {
         goingCity = findViewById(R.id.goingCity);
         checkin = findViewById(R.id.checkin);
         checkout = findViewById(R.id.checkout);
+
+        Log.i("checkindate", checkInDate);
+        Log.i("checkoutdate", checkOutDate);
+        try {
+            Date checkin = new SimpleDateFormat("dd MMM yyyy").parse(checkInDate);
+            Date checkout = new SimpleDateFormat("dd MMM yyyy").parse(checkOutDate);
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            checkInDate = dateFormat.format(checkin);
+            checkOutDate = dateFormat.format(checkout);
+            Log.i("checkindate", checkInDate);
+            Log.i("checkoutdate", checkOutDate);
+        }catch(Exception e){
+
+        }
 
         listview = findViewById(R.id.search_results_list);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,6 +138,8 @@ public class search_result_activity extends AppCompatActivity {
                 intent.putExtra("child", child);
                 intent.putExtra("email", email);
                 intent.putExtra("nights", nights);
+                intent.putExtra("userId", userId);
+                Log.i("s_result put userId", userId);
                 startActivity(intent);
             }
         });

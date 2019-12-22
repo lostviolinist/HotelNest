@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,7 @@ public class SearchFragment extends Fragment {
     private ImageButton search_button;
 
     private String email;
+    private String userId;
 
     private int nights;
 
@@ -62,6 +64,13 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         email = getActivity().getIntent().getStringExtra("email");
+        userId = getActivity().getIntent().getStringExtra("userId");
+        if(email==null||userId==null){
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            email = prefs.getString("email", "defaultStringIfNothingFound");
+            userId = prefs.getString("userId", "defaultStringIfNothingFound");
+
+        }
 
         checkInDate = view.findViewById(R.id.checkInDate);
         checkOutDate = view.findViewById(R.id.checkOutDate);
@@ -214,6 +223,8 @@ public class SearchFragment extends Fragment {
                     intent.putExtra("checkOutDate", checkOutDateT);
                     intent.putExtra("email", email);
                     intent.putExtra("nights", nights);
+                    intent.putExtra("userId", userId);
+                    Log.i("search put userId", userId);
                     startActivity(intent);
                 }catch(Exception e){
 
@@ -226,14 +237,7 @@ public class SearchFragment extends Fragment {
 
         return view;
 }
-    private OnSelectDateListener listener = new OnSelectDateListener() {
-        @Override
-        public void onSelect(List<Calendar> calendar) {
-            List<Calendar> selectedDates = calendarView.getSelectedDates();
-            checkInDate.setText(selectedDates.get(0).toString());
-            checkOutDate.setText(selectedDates.get(selectedDates.size()).toString());
-        }
-    };
+
 
 
 }

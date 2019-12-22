@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +20,7 @@ public class booking extends AppCompatActivity {
     //$request->fullName, $request->email, $request->phone, $request->icNum,
     //$request->checkInDate, $request->checkOutDate, $request->remark, $request->adult, $request->child,
     //         $request->totalPrice, $request->hotelId, $request->roomId, $request->addBed);
-    private String email, checkInDate, checkOutDate, hotel_name;
+    private String email, checkInDate, checkOutDate, hotel_name, userId;
     private int adult, child, totalPrice, hotelId, nights,hotelicon_drawable, star;
 
     private ArrayList<Integer> room_number, room_id, room_selected_addbed, room_price;
@@ -51,6 +52,8 @@ public class booking extends AppCompatActivity {
         star4 = findViewById(R.id.star4);
         star5 = findViewById(R.id.star5);
 
+        userId = getIntent().getStringExtra("userId");
+        Log.i("booking take userId", userId);
         star = getIntent().getIntExtra("hotel_star", 0);
         hotelicon_drawable = getIntent().getIntExtra("hotelicon_drawable", 0);
         nights = getIntent().getIntExtra("nights", 0);
@@ -184,6 +187,8 @@ public class booking extends AppCompatActivity {
                 intent.putExtra("hotelId", hotelId);
                 intent.putExtra("roomId", roomId);
                 intent.putExtra("addBed", addBed);
+                intent.putExtra("userId", userId);
+                Log.i("booking put userId", userId);
                 startActivity(intent);
 
 
