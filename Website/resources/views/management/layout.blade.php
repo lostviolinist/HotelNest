@@ -28,9 +28,9 @@
       <nav class="navbar navbar-expand-md navbar-light container">
         @if (session('management_admin_id') != null)
             <!-- Brand -->
-            <a class="title text-default h1 text-decoration-none" href="{{ url('management/book') }}">
+            <a class="title text-default text-decoration-none" href="{{ url('management/book') }}" style="font-size: x-large;">
+                <img src="{{ asset('images/hotelnest-logo.png') }}" alt="logo" style="width: 64px;" />
                 HotelNest
-                <!-- <img src="{{ asset('images/management/logo.png') }}" alt="logo" style="width: 64px;" /> -->
             </a>
 
             <!-- Toggler/collapsibe Button -->
@@ -64,7 +64,10 @@
                 </div>
             </div>
         @else
-            <img src="{{ asset('images/management/logo.png') }}" alt="logo" style="width: 64px;" />
+            <a class="title text-default text-decoration-none" href="" style="font-size: x-large;">
+                <img src="{{ asset('images/hotelnest-logo.png') }}" alt="logo" style="width: 64px;" />
+                HotelNest
+            </a>
         @endif
       </nav>
     </header>

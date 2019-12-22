@@ -23,6 +23,28 @@ class AdminBookingController extends Controller
         return "true";
     }
 
+    public static function updateBooking(Request $request) {
+
+        $hotelId = $request->hotelId;
+        $bookingNum = $request->bookingNum;
+
+        // booking detail
+        $checkInDate = $request->checkInDate;
+        $checkOutDate = $request->checkOutDate;
+
+        // room assignment
+        $no = $request->no;             // array
+        $roomNum = $request->roomNum;   // array
+
+        DB::update('update bookings set checkInDate=?, checkOutDate=? where hotelId=? and bookingNum=?;',
+            [$checkInDate, $checkOutDate, $hotelId, $bookingNum]);
+
+        for ($i = 0; $i < count($no); $i++) {
+            DB::update('update booking_room set roomNum=? where no=?;',
+                [$roomNum[$i], $no[$i]]);
+        }
+    }
+
     public static function editBooking(Request $request, $hotelId, $bookingNum){
         try{
             $roomNumber = count($request->roomNo);

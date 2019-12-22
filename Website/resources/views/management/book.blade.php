@@ -219,6 +219,7 @@ $(document).ready(function() {
       method: "POST",
       data: $('#searchForm').serialize(),
       success:function(data) {
+        console.log(data);
         if (data === "false") {
           console.log("Search failed");
         } else {
@@ -227,17 +228,27 @@ $(document).ready(function() {
           var json = JSON.parse(data);
           console.log(json);
           for (var i = 0; i < json.length; i++) {
+            var amenities = '';
+            Object.keys(json[i]).forEach(function(k){
+              if (k != "roomId" && k!="type"&&k!="price"&&k!="pax"&&k!="description"&&k!="availableNum"&&k!="hotelId"&&json[i][k]==1) {
+                var text = "{{ asset('images/icons/:url.png') }}";
+                text = text.replace(":url", k);
+                console.log(text);
+                amenities += '<img class="m-2" src="'+text+'" style="width: 24px;" alt="'+k+'" data-toggle="tooltip" data-placement="bottom" title="'+k+'" />'; 
+              }
+            });
+
             html += '<tr>';
-            html += '<td class="font-weight-bold">' + json[i]['type'] + '</td>';
-            html += '<td>' + json[i]['description'] + '</td>';
+            html += '<td class="font-weight-bold" rowspan="'+(json[i]['addBed'] > 0?2:1)+'">' + json[i]['type'] + '</td>';
+            html += '<td rowspan="'+(json[i]['addBed'] > 0?2:1)+'">' + json[i]['description'] + '<br />'+amenities+'</td>';
             html += '<td class="text-center">' + json[i]['pax'] + '</td>';
             html += '<td>' + 'RM' + json[i]['price'] + '/night' + '</td>';
             html += '<td><input class="form-control" type="number" min="0" max="' + json[i]['availableNum'] + '" value="0" style="width: 128px;" data-roomId="' + json[i]['roomId'] + '" data-addBed="0" data-price="'+json[i]['price']+'" onchange="updateTotal()" />';
             html += '</tr>';
             if (json[i]['addBed'] > 0) {
               html += '<tr>';
-              html += '<td class="font-weight-bold">' + json[i]['type'] + '</td>';
-              html += '<td>' + json[i]['description'] + '</td>';
+              // html += '<td class="font-weight-bold">' + json[i]['type'] + '</td>';
+              // html += '<td>' + json[i]['description'] + '</td>';
               html += '<td class="text-center">' + json[i]['pax'] + '+' + json[i]['addBed'] + '&nbsp;<i class="fas fa-bed"></i>' + '</td>';
               html += '<td>' + 'RM' + (json[i]['price'] + 30) + '/night' + '</td>';
               html += '<td><input class="form-control" type="number" min="0" max="' + json[i]['availableNum'] + '" value="0" style="width: 128px;" data-roomId="' + json[i]['roomId'] + '" data-addBed="1" data-price="'+(json[i]['price'] + 30)+'" onchange="updateTotal()" />';
@@ -246,6 +257,7 @@ $(document).ready(function() {
           }
           $('#resultTable').css('display', 'block');
           $('#searchResult').html(html);
+          $('[data-toggle="tooltip"]').tooltip();
         }
         $('#loadingSpinner').removeClass('d-flex');
         $('#loadingSpinner').addClass('d-none');
@@ -295,14 +307,18 @@ $(document).ready(function() {
         addBedList.push($(list[i]).attr('data-addBed'));
       }
     }
+    // var checkInDate = new Date ($('#inputCheckIn').val());
+    // checkInDate.setDate(checkInDate.getDate() + 1);
+    // var checkOutDate = new Date ($('#inputCheckOut').val());
+    // checkOutDate.setDate(checkOutDate.getDate() + 1);
     var json = {
         _token: "{{ csrf_token() }}",
         fullName: $('#inputFullName').val(),
         email: $('#inputGuestEmail').val(),
         phone: $('#inputPhoneNumber').val(),
         icNum: $('#inputICNumber').val(),
-        checkInDate: new Date ($('#inputCheckIn').val()).toISOString().split('.')[0],
-        checkOutDate: new Date ($('#inputCheckOut').val()).toISOString().split('.')[0],
+        checkInDate: moment($('#inputCheckIn').val()).format('YYYY-MM-DD'),
+        checkOutDate: moment($('#inputCheckOut').val()).format('YYYY-MM-DD'),
         remark: $('#inputRemark').val(),
         adult: $('#inputAdult').val(),
         child: $('#inputChildren').val(),

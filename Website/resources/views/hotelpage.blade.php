@@ -83,8 +83,8 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
       </div>
       <div class="col">
         <div class="container">
-          Start Date: <input type="datetime" disabled> <br> <br>
-          End Date: <input type="datetime" disabled>
+          Start Date:  <?php print_r($checkInDate) ?> <br> <br>
+          End Date:  <?php print_r($checkOutDate) ?>
         </div>
         
 
@@ -103,18 +103,32 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
           <th scope="col">Room type</th>
           <th scope="col">Description</th>
           <th scope="col">Price</th>
+          <th scope="col">Pax</th>
           <th scope="col">Number of Rooms</th>
         </tr>
       </thead>
       <tbody>
         <?php for ($i = 0; $i < count($room); $i++) { ?>
           <tr>
-            <th scope="row"><?php echo $room[$i]->type ?></th>
-            <td><?php echo $room[$i]->description ?></td>
-            <td>RM<?php echo $room[$i]->price ?>/night</td>
-            <td class="ml-5"><input type="number" min="0">
-          </tr>
-        <?php } ?>
+
+            <th scope="row" rowspan="{{ ($room[$i]->addBed > 0 ? 2 : 1) }}"><?php echo $room[$i]->type ?></th>
+            <td rowspan="{{ ($room[$i]->addBed > 0 ? 2 : 1) }}"><?php echo $room[$i]->description ?></td>
+            <td>RM{{ $room[$i]->price}}/night</td>
+              <td>{{ $room[$i]->pax }}</td>
+              <td class="ml-5"><input type="number" min="0" max="<?php echo $room[$i]->availableNum?>"></td>
+            </tr>
+            <?php 
+            if ($room[$i]->addBed > 0){
+            ?>
+               <tr>
+            <td>RM{{ $room[$i]->price  + ($room[$i]->addBed > 0 ? 30 : 0 ) }}/night</td>
+              <td>{{ $room[$i]->pax }}  + {{ $room[$i]->addBed }} bed </td>
+              <td class="ml-5"><input type="number" min="0" max="{{ $room[$i]->availableNum }}"></td>
+             </tr>
+            
+            
+          
+        <?php }} ?>
       </tbody>
     </table>
   </div>

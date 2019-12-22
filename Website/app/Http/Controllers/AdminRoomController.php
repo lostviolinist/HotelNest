@@ -34,17 +34,24 @@ class AdminRoomController extends Controller
     }
 
     public static function getRoomType($hotelId){
-        $roomType = DB::select('select * from room_infos where hotelId = ?',[$hotelId]);
-
+        $roomType = DB::select('select * from room_infos ri inner join room_facilities rf on (ri.roomId=rf.roomId and ri.hotelId=rf.hotelId) where ri.hotelId = ?',[$hotelId]);
+        
         $res = [];
         foreach($roomType as $type){
+            $html = "";
+            foreach($type as $attr => $value) {
+                if ($value == 1 && $attr !="pax" && $attr !="roomId" && $attr!="price" && $attr!="description" && $attr!="hotelId" && $attr!="type")
+                    $html .= '<img class="m-2" src="' . asset('images/icons/'.$attr.'.png') . 
+                        '" alt="'.$attr.'" data-toggle="tooltip" data-placement="bottom" title="'.$attr.'" style="width: 32px;" />';
+            }
             $arr = [
                 $type->type,
                 ($type->addBed > 0) ? ($type->pax . " + " . $type->addBed) : ($type->pax),
                 $type->description,
                 '<button class="btn btn-outline-primary" onclick="editRoomType(this, '.$type->roomId.')">
                     <i class="fas fa-edit"></i>
-                </button>'
+                </button>',
+                $html
             ];
             array_push($res, $arr);
         }
@@ -100,22 +107,31 @@ class AdminRoomController extends Controller
             [$request->available, $hotelId]);
     }
 
-    public static function getAvailableRoomNo($hotelId, $checkInDate, $checkOutDate){
+    public static function getAvailableRoomNo(Request $request){
         $rooms = DB::select('Select rooms.roomId, type, roomNum, price, addBed from rooms
         inner join room_infos 
         on ((rooms.roomId = room_infos.roomId) and (rooms.hotelId = room_infos.hotelId)) 
         where (rooms.hotelId, rooms.roomNum) not in (Select booking_room.hotelId, booking_room.roomNum from bookings
         inner join booking_room
-        where (bookings.bookingNum = booking_room.bookingNum) AND
-        ( (checkInDate <= "'.$checkInDate.'" AND checkOutDate > "'.$checkInDate.'") OR 
-        (checkInDate >= "'.$checkInDate.'" AND checkInDate < "'.$checkOutDate.'")))
-        and rooms.hotelId = ?; ',[$hotelId]);
+        where booking_room.roomNum is NOT NULL AND (bookings.bookingNum = booking_room.bookingNum) AND
+        ( (checkInDate <= "'.$request->checkInDate.'" AND checkOutDate > "'.$request->checkInDate.'") OR 
+        (checkInDate >= "'.$request->checkInDate.'" AND checkInDate < "'.$request->checkOutDate.'")))
+        and rooms.hotelId = ?; ',[$request->hotelId]);
+
+        // $rooms = DB::select('Select rooms.roomId, type, roomNum, price, addBed from rooms
+        // inner join room_infos 
+        // on ((rooms.roomId = room_infos.roomId) and (rooms.hotelId = room_infos.hotelId)) 
+        // where rooms.hotelId=? and (rooms.hotelId, rooms.roomNum) not in (Select booking_room.hotelId, booking_room.roomNum from bookings
+        // inner join booking_room
+        // where (bookings.bookingNum = booking_room.bookingNum) AND
+        // ( (checkInDate <= "'.$request->checkInDate.'" AND checkOutDate > "'.$request->checkInDate.'") OR 
+        // (checkInDate >= "'.$request->checkInDate.'" AND checkInDate < "'.$request->checkOutDate.'")));', [$request->hotelId]);
 
         return json_encode($rooms);
     }
 
-    public static function getBookingRoom($bookingNum){
-        $rooms = DB::select('select roomId, addBed, roomNum from booking_room where bookingNum = ?',[$bookingNum]);
+    public static function getBookingRoom(Request $request){
+        $rooms = DB::select('select br.roomId, ri.type, br.addBed, br.roomNum, br.no from booking_room br inner join room_infos ri on (br.roomId=ri.roomId and br.hotelId=ri.hotelId) where bookingNum = ?',[$request->bookingNum]);
 
         return json_encode($rooms);
     }

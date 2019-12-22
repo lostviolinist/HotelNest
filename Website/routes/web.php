@@ -100,6 +100,18 @@ Route::post('management/change-password',
     'Management\AdminController@changePassword')
     ->name('management/change-password');
 
+Route::get('management/getAvailableRoomNo', 
+    'AdminRoomController@getAvailableRoomNo')
+    ->name('management/getAvailableRoomNo');
+
+Route::get('management/getBookingRoom', 
+    'AdminRoomController@getBookingRoom')
+    ->name('management/getBookingRoom');
+
+Route::post('management/updateBooking', 
+    'AdminBookingController@updateBooking')
+    ->name('management/updateBooking');
+
 // ------------------------------------- MANAGEMENT END ----------------------------------- //
 
 // -----------------------------------------For Testing------------------------------------------------------
@@ -134,7 +146,8 @@ Route::post('loginUser',function(Request $request){
 
     if (Auth::attempt($credentials)) {
         // Authentication passed...
-        return $credentials['password'];
+        $userId = DB::select('select id from users where email=?;', [$request->email]);
+        return $userId;
     }else{
         return "false";
     }
