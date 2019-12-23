@@ -13,6 +13,9 @@ $hotelId = $_REQUEST['id'];
 $adult =  $_REQUEST['adult'];
 $child =  $_REQUEST['child'];
 $room =  $_REQUEST['room'];
+$roomList =  $_REQUEST['room'];
+$fullName =  $_REQUEST['fullName'];
+
 
 
 $data = json_decode($_REQUEST['data']);
@@ -20,7 +23,7 @@ $data = json_decode($_REQUEST['data']);
 $arr = json_decode(SelectController::getHotelInfo($hotelId));
 $image = json_decode(ImageController::getImage($hotelId));
 $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $checkOutDate));
-print_r($data);
+//print_r($data);
 ?>
 
 <head>
@@ -40,7 +43,7 @@ print_r($data);
   <div class="container-fluid mt-3">
     <section class="row">
       <div class="col-md-8">
-        <h1 class="title">HotelNest</h1>
+        <h1 class="title"><a href="{{ route('mainhome') }}">HotelNest</a></h1>
       </div>
       <div class="col-md-4">
         <div class=" float-right" role="group">
@@ -62,6 +65,7 @@ print_r($data);
           <th scope="col">Description</th>
           <th scope="col">Price</th>
           <th scope="col">Pax</th>
+          <th scope="col">Rooms</th>
           
         </tr>
       </thead>
@@ -77,7 +81,14 @@ print_r($data);
             <th scope="row"><?php echo $room[$i]->type ?></th>
             <td><?php echo $room[$i]->description ?></td>
             <td>RM{{ $room[$i]->price  + ($data[$j]->addBed > 0 ? 30 : 0 ) }}/night</td>
+            <?php if ($data[$j]->addBed>0) { ?>
               <td>{{ $room[$i]->pax }}  + {{ $data[$j]->addBed }} bed </td>
+              <?php } ?>
+              <?php if($data[$j]->addBed==0){ ?>
+                <td>{{ $room[$i]->pax }}</td>
+                <?php } ?>
+              
+              <td>{{ $data[$j]->num }}</td>
               
             </tr>
            
@@ -93,68 +104,13 @@ print_r($data);
          
 
           </div>
-          <div class="ml-5 mt-5">
-            <form class="form-inline">
-              <label class="sr-only" for="inlineFormInputName2">Name</label>
-              <input type="text" class="form-control mb-2 mr-5" id="inlineFormInputName2" placeholder="Where">
-
-              <label class="sr-only" for="inlineFormInputGroupUsername2">Check in</label>
-              <div class="input-group mb-2 mr-sm-2">
-
-                <input type="date" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Check in">
-              </div>
-
-              <label class="sr-only" for="inlineFormInputGroupUsername2">to</label>
-              <div class="input-group mb-2 mr-sm-2">
-
-                to
-              </div>
-              <label class="sr-only" for="inlineFormInputGroupUsername2">Check Out</label>
-              <div class="input-group mb-2 mr-5">
-
-                <input type="date" class="form-control" id="inlineFormInputGroupUsername3" placeholder="Check Out">
-              </div>
-              <label class="sr-only" for="inlineFormInputGroupUsername2">Pax</label>
-              <div class="input-group mb-2 mr-sm-2">
-
-                <input type="number" class="form-control" style="width: 50px;" id="inlineFormInputGroupUsername4" placeholder="1">
-              </div>
-              <label class="sr-only" for="inlineFormInputGroupUsername2">Pax</label>
-              <label class="sr-only" for="inlineFormInputGroupUsername2">to</label>
-              <div class="input-group mb-2 mr-5">
-
-                Adults
-              </div>
-              <div class="input-group mb-2 mr-sm-2">
-
-                <input type="number" class="form-control" style="width: 50px;" id="inlineFormInputGroupUsername5" placeholder="1">
-              </div>
-              <label class="sr-only" for="inlineFormInputGroupUsername2">to</label>
-              <div class="input-group mb-2 mr-5">
-
-                Children
-              </div>
-              <div class="input-group mb-2 mr-sm-2">
-
-                <input type="number" class="form-control" style="width: 50px;" id="inlineFormInputGroupUsername5" placeholder="1">
-              </div>
-
-              <div class="input-group mb-2 mr-5">
-
-                Rooms
-              </div>
-
-
-
-
-            </form>
-          </div>
+         
           <div class="container mt-5">
             <form>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputName">Full Name</label>
-                  <input type="text" class="form-control" id="inputName" >
+                  <input type="text" class="form-control" id="inputName" name="fullName" >
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputICNum">IC Number</label>
@@ -241,7 +197,7 @@ for(var i of search_params) {
         } else {
           console.log("Book success");
           console.log(data);
-          // $(location).attr('href', '{{ route("confirm") }}');
+          $(location).attr('href', '{{ route("confirm") }}');
         }
       },
       error:function(error) {
@@ -249,7 +205,9 @@ for(var i of search_params) {
         
       }
     });
-    
+    var url ='{{ route("confirm") }}';
+    url+='?id={{$arr[0]->hotelId}}&cid={{$checkInDate}}&cod={{$checkOutDate}}&adult={{$adult}}&child={{$child}}&fullName={{$fullName}}&email={{$email}}&phone={{$phone}}&icNum={{$icNum}}&remark={{$remark}}&room={{$roomList}}&data=' + JSON.stringify(json);
+    $(location).attr('href', url);
   })
   });
   function formatDate(date) {
@@ -265,6 +223,7 @@ for(var i of search_params) {
 
     return [year, month, day].join('-');
 }
+
 </script>
 
 

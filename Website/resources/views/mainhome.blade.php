@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\DB;
     <div class="container-fluid mt-3">
         <section class="row">
             <div class="col-md-8">
-                <h1 class="title">HotelNest</h1>
+                <h1 class="title"><a href="{{ route('mainhome') }}">HotelNest</a></h1>
             </div>
             <div class="col-md-4">
                 <div class=" float-right" role="group">
@@ -75,6 +75,19 @@ use Illuminate\Support\Facades\DB;
                                         return $('#checkInDate').val();
                                     }
                                 });
+                                function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
                             </script>
                         </div>
 

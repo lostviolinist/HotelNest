@@ -22,7 +22,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('mainhome');
-});
+})->name('mainhome');
 
 Auth::routes();
 

@@ -35,7 +35,7 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
   <div class="container-fluid mt-3">
     <section class="row">
       <div class="col-md-8">
-        <h1 class="title">HotelNest</h1>
+        <h1 class="title"><a href="{{ route('mainhome') }}">HotelNest</a></h1>
       </div>
       <div class="col-md-4">
         <div class=" float-right" role="group">
@@ -78,6 +78,19 @@ $arr = json_decode(SearchController::getHotelDetails($city, $checkInDate, $check
                   return $('#checkInDate').val();
                 }
               });
+              function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
             </script>
             <div class="form-row p-2">
               <div class="form-group col-md-3 m-3">
