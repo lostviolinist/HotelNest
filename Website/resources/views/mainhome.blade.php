@@ -1,46 +1,13 @@
+@extends('layouts.app')
+
+@section('content')
 <?php
 
 use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\DB;
 
 ?>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <!-- Bootstrap 4.3.1 -->
-    <link rel="stylesheet" href="{{ asset('bootstrap-4.3.1/css/bootstrap.min.css') }}">
-    <script src="{{ asset('jquery-3.4.1/jquery-3.4.1.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="{{ asset('bootstrap-4.3.1/js/bootstrap.min.js') }}" charset="utf-8"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-
-    <title>
-        HotelNest
-    </title>
-</head>
-
-<body>
-    <div class="container-fluid mt-3">
-        <section class="row">
-            <div class="col-md-8">
-                <h1 class="title"><a href="{{ route('mainhome') }}">HotelNest</a></h1>
-            </div>
-            <div class="col-md-4">
-                <div class=" float-right" role="group">
-                    <a class="btn btn-secondary btn-md  mr-3" style="background-color: #586BA4;" href="#"> Register </a>
-                    <a class="btn btn-md btn-outline-secondary" tyle="border-color: #586BA4;" href="#"> Sign In </a>
-                </div>
-            </div>
-        </section>
-    </div>
-    <table class="ml-0">
+<table class="ml-0">
         <tr>
             <td>
                 <div class="card ml-5 mt-5 mt-5 " style="width: 700px">
@@ -113,7 +80,7 @@ use Illuminate\Support\Facades\DB;
                 </div>
             </td>
             <td>
-                <div class="recommended">
+                <div class="recommended" style="width:700px;">
                     <p>Kuala Lumpur</p>
 
                     <?php
@@ -214,6 +181,4 @@ use Illuminate\Support\Facades\DB;
             </td>
         </tr>
     </table>
-</body>
-
-</html>
+@endsection

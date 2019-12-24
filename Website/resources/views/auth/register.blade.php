@@ -50,11 +50,16 @@
             
                 <div>
                     <div>
-                        <button type="submit" align="center" class="submit">
+                        <button type="submit" align="center" class="submit"> 
                             {{ __('Register') }}
                         </button>
+                        
                     </div>
+                    
                 </div>
+                <div></div>
+                <div></div>
+                
             </form>
         </div>
     </body>

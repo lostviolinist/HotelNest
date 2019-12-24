@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
+
+@section('content')
 
 <?php
 
@@ -24,7 +25,7 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
 
 ?>
 
-<head>
+<!-- <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -35,22 +36,21 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
 
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <title>Booking Confirmed!</title>
-</head>
+</head> -->
 
-<body>
-    <div class="container-fluid mt-3">
+<!-- <div class="container-fluid mt-3">
         <section class="row">
             <div class="col-md-8">
                 <h1 class="title"><a href="{{ route('mainhome') }}">HotelNest</a></h1>
             </div>
             <div class="col-md-4">
-                <div class=" float-right" role="group">
+                 <div class=" float-right" role="group">
                     <a class="btn btn-secondary btn-md  mr-3" style="background-color: #586BA4;" href="#"> Register </a>
                     <a class="btn btn-md btn-outline-secondary" style="border-color: #586BA4;" href="#"> Sign In </a>
                 </div>
             </div>
         </section>
-    </div>
+    </div> -->
 
     <div class="card mt-5 container shadow-sm" style="width: 30rem;">
         <div class="card-body">
@@ -122,4 +122,4 @@ for(var i of search_params) {
     
 </script>
 
-</html>
+@endsection

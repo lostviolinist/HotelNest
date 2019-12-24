@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
+
+@section('content')
 
 <?php
 
@@ -14,7 +15,7 @@ $adult =  $_REQUEST['adult'];
 $child =  $_REQUEST['child'];
 $room =  $_REQUEST['room'];
 $roomList =  $_REQUEST['room'];
-$fullName =  $_REQUEST['fullName'];
+// $fullName =  $_REQUEST['fullName'];
 
 
 
@@ -26,7 +27,7 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
 //print_r($data);
 ?>
 
-<head>
+<!-- <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -37,22 +38,21 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
 
   <link rel="stylesheet" type="text/css" href="/css/style.css">
   <title>Booking Form</title>
-</head>
+</head> -->
 
-<body>
-  <div class="container-fluid mt-3">
+<!-- <div class="container-fluid mt-3">
     <section class="row">
       <div class="col-md-8">
         <h1 class="title"><a href="{{ route('mainhome') }}">HotelNest</a></h1>
       </div>
       <div class="col-md-4">
-        <div class=" float-right" role="group">
+         <div class=" float-right" role="group">
           <a class="btn btn-secondary btn-md  mr-3" style="background-color: #586BA4;" href="#"> Register </a>
           <a class="btn btn-md btn-outline-secondary" tyle="border-color: #586BA4;" href="#"> Sign In </a>
-        </div>
+        </div> 
       </div>
     </section>
-  </div>
+  </div> -->
   <div class="ml-5 mt-3">
     <h2><?php echo $arr[0]->name ?> </h2>
   </div>
@@ -110,7 +110,7 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputName">Full Name</label>
-                  <input type="text" class="form-control" id="inputName" name="fullName" >
+                  <input type="text" class="form-control" id="inputName" name="$fullName" >
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputICNum">IC Number</label>
@@ -187,6 +187,9 @@ for(var i of search_params) {
         addBed: JSON.stringify(addBedList), // [0,1,0,1]
     }
     console.log(json);
+    
+    var url ='{{ route("confirm") }}';
+    url+='?id={{$arr[0]->hotelId}}&cid={{$checkInDate}}&cod={{$checkOutDate}}&adult={{$adult}}&child={{$child}}&room={{$roomList}}&data=' + JSON.stringify(json);
       $.ajax({
       url: "{{ route('createBooking') }}",
       method: "POST",
@@ -197,7 +200,7 @@ for(var i of search_params) {
         } else {
           console.log("Book success");
           console.log(data);
-          $(location).attr('href', '{{ route("confirm") }}');
+          $(location).attr('href', url);
         }
       },
       error:function(error) {
@@ -205,9 +208,6 @@ for(var i of search_params) {
         
       }
     });
-    var url ='{{ route("confirm") }}';
-    url+='?id={{$arr[0]->hotelId}}&cid={{$checkInDate}}&cod={{$checkOutDate}}&adult={{$adult}}&child={{$child}}&fullName={{$fullName}}&email={{$email}}&phone={{$phone}}&icNum={{$icNum}}&remark={{$remark}}&room={{$roomList}}&data=' + JSON.stringify(json);
-    $(location).attr('href', url);
   })
   });
   function formatDate(date) {
@@ -226,5 +226,4 @@ for(var i of search_params) {
 
 </script>
 
-
-</html>
+@endsection

@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
+
+@section('content')
 
 <?php
 
@@ -21,7 +22,7 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
 
 ?>
 
-<head>
+<!-- <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -30,13 +31,12 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <!-- <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script> -->
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script> 
   <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
   <title>Hotel</title>
-</head>
+</head> -->
 
-<body>
-  <div class="container-fluid mt-3">
+<!-- <div class="container-fluid mt-3">
     <section class="row">
       <div class="col-md-8">
         <h1 class="title"><a href="{{ route('mainhome') }}">HotelNest</a></h1>
@@ -45,10 +45,10 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
         <div class=" float-right" role="group">
           <a class="btn btn-secondary btn-md register-button mr-3" href="#"> Register </a>
           <a class="btn btn-md btn-outline-secondary signin-button" href="#"> Sign In </a>
-        </div>
+        </div> 
       </div>
     </section>
-  </div>
+  </div> -->
   <div class="container">
     <hr class="mt-2 mb-5">
 
@@ -178,4 +178,4 @@ $room = json_decode(SelectController::getRoomInfo($hotelId, $checkInDate, $check
   });
   
 </script>
-</html>
+@endsection
